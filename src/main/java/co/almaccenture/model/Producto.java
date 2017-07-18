@@ -23,7 +23,7 @@ public class Producto {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private String idProducto;
 	private String nombreProducto;
-	private boolean idEstado = true;
+	private boolean estadoProducto = true;
 	private Integer cantidadProducto;
 	private float precioProducto;
 	private String descripcionProducto;
@@ -63,12 +63,12 @@ public class Producto {
 		this.nombreProducto = nombreProducto;
 	}
 
-	public Boolean getIdEstado() {
-		return idEstado;
+	public Boolean getEstadoProducto() {
+		return estadoProducto;
 	}
 
-	public void setIdEstado(Boolean idEstado) {
-		this.idEstado = idEstado;
+	public void setEstadoProducto(Boolean estadoProducto) {
+		this.estadoProducto = estadoProducto;
 	}
 
 	public Integer getCantidadProducto() {

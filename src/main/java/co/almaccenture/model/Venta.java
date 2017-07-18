@@ -26,100 +26,62 @@ public class Venta implements Serializable {
 	private Date fechaVenta;
 	private Integer idCaja;
 	private Float totalVenta;
-	private Boolean idEstado;
+	private Boolean estadoVenta;
 
-	/**
-	 * @param idVenta
-	 * @param fechaVenta
-	 * @param idCaja
-	 * @param totalVenta
-	 */
-	public Venta(Integer idVenta, Date fechaVenta, Integer idCaja, Float totalVenta, Boolean idEstado) {
+	public Venta(Integer idVenta, Date fechaVenta, Integer idCaja, Float totalVenta, Boolean estadoVenta) {
 		super();
 		this.idVenta = idVenta;
 		this.fechaVenta = fechaVenta;
 		this.idCaja = idCaja;
 		this.totalVenta = totalVenta;
-		this.idEstado = idEstado;
+		this.estadoVenta = estadoVenta;
 	}
 
-	/**
-	 * 
-	 */
 	public Venta() {
 
 	}
 
-	/**
-	 * @return the idVenta
-	 */
 	public Integer getIdVenta() {
 		return idVenta;
 	}
 
-	/**
-	 * @param idVenta
-	 *            the idVenta to set
-	 */
+
 	public void setIdVenta(Integer idVenta) {
 		this.idVenta = idVenta;
 	}
 
-	/**
-	 * @return the fechaVenta
-	 */
 	public Date getFechaVenta() {
 		return fechaVenta;
 	}
 
-	/**
-	 * @param fechaVenta
-	 *            the fechaVenta to set
-	 */
 	public void setFechaVenta(Date fechaVenta) {
 		this.fechaVenta = fechaVenta;
 	}
 
-	/**
-	 * @return the idCaja
-	 */
 	public Integer getIdCaja() {
 		return idCaja;
 	}
 
-	/**
-	 * @param idCaja
-	 *            the idCaja to set
-	 */
 	public void setIdCaja(Integer idCaja) {
 		this.idCaja = idCaja;
 	}
 
-	/**
-	 * @return the totalVenta
-	 */
+	
 	public Float getTotalVenta() {
 		return totalVenta;
 	}
 
-	/**
-	 * @param totalVenta
-	 *            the totalVenta to set
-	 */
+
 	public void setTotalVenta(Float totalVenta) {
 		this.totalVenta = totalVenta;
 	}
 
-	public Boolean getIdEstado() {
-		return idEstado;
+	public Boolean getEstadoVenta() {
+		return estadoVenta;
 	}
 
-	/**
-	 * @param idEstado
-	 *            the idEstado to set
-	 */
-	public void setIdEstado(Boolean idEstado) {
-		this.idEstado = idEstado;
+	public void setEstadoVenta(Boolean estadoVenta) {
+		this.estadoVenta = estadoVenta;
 	}
 
 }

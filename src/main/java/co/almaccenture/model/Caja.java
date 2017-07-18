@@ -22,7 +22,7 @@ public class Caja implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer idCaja;
-	private String nombreCaja;
+	private String  nombreCaja;
 
 	public Caja(Integer idCaja, String nombreCaja) {
 		super();
