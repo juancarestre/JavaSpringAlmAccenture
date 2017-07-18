@@ -1,9 +1,12 @@
 package co.almaccenture.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import java.io.Serializable;
@@ -30,13 +33,14 @@ public class Venta implements Serializable {
 	private Boolean estadoVenta;
 	private List<DetalleVenta> detalles; 
 	
-	public Venta(Integer idVenta, Date fechaVenta, Caja caja, Float totalVenta, Boolean estadoVenta) {
+	public Venta(Integer idVenta, Date fechaVenta, Caja caja, Float totalVenta, Boolean estadoVenta, List<DetalleVenta> detalles) {
 		super();
 		this.idVenta = idVenta;
 		this.fechaVenta = fechaVenta;
 		this.caja = caja;
 		this.totalVenta = totalVenta;
 		this.estadoVenta = estadoVenta;
+		this.detalles = detalles;
 	}
 
 	public Venta() {
@@ -84,6 +88,21 @@ public class Venta implements Serializable {
 
 	public void setEstadoVenta(Boolean estadoVenta) {
 		this.estadoVenta = estadoVenta;
+	}
+
+	/**
+	 * @return the detalles
+	 */
+	@OneToMany(mappedBy = "detalles", cascade = CascadeType.ALL)
+	public List<DetalleVenta> getDetalles() {
+		return detalles;
+	}
+
+	/**
+	 * @param detalles the detalles to set
+	 */
+	public void setDetalles(List<DetalleVenta> detalles) {
+		this.detalles = detalles;
 	}
 
 }
