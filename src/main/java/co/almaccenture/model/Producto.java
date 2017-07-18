@@ -15,7 +15,7 @@ import java.util.Calendar;
  *
  */
 @Entity
-@Table(name = "produto")
+@Table(name = "producto")
 
 public class Producto {
 
