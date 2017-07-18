@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+
+
+<title>Almaccenture Ventas</title>
+</head>
+
+<body>
+	<div style="height: 100%; width: 100%">
+
+
+		<div id="encabezado" style="float: initial; height: 100%; width: 50%">
+
+			<div style="float: left;">
+				<label>Fecha: </label> <br> <label>Caja: </label>
+			</div>
+			<div style="float: right;">
+				<label>Codigo venta: </label> <br> <img
+					src="../static/logo.png" width="40%" alt="logo">
+			</div>
+
+		</div>
+		<br> <br> <br>
+		<div id="tabla" style="float: center; height: 50%; width: 50%">
+			<table>
+				<thead>
+					<tr>
+						<th>Codigo</th>
+						<th>Producto</th>
+						<th>Cantidad</th>
+						<th>Precio</th>
+						<th>Subtotal</th>
+						<th>Accion</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>1</td>
+						<td>Jabon</td>
+						<td>5</td>
+						<td>1800</td>
+						<td>9000</td>
+						<td><button class="btn-transparente">Eliminar</button></td>
+				</tbody>
+			</table>
+			<label>Total: </label>
+
+		</div>
+
+
+		<div id="bottom">
+
+			<div id="procductocantidad" style="float: left">
+				<form action="">
+					Producto: <input type="text" name="producto"> Cantidad: <input
+						type="text" name="cantidad"> <input type="submit"
+						value="Aceptar">
+				</form>
+			</div>
+			<br> <br>
+
+			<div id="confirmaroperacion">
+				<br>
+				<form action="">
+					<input type="submit" value="Confirmar"> <input
+						type="submit" value="Cancelar">
+				</form>
+			</div>
+
+
+		</div>
+
+	</div>
+</body>
+</html>
