@@ -2,76 +2,97 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-
-
 <title>Almaccenture Ventas</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+
 </head>
 
 <body>
-	<div style="height: 100%; width: 100%">
 
-
-		<div id="encabezado" style="float: initial; height: 100%; width: 50%">
-
-			<div style="float: left;">
-				<label>Fecha: </label> <br> <label>Caja: </label>
-			</div>
-			<div style="float: right;">
-				<label>Codigo venta: </label> <br> <img
-					src="../static/logo.png" width="40%" alt="logo">
-			</div>
-
+	<div class="row">
+		<div class="col-md-1">
+			<img src="../static/logo.png" width="130" height="150">
 		</div>
-		<br> <br> <br>
-		<div id="tabla" style="float: center; height: 50%; width: 50%">
-			<table>
-				<thead>
-					<tr>
-						<th>Codigo</th>
-						<th>Producto</th>
-						<th>Cantidad</th>
-						<th>Precio</th>
-						<th>Subtotal</th>
-						<th>Accion</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>1</td>
-						<td>Jabon</td>
-						<td>5</td>
-						<td>1800</td>
-						<td>9000</td>
-						<td><button class="btn-transparente">Eliminar</button></td>
-				</tbody>
-			</table>
-			<label>Total: </label>
-
-		</div>
-
-
-		<div id="bottom">
-
-			<div id="procductocantidad" style="float: left">
-				<form action="">
-					Producto: <input type="text" name="producto"> Cantidad: <input
-						type="text" name="cantidad"> <input type="submit"
-						value="Aceptar">
-				</form>
+		<div class="col-md-11">
+			<div class="page-header">
+				<h1>
+					Administrador web<small> Ventas</small>
+				</h1>
 			</div>
-			<br> <br>
-
-			<div id="confirmaroperacion">
-				<br>
-				<form action="">
-					<input type="submit" value="Confirmar"> <input
-						type="submit" value="Cancelar">
-				</form>
-			</div>
-
-
 		</div>
+	</div>
+
+	<br>
+	<br>
+
+	<div class="row text-center">
+		<div class="col-md-8">
+			<div>
+				<label>Fecha:</label> <br> <br><label>Caja:</label><br><br><label>Código venta: </label>
+			</div>
+		</div>
+	</div>
+
+	<br>
+	<br>
+	<br>
+
+	<div class="row text-center">
+
+		<label path="producto">Producto:</label> <input path="producto"
+			cssClass="form-control"> <label path="cantidad">Cantidad:</label>
+		<input path="cantidad" cssClass="form-control"> <input
+			type="submit" value="Buscar" class="btn btn-success" />
 
 	</div>
+
+	<br>
+	<br>
+	<br>
+	<div class="container-fluid">
+		<table class="table table-bordered table-striped table-hover">
+			<thead>
+				<tr>
+					<th>Código</th>
+					<th>Producto</th>
+					<th>Cantidad</th>
+					<th>Precio</th>
+
+					<th>Subtotal</th>
+					<th>Acción</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>1</td>
+					<td>Jabon</td>
+					<td>5</td>
+					<td>1800</td>
+
+					<td>9000</td>
+					<td><a href="<c:url value="
+						EliminarCategoria.htm?id=${dato.intCodigoCategoria} " /><span
+						class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></td>
+				</tr>
+			</tbody>
+		</table>
+
+		<div class="row text-center">
+			<h2>
+				<span class="label label-primary">Total</span>
+			</h2>
+		</div>
+		<br> <br>
+
+		<div class="row text-center">
+			<input type="submit" value="Aceptar" class="btn btn-success" /> <input
+				type="submit" value="Cancelar" class="btn btn-primary" />
+		</div>
+
+
+
+	</div>
+	<!-- </div> -->
 </body>
 </html>
