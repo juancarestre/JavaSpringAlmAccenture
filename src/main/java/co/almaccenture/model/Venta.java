@@ -8,6 +8,7 @@ import javax.persistence.Table;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.List;
 
 /**
  * Se implementa el modelo , set and get
@@ -24,15 +25,16 @@ public class Venta implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer idVenta;
 	private Date fechaVenta;
-	private Integer idCaja;
+	private Caja caja;
 	private Float totalVenta;
 	private Boolean estadoVenta;
-
-	public Venta(Integer idVenta, Date fechaVenta, Integer idCaja, Float totalVenta, Boolean estadoVenta) {
+	private List<DetalleVenta> detalles; 
+	
+	public Venta(Integer idVenta, Date fechaVenta, Caja caja, Float totalVenta, Boolean estadoVenta) {
 		super();
 		this.idVenta = idVenta;
 		this.fechaVenta = fechaVenta;
-		this.idCaja = idCaja;
+		this.caja = caja;
 		this.totalVenta = totalVenta;
 		this.estadoVenta = estadoVenta;
 	}
@@ -58,12 +60,12 @@ public class Venta implements Serializable {
 		this.fechaVenta = fechaVenta;
 	}
 
-	public Integer getIdCaja() {
-		return idCaja;
+	public Caja getCaja() {
+		return caja;
 	}
 
-	public void setIdCaja(Integer idCaja) {
-		this.idCaja = idCaja;
+	public void setCaja(Caja caja) {
+		this.caja = caja;
 	}
 
 	
