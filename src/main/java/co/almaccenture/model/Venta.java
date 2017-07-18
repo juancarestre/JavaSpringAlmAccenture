@@ -8,6 +8,7 @@ import javax.persistence.Table;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.Calendar;
 
 /**
  * Se implementa el modelo , set and get
@@ -31,7 +32,7 @@ public class Venta implements Serializable {
 	public Venta(Integer idVenta, Date fechaVenta, Integer idCaja, Float totalVenta, Boolean estadoVenta) {
 		super();
 		this.idVenta = idVenta;
-		this.fechaVenta = fechaVenta;
+		this.fechaVenta = new Date(Calendar.getInstance().getTimeInMillis());
 		this.idCaja = idCaja;
 		this.totalVenta = totalVenta;
 		this.estadoVenta = estadoVenta;
