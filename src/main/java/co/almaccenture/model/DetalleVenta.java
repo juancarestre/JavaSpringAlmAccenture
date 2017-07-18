@@ -21,15 +21,15 @@ public class DetalleVenta implements Serializable {
 	private static final long serialVersionUID = 531582601623741115L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private String idProducto;
-	private Integer idVenta;
+	private Producto producto= null;
+	private Venta venta;
 	private Integer cantidad;
 	private Float valorUnitario;
 
-	public DetalleVenta(String idProducto, Integer idVenta, Integer cantidad, Float valorUnitario) {
+	public DetalleVenta(Producto producto, Integer cantidad ) {
 		super();
-		this.idProducto = idProducto;
-		this.idVenta = idVenta;
+		this.producto = producto;
+		this.venta = venta;
 		this.cantidad = cantidad;
 		this.valorUnitario = valorUnitario;
 	}
@@ -38,20 +38,20 @@ public class DetalleVenta implements Serializable {
 
 	}
 
-	public String getIdProducto() {
-		return idProducto;
+	public Producto getProducto() {
+		return producto;
 	}
 
-	public void setIdProducto(String idProducto) {
-		this.idProducto = idProducto;
+	public void setProducto(Producto producto) {
+		this.producto = producto;
 	}
 
-	public Integer getIdVenta() {
-		return idVenta;
+	public Venta getVenta() {
+		return venta;
 	}
 
-	public void setIdVenta(Integer idVenta) {
-		this.idVenta = idVenta;
+	public void setVenta(Venta venta) {
+		this.venta = venta;
 	}
 
 	public Integer getCantidad() {

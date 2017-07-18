@@ -30,8 +30,8 @@ public class Producto {
 	private Categoria categoria = null;
 	private Date fechaModificacion = null;
 
-	public Producto(String idProducto, String nombreProducto, int cantidadProducto,
-			float precioProducto, String descripcionProducto, Categoria categoria) {
+	public Producto(String idProducto, String nombreProducto, int cantidadProducto, float precioProducto,
+			String descripcionProducto, Categoria categoria) {
 
 		this.idProducto = idProducto;
 		this.nombreProducto = nombreProducto;
@@ -40,7 +40,7 @@ public class Producto {
 		this.descripcionProducto = descripcionProducto;
 		this.categoria = categoria;
 		this.fechaModificacion = new Date(Calendar.getInstance().getTimeInMillis());
-		
+
 	}
 
 	public Producto() {

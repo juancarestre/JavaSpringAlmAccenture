@@ -17,7 +17,7 @@ public interface LogicaNegocioVenta {
 	 * 
 	 * @param codigoProducto Codigo del producto que se desea agregar como detalle. 
 	 * @param cantidad cantidad del producto que se desea agregar como detalle.
-	 * @return Detalle completo con nombre y precio unitario.
+	 * @return Detalle completo con nombre y precio unitario. 
 	 */
 	public DetalleVenta agregarDetalleVenta(String codigoProducto, int cantidad);
 

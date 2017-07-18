@@ -7,6 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Se implementa el modelo , set and get
@@ -23,6 +24,7 @@ public class Categoria implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer idCategoria;
 	private String nombreCategoria;
+	private List<Producto> productos;
 
 	public Categoria(Integer idCategoria, String nombreCategoria) {
 		super();
