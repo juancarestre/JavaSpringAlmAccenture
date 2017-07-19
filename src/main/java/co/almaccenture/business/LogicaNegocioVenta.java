@@ -12,6 +12,12 @@ import co.almaccenture.model.Venta;
  *
  */
 public interface LogicaNegocioVenta {
+	/**
+	 * Genera una nueva venta inicializando incializando fecha y caja
+	 * @return
+	 * @throws LogicaNegocioExcepcion
+	 */
+	public Venta nuevaVenta() throws LogicaNegocioExcepcion; 
 
 	/**
 	 * recibe un produto y verifica que exista para luego completar el detalle y retornarlo completo.
@@ -28,9 +34,10 @@ public interface LogicaNegocioVenta {
 	 * 
 	 * @param venta
 	 *            Objeto de tipo venta que será guardado en la base de datos.
+	 * @return 
 	 * @throws LogicaNegocioExcepcion 
 	 */
-	public void guardarVenta(Venta venta) throws LogicaNegocioExcepcion;
+	public Venta guardarVenta(Venta venta) throws LogicaNegocioExcepcion;
 
 	/**
 	 * Elimina una venta de forma lógica de la base de datos.
@@ -40,12 +47,7 @@ public interface LogicaNegocioVenta {
 	 * @throws LogicaNegocioExcepcion 
 	 */
 	public void eliminarVenta(int idVenta) throws LogicaNegocioExcepcion;
-
-	/**
-	 * 
-	 * @return Retorna una caja aleatoriamente desde la base de datos.
-	 */
-	public Caja generarCaja();
+	
 	
 	//TODO: Crear método para buscar por el nombre con comodin contains
 }
