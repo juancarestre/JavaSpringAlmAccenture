@@ -1,6 +1,7 @@
 package co.almaccenture.model;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -33,7 +34,7 @@ public class Venta implements Serializable {
 	@JoinColumn(name = "idCaja")
 	private Caja caja;
 	private Float totalVenta;
-	private Boolean estadoVenta;
+	private Boolean estadoVenta = true; //Valor default para estado venta
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "venta")
 	private List<DetalleVenta> detalleVentas;
 
