@@ -22,8 +22,15 @@ public class RepositorioProductoTest {
 	RepositorioProducto productoRepo;
 
 	@Test
-	public void testFindByIdProductoAndEstadoProducto() {
-		fail("Not yet implemented");
+	public void testFindByIdProductoAndEstadoProducto() {	
+		String idProd = "lmr180";
+		
+		try {
+			assertNotNull("No se encontro producto", productoRepo.findByIdProductoAndEstadoProducto(idProd, true));
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail(e.getMessage());
+		}
 	}
 
 	@Test
@@ -49,14 +56,14 @@ public class RepositorioProductoTest {
 		Producto producto = new Producto();
 		producto.setCantidadProducto(20);
 		Categoria cat = new Categoria();
-		cat.setNombreCategoria("Aseo");
 		cat.setIdCategoria(1);
+		cat.setNombreCategoria("Aseo");
 		producto.setCategoria(cat);
 		producto.setIdProducto("mmr771");
 		producto.setDescripcionProducto("JAbon de baño");
 		producto.setEstadoProducto(true);
 		producto.setFechaModificacion(new Date(Calendar.getInstance().getTimeInMillis()));
-		producto.setPrecioProducto((float) 42000);
+		producto.setPrecioProducto((float) 1800);
 		producto.setNombreProducto("Jabon");
 		
 		try {

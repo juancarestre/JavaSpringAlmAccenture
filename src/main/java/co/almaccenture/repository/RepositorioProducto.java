@@ -10,6 +10,4 @@ public interface RepositorioProducto extends CrudRepository<Producto, String> {
 
 	public Producto findByIdProductoAndEstadoProducto(String idProducto, boolean estadoProducto);
 	
-	public Producto findOne(String idProducto);
-	
 }

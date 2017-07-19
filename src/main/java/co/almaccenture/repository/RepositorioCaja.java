@@ -9,11 +9,6 @@ import co.almaccenture.model.Caja;
 
 @Repository
 public interface RepositorioCaja extends CrudRepository<Caja, Integer> {
-
-	public Caja findOne(Integer idCaja);
-	
-	public List<Caja> findAll();
-	
 	/**
 	 * Busca una caja por su nombre
 	 * @param nombreCaja

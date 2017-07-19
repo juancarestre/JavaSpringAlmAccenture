@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import co.almaccenture.exception.LogicaNegocioExcepcion;
+
 /**
  * Esta clase es la encargada de agregar información a la vista así
  * como recibir valores ingresads por el usuario para hacer su previa validación
@@ -20,8 +22,9 @@ public interface ControladorVenta {
 	 * El usuario inicia una nueva venta desde cero (Aun no se asigna idVenta)
 	 * Este metodo se ejecuta con la ruta almaccenture/ventas
 	 * @return Vista y Modelo con información inicial de nueva Venta como fecha
+	 * @throws LogicaNegocioExcepcion 
 	 */
-	public ModelAndView iniciaVenta();
+	public ModelAndView iniciaVenta() throws LogicaNegocioExcepcion;
 	
 	/**
 	 * Al iniciar venta el modulo recibe una caja definida por la caja de negocio
@@ -39,8 +42,9 @@ public interface ControladorVenta {
 	 * @param idProducto
 	 * @param cantidad
 	 * @return Vista y modelo con la tabla actualizada (almaccenture/ventas)
+	 * @throws LogicaNegocioExcepcion 
 	 */
-	public ModelAndView ingresarProducto(String idProducto, int cantidad);
+	public ModelAndView ingresarProducto(String idProducto, int cantidad) throws LogicaNegocioExcepcion;
 	
 	/**
 	 * Elimina un producto de la tabla de productos de venta, obtiene id de producto por medio
@@ -59,8 +63,9 @@ public interface ControladorVenta {
 	 * url: almaccenture/ventas/confirmar
 	 * TODO: Como tirar un modal o popup antes de ir a nueva Venta.
 	 * @return Un Modal o un popup
+	 * @throws LogicaNegocioExcepcion 
 	 */
-	public ModelAndView confirmarVenta();
+	public ModelAndView confirmarVenta() throws LogicaNegocioExcepcion;
 	
 	
 }

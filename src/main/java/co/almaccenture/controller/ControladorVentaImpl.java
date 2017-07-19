@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import co.almaccenture.business.LogicaNegocioVenta;
+import co.almaccenture.exception.LogicaNegocioExcepcion;
 import co.almaccenture.model.DetalleVenta;
 import co.almaccenture.model.Venta;
 
@@ -29,10 +30,9 @@ public class ControladorVentaImpl implements ControladorVenta {
 
 	@RequestMapping(value = "/ventas", method=RequestMethod.GET)
 	@Override
-	public ModelAndView iniciaVenta() {
-		venta = new Venta();
+	public ModelAndView iniciaVenta() throws LogicaNegocioExcepcion {
+		venta = ventaBl.nuevaVenta();
 		productos = new ArrayList<>();
-		venta.setCaja(ventaBl.generarCaja());
 		
 		ModelAndView mav = new ModelAndView("/venta");
 		mav.addObject(venta);
@@ -44,7 +44,7 @@ public class ControladorVentaImpl implements ControladorVenta {
 	@RequestMapping(value = "/ventas", method=RequestMethod.GET, params={"id","cant"})
 	@Override
 	public ModelAndView ingresarProducto(@QueryParam("id") String idProducto,
-			@QueryParam("cant") int cantidad) {
+			@QueryParam("cant") int cantidad) throws LogicaNegocioExcepcion {
 		
 		DetalleVenta producto = ventaBl.agregarDetalleVenta(idProducto, cantidad);
 		
@@ -67,7 +67,7 @@ public class ControladorVentaImpl implements ControladorVenta {
 	
 	@RequestMapping(value = "/ventas", method=RequestMethod.POST, params="save")
 	@Override
-	public ModelAndView confirmarVenta() {
+	public ModelAndView confirmarVenta() throws LogicaNegocioExcepcion {
 		//TODO: Popup de confirmación
 		
 		venta.setDetalles(productos);
