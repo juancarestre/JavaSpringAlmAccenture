@@ -1,6 +1,9 @@
 package co.almaccenture.business;
 
+import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +30,10 @@ public class LogicaNegocioVentaImpl implements LogicaNegocioVenta {
 	public static final String MENSAJE_VENTA_INEXISTENTE = "No existe ninguna venta asociada a este codigo.";
 	public static final String MENSAJE_VENTA_SIN_DETALLES = "La venta no tiene Productos agregados, Se debe agregar por lo menos un producto a la venta.";
 	public static final String MENSAJE_VENTA_NULA = "Error: La venta no puede ser nula.";
+	public static final String MENSAJE_VENTA_CAMPOS_SIN_COMPLETAR = "Error: Hay campos de venta sin completar.";
+	public static final String MENSAJE_VENTA_TOTALVENTA_NO_COINCIDE = "El total de venta no es válido.";
+	public static final String MENSAJE_VENTA_TOTALVENTA_NO_EXISTE = "No se generó el total de la venta";
+	
 
 	@Autowired
 	private RepositorioProducto repositorioProducto;
@@ -35,8 +42,12 @@ public class LogicaNegocioVentaImpl implements LogicaNegocioVenta {
 	@Autowired
 	private RepositorioCaja repositorioCaja;
 
+	
 	/**
-	 * 
+	 * Verifica los datos ingresados. Se obtiene el producto con el idProducto,
+	 * se verifica si existe en la base de datos, se obtiene el precio del producto en el 
+	 * momento de la venta. Finalmente se completa el objeto detalleventa con la cantidad,
+	 * el precio, y el producto para ser retornado. 
 	 */
 	@Override
 	public DetalleVenta agregarDetalleVenta(String idProducto, int cantidad) throws LogicaNegocioExcepcion {
@@ -60,41 +71,77 @@ public class LogicaNegocioVentaImpl implements LogicaNegocioVenta {
 		
 		return detalleVenta;
 	}
-
+	
+	/**
+	 * Verifica y almacena la venta: Se verifica que existan detalles de venta en la venta,
+	 * así como el total de venta esté generado, luego se verfica que el total de la venta sea correcto,
+	 * se inngresa el estado de la venta a activo. Finalmente se guarda la venta en la base de datos y 
+	 * se retorna la venta ya almacenada.
+	 * 
+	 */
 	@Override
-	public void guardarVenta(Venta venta) throws LogicaNegocioExcepcion {
+	public Venta guardarVenta(Venta venta) throws LogicaNegocioExcepcion {
 
+		List<DetalleVenta> detalleVenta;
+		float total=0;
+		
 		if (venta.getDetalles().isEmpty()) {
 			throw new LogicaNegocioExcepcion(MENSAJE_VENTA_SIN_DETALLES);
 		}
+		if (venta.getTotalVenta()==null ) {
+			throw new LogicaNegocioExcepcion(MENSAJE_VENTA_TOTALVENTA_NO_EXISTE);
+			}
+		detalleVenta = venta.getDetalles();
+		for(int i=0; i<detalleVenta.size(); i++){
+			total += detalleVenta.get(i).getCantidad()*detalleVenta.get(i).getValorUnitario();				
+		}
+		if(total != venta.getTotalVenta()){
+			throw new LogicaNegocioExcepcion(MENSAJE_VENTA_CAMPOS_SIN_COMPLETAR);
+		}
 		
-		repositorioVenta.save(venta);
+		venta.setEstadoVenta(ACTIVO);
+		return repositorioVenta.save(venta);
 
 	}
-
+	
+	/**
+	 * Elimina una venta: Se busca por id, se verifica que existe y el estado y se realiza el 
+	 * borrado lógico cambiando el estado a inactivo.
+	 */
 	@Override
 	public void eliminarVenta(int idVenta) throws LogicaNegocioExcepcion {
 		
 		Venta venta = repositorioVenta.findByIdVentaAndEstadoVenta(idVenta, ACTIVO);
 		
-		if (venta == null) {
+		if (venta == null || venta.getEstadoVenta() == INACTIVO) {
 			throw new LogicaNegocioExcepcion(MENSAJE_VENTA_INEXISTENTE);
 		}
 		venta.setEstadoVenta(INACTIVO);
 		repositorioVenta.save(venta);
 
 	}
-
+	/**
+	 * Genera una nueva venta, ingresando la caja y la fecha, retrona la venta. 
+	 */
+	@Override
+	public Venta nuevaVenta() throws LogicaNegocioExcepcion {
+		
+		Venta venta = new Venta();
+		venta.setCaja(generarCaja());
+		Date date = new Date(Calendar.getInstance().getTimeInMillis());
+		venta.setFechaVenta(date);
+		return venta;
+	}
+	
 	/**
 	 * Consulta todas las cajas existentes la base de datos y retorna una caja
 	 * basado en un index generado aleatoriamente entre 0 y la cantidad de
 	 * cajas.
 	 */
-	@Override
-	public Caja generarCaja() {
+	private Caja generarCaja() {
 		ArrayList<Caja> cajas = (ArrayList<Caja>) repositorioCaja.findAll();
 		Random random = new Random();
-		int index = random.nextInt(cajas.size());
+		int index = random.nextInt(cajas.size()-1);
 		return cajas.get(index);
 	}
 
