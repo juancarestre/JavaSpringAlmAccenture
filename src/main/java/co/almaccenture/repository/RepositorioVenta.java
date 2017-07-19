@@ -8,7 +8,7 @@ import co.almaccenture.model.Venta;
 @Repository
 public interface RepositorioVenta extends CrudRepository<Venta, Integer> {
 
-	public Venta findByIdVentaAndEstadoVenta(Integer idVenta, int estadoVenta);
+	public Venta findByIdVentaAndEstadoVenta(Integer idVenta, boolean estadoVenta);
 	
 	public Venta findOne(Integer idVenta);
 		
