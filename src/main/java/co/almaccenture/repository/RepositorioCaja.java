@@ -1,5 +1,7 @@
 package co.almaccenture.repository;
 
+import java.util.List;
+
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -9,4 +11,13 @@ import co.almaccenture.model.Caja;
 public interface RepositorioCaja extends CrudRepository<Caja, Integer> {
 
 	public Caja findOne(Integer idCaja);
+	
+	public List<Caja> findAll();
+	
+	/**
+	 * Busca una caja por su nombre
+	 * @param nombreCaja
+	 * @return
+	 */
+	public Caja findCajaByNombreCaja(String nombreCaja);
 }

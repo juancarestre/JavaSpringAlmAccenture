@@ -44,5 +44,16 @@ public class RepositorioCajaTest {
 		}
 	}
 	
+	@Test
+	public void testFindCajaByName(){
+		try {
+			String nombreCaja = "Caja 1";
+			assertNotNull("No se encontro caja " + nombreCaja, cajaRepo.findCajaByNombreCaja(nombreCaja));
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail(e.getMessage());
+		}
+	}
+	
 
 }
