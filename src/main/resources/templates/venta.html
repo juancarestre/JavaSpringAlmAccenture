@@ -10,6 +10,7 @@
 
 <body>
 
+
 	<div class="navbar-wrapper">
 		<div class="container">
 
@@ -37,81 +38,93 @@
 
 		</div>
 	</div>
-	
-	<br>
-	<br>
-	<br>
-	<br>
+	<H2>
 
-	<div class="row">
-		<div class="col-md-1">
-			<img src="../static/img/A.png" width="130" height="150">
-		</div>
-		<div class="col-md-11">
-			<div class="page-header">
-				<h1>
-					Administrador web<small> Ventas</small>
-				</h1>
+		<br> 
+		<div class="row">
+			<div class="col-md-1">
+				<img src="../static/img/A.png" width="130" height="150">
+			</div>
+			<div class="col-md-11">
+				<div class="page-header">
+					<h1>
+						Administrador web<small> Ventas</small>
+					</h1>
+
+				</div>
 			</div>
 		</div>
-	</div>
 
-	<br>
-	<br>
+		
 
-	<div class="row text-center">
-		<div class="col-md-8">
-			<div>
-				<label th:text="${venta.fecha}">Fecha:</label> <br> <br> <label>Caja:</label><br>
-				<br> <label>Código venta: </label>
+		<div class="row text-center">
+			<div class="col-md-8">
+
+				<div>
+					<div class=col-md-4>
+						<label th:text="${venta.fecha}"> Fecha:</label>
+					</div>
+				</div>
+				<div class=col-md-4>
+					<label>Caja:</label>
+				</div>
+				<div class=col-md-4>
+					<label>Código venta: </label>
+				</div>
+
 			</div>
 		</div>
-	</div>
+		</div>
+		<hr class="featurette-divider">
 
-	<br>
-	<br>
-	<br>
+		<br> 
 
-	<div class="row text-center">
+		<div class="row text-center">
 
-		<label path="producto">Producto:</label> <input path="producto"
-			cssClass="form-control"> <label path="cantidad">Cantidad:</label>
-		<input path="cantidad" cssClass="form-control"> <input
-			type="submit" value="Buscar" class="btn btn-success" />
+			<label path="producto">Producto:</label> <input path="producto"
+				cssClass="form-control"> <label path="cantidad">Cantidad:</label>
+			<input path="cantidad" cssClass="form-control"> <input
+				type="submit" value="Buscar" class="btn btn-success" />
 
-	</div>
+		</div>
 
-	<br>
-	<br>
-	<br>
-	<div class="container-fluid">
-		<table class="table table-bordered table-striped table-hover">
-			<thead>
-				<tr>
-					<th>Código</th>
-					<th>Producto</th>
-					<th>Cantidad</th>
-					<th>Precio</th>
+		<br> 
+		<div class="row">
+			<div class=col-md-2></div>
+			<div class=col-md-8>
 
-					<th>Subtotal</th>
-					<th>Acción</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td>1</td>
-					<td>Jabon</td>
-					<td>5</td>
-					<td>1800</td>
+				<table class="table table-bordered table-striped table-hover">
 
-					<td>9000</td>
-					<td><a href="<c:url value="
-						EliminarCategoria.htm?id=${dato.intCodigoCategoria} " /><span
-						class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></td>
-				</tr>
-			</tbody>
-		</table>
+					<thead>
+						<tr>
+							<th>Código</th>
+							<th>Producto</th>
+							<th>Cantidad</th>
+							<th>Precio</th>
 
+							<th>Subtotal</th>
+							<th>Acción</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>1</td>
+							<td>Jabon</td>
+							<td>5</td>
+							<td>1800</td>
+
+							<td>9000</td>
+							<td><a href="<c:url value="
+								EliminarCategoria.htm?id=${dato.intCodigoCategoria} " /><span
+								class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></td>
+						</tr>
+					</tbody>
+
+				</table>
+
+			</div>
+			<div class=col-md-2></div>
+		</div>
 		<div class="row text-center">
 			<h2>
 				<span class="label label-primary">Total</span>
@@ -126,7 +139,8 @@
 
 
 
-	</div>
-	<!-- </div> -->
+		</div>
+
+	</H2>
 </body>
 </html>
