@@ -24,7 +24,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "venta")
-public class Venta implements Serializable {
+public class Venta{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -35,6 +35,7 @@ public class Venta implements Serializable {
 	private Caja caja;
 	private Float totalVenta;
 	private Boolean estadoVenta = true; //Valor default para estado venta
+	
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "venta")
 	private List<DetalleVenta> detalleVentas;
 
