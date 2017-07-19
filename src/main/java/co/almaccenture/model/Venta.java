@@ -34,8 +34,8 @@ public class Venta implements Serializable {
 	private Caja caja;
 	private Float totalVenta;
 	private Boolean estadoVenta;
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "venta", targetEntity=DetalleVenta.class)
-	private List<DetalleVenta> detalles;
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "venta")
+	private List<DetalleVenta> detalleVentas;
 
 	public Venta() {
 
@@ -90,11 +90,11 @@ public class Venta implements Serializable {
 	}
 
 	public List<DetalleVenta> getDetalles() {
-		return detalles;
+		return detalleVentas;
 	}
 
 	public void setDetalles(List<DetalleVenta> detalles) {
-		this.detalles = detalles;
+		this.detalleVentas = detalles;
 	}
 
 }

@@ -24,17 +24,18 @@ import java.util.Calendar;
 public class Producto {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	private String idProducto;
 	private String nombreProducto;
 	private Boolean estadoProducto = true;
 	private Integer cantidadProducto;
 	private Float precioProducto;
 	private String descripcionProducto;
-	@ManyToOne(fetch = FetchType.EAGER)
+	
+	@ManyToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
 	@JoinColumn(name = "idCategoria")
-	private Categoria categoria = null;
-	private Date fechaModificacion = null;
+	private Categoria categoria;
+	
+	private Date fechaModificacion;
 
 	public Producto() {
 
@@ -100,6 +101,7 @@ public class Producto {
 		this.descripcionProducto = descripcionProducto;
 	}
 
+	
 	public Categoria getCategoria() {
 		return categoria;
 	}

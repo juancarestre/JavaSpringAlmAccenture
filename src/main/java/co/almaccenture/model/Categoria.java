@@ -26,7 +26,7 @@ public class Categoria implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer idCategoria;
 	private String nombreCategoria;
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "categoria", orphanRemoval = true, targetEntity=Producto.class)
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "categoria", targetEntity=Producto.class)
 	private List<Producto> productos;
 
 	public Categoria() {

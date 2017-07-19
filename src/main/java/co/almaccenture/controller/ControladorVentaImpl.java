@@ -23,19 +23,9 @@ public class ControladorVentaImpl implements ControladorVenta {
 	
 	private Venta venta;
 	private List<DetalleVenta> productos;
-	@Autowired
 	private LogicaNegocioVenta ventaBl;
 	
 	
-	/**
-	 * @param venta
-	 * @param productos
-	 * @param ventaBl
-	 */
-	public ControladorVentaImpl(LogicaNegocioVenta ventaBl) {
-		super();
-		this.ventaBl = ventaBl;
-	}
 
 	@RequestMapping(value = "/ventas", method=RequestMethod.GET)
 	@Override

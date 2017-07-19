@@ -3,6 +3,9 @@ package co.almaccenture.model;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -20,7 +23,9 @@ import java.io.Serializable;
 public class DetalleVenta implements Serializable {
 
 	private static final long serialVersionUID = 531582601623741115L;
-	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Integer id;
 	@ManyToOne(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
 	@JoinColumn(name="idProducto")
 	private Producto producto;	
