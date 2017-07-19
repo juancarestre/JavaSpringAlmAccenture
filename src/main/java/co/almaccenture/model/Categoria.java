@@ -1,9 +1,12 @@
 package co.almaccenture.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import java.io.Serializable;
@@ -19,21 +22,21 @@ import java.util.List;
 @Table(name = "categoria")
 public class Categoria implements Serializable {
 
-	private static final long serialVersionUID = 171070648691519202L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer idCategoria;
 	private String nombreCategoria;
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "categoria", orphanRemoval = true, targetEntity=Producto.class)
 	private List<Producto> productos;
-
-	public Categoria(Integer idCategoria, String nombreCategoria) {
-		super();
-		this.idCategoria = idCategoria;
-		this.nombreCategoria = nombreCategoria;
-	}
 
 	public Categoria() {
 
+	}
+
+	public Categoria(Integer idCategoria, String nombreCategoria) {
+
+		this.idCategoria = idCategoria;
+		this.nombreCategoria = nombreCategoria;
 	}
 
 	public Integer getIdCategoria() {
@@ -52,4 +55,12 @@ public class Categoria implements Serializable {
 		this.nombreCategoria = nombreCategoria;
 	}
 
+	public List<Producto> getProductos() {
+		return productos;
+	}
+
+	public void setProductos(List<Producto> productos) {
+		this.productos = productos;
+	}
+	
 }

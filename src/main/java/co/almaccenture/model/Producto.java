@@ -1,9 +1,13 @@
 package co.almaccenture.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.sql.Date;
 import java.util.Calendar;
@@ -23,28 +27,29 @@ public class Producto {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private String idProducto;
 	private String nombreProducto;
-	private boolean estadoProducto = true;
+	private Boolean estadoProducto = true;
 	private Integer cantidadProducto;
-	private float precioProducto;
+	private Float precioProducto;
 	private String descripcionProducto;
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "idCategoria")
 	private Categoria categoria = null;
 	private Date fechaModificacion = null;
 
-	public Producto(String idProducto, String nombreProducto, int cantidadProducto,
-			float precioProducto, String descripcionProducto, Categoria categoria) {
+	public Producto() {
+
+	}
+
+	public Producto(String idProducto, String nombreProducto, Boolean estadoProducto, Integer cantidadProducto,
+			Float precioProducto, String descripcionProducto, Date fechaModificacion) {
 
 		this.idProducto = idProducto;
 		this.nombreProducto = nombreProducto;
+		this.estadoProducto = estadoProducto;
 		this.cantidadProducto = cantidadProducto;
 		this.precioProducto = precioProducto;
 		this.descripcionProducto = descripcionProducto;
-		this.categoria = categoria;
-		this.fechaModificacion = new Date(Calendar.getInstance().getTimeInMillis());
-		
-	}
-
-	public Producto() {
-
+		this.fechaModificacion = fechaModificacion;
 	}
 
 	public String getIdProducto() {

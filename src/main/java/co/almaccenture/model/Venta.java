@@ -2,9 +2,11 @@ package co.almaccenture.model;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -23,34 +25,33 @@ import java.util.List;
 @Table(name = "venta")
 public class Venta implements Serializable {
 
-	private static final long serialVersionUID = -6485132674087301295L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer idVenta;
 	private Date fechaVenta;
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "idCaja")
 	private Caja caja;
 	private Float totalVenta;
 	private Boolean estadoVenta;
-	private List<DetalleVenta> detalles; 
-	
-	public Venta(Integer idVenta, Date fechaVenta, Caja caja, Float totalVenta, Boolean estadoVenta, List<DetalleVenta> detalles) {
-		super();
-		this.idVenta = idVenta;
-		this.fechaVenta = fechaVenta;
-		this.caja = caja;
-		this.totalVenta = totalVenta;
-		this.estadoVenta = estadoVenta;
-		this.detalles = detalles;
-	}
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "venta", targetEntity=DetalleVenta.class)
+	private List<DetalleVenta> detalles;
 
 	public Venta() {
 
 	}
 
+	public Venta(Integer idVenta, Date fechaVenta, Float totalVenta, Boolean estadoVenta) {
+		super();
+		this.idVenta = idVenta;
+		this.fechaVenta = fechaVenta;
+		this.totalVenta = totalVenta;
+		this.estadoVenta = estadoVenta;
+	}
+
 	public Integer getIdVenta() {
 		return idVenta;
 	}
-
 
 	public void setIdVenta(Integer idVenta) {
 		this.idVenta = idVenta;
@@ -72,11 +73,9 @@ public class Venta implements Serializable {
 		this.caja = caja;
 	}
 
-	
 	public Float getTotalVenta() {
 		return totalVenta;
 	}
-
 
 	public void setTotalVenta(Float totalVenta) {
 		this.totalVenta = totalVenta;
@@ -90,17 +89,10 @@ public class Venta implements Serializable {
 		this.estadoVenta = estadoVenta;
 	}
 
-	/**
-	 * @return the detalles
-	 */
-	@OneToMany(mappedBy = "detalles", cascade = CascadeType.ALL)
 	public List<DetalleVenta> getDetalles() {
 		return detalles;
 	}
 
-	/**
-	 * @param detalles the detalles to set
-	 */
 	public void setDetalles(List<DetalleVenta> detalles) {
 		this.detalles = detalles;
 	}

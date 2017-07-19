@@ -1,9 +1,10 @@
 package co.almaccenture.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import java.io.Serializable;
@@ -19,23 +20,24 @@ import java.io.Serializable;
 public class DetalleVenta implements Serializable {
 
 	private static final long serialVersionUID = 531582601623741115L;
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Producto producto;
+	
+	@ManyToOne(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
+	@JoinColumn(name="idProducto")
+	private Producto producto;	
+	@ManyToOne(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
+	@JoinColumn(name="idVenta")
 	private Venta venta;
 	private Integer cantidad;
 	private Float valorUnitario;
-
-	public DetalleVenta(Producto producto, Venta Venta, Integer cantidad) {
-		super();
-		this.producto = producto;
-		this.venta = venta;
-		this.cantidad = cantidad;
-		this.valorUnitario = valorUnitario;
-	}
-
+	
 	public DetalleVenta() {
 
+	}
+
+	public DetalleVenta(Integer cantidad, Float valorUnitario) {
+
+		this.cantidad = cantidad;
+		this.valorUnitario = valorUnitario;
 	}
 
 	public Producto getProducto() {
