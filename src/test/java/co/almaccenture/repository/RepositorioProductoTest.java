@@ -4,6 +4,8 @@ import static org.junit.Assert.*;
 
 import java.sql.Date;
 import java.util.Calendar;
+import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,6 +22,8 @@ public class RepositorioProductoTest {
 	
 	@Autowired
 	RepositorioProducto productoRepo;
+	@Autowired
+	RepositorioCategoria cateRepo;
 
 	@Test
 	public void testFindByIdProductoAndEstadoProducto() {	
@@ -55,16 +59,15 @@ public class RepositorioProductoTest {
 	public void testSaveProduct(){
 		Producto producto = new Producto();
 		producto.setCantidadProducto(20);
-		Categoria cat = new Categoria();
-		cat.setIdCategoria(1);
-		cat.setNombreCategoria("Aseo");
+		List<Categoria> categorias = (List<Categoria>) cateRepo.findAll();
+		Categoria cat = categorias.get(ThreadLocalRandom.current().nextInt(categorias.size()));
 		producto.setCategoria(cat);
-		producto.setIdProducto("mmr771");
-		producto.setDescripcionProducto("JAbon de baño");
+		producto.setIdProducto("mmr732");
+		producto.setDescripcionProducto("Producto Prueba");
 		producto.setEstadoProducto(true);
 		producto.setFechaModificacion(new Date(Calendar.getInstance().getTimeInMillis()));
 		producto.setPrecioProducto((float) 1800);
-		producto.setNombreProducto("Jabon");
+		producto.setNombreProducto("Producto");
 		
 		try {
 			Producto p = productoRepo.save(producto);
