@@ -26,6 +26,8 @@ public class RepositorioVentaTest {
 	RepositorioVenta ventaRepo;
 	@Autowired
 	RepositorioCaja cajaRepo;
+	@Autowired
+	RepositorioDetalleVenta detaRepo;
 
 	@Test
 	public void testFindByIdVentaAndEstadoVenta() {
@@ -44,7 +46,7 @@ public class RepositorioVentaTest {
 
 	@Test
 	public void testFindOneInteger() {
-		int id = 3;
+		int id = 56;
 
 		try {
 			Venta v = ventaRepo.findOne(id);
@@ -90,6 +92,16 @@ public class RepositorioVentaTest {
 		venta.setCaja(caja);
 		venta.setFechaVenta(new Date(Calendar.getInstance().getTimeInMillis()));
 		venta.setTotalVenta((float) 3782348);
+		
+		
+		List<DetalleVenta> detalles = ventaRepo.findOne(3).getDetalles();
+		for (DetalleVenta detalleVenta : detalles) {
+			detalleVenta.setVenta(venta);
+		}
+		detaRepo.save(detalles);
+		System.out.println(detalles.size()+" Detalles de venta obtenidos de id 3");
+		venta.setDetalles(detalles);
+		
 		
 		try {
 			Venta ventaS = ventaRepo.save(venta);
