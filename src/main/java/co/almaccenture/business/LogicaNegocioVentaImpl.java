@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import co.almaccenture.exception.LogicaNegocioExcepcion;
 import co.almaccenture.model.Caja;
@@ -16,7 +17,7 @@ import co.almaccenture.model.Venta;
 import co.almaccenture.repository.RepositorioCaja;
 import co.almaccenture.repository.RepositorioProducto;
 import co.almaccenture.repository.RepositorioVenta;
-
+@Service
 public class LogicaNegocioVentaImpl implements LogicaNegocioVenta {
 
 	public static final boolean ACTIVO = true;
