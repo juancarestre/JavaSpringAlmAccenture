@@ -8,6 +8,8 @@ import javax.ws.rs.QueryParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -25,33 +27,38 @@ public class ControladorVentaImpl{
 	
 	
 	private Venta venta;
-	private List<DetalleVenta> detalles;
+	private List<DetalleVenta> detalles = new ArrayList<>();
 	@Autowired
 	private LogicaNegocioVenta ventaBl;
-	@Autowired
-	private LogicaNegocioCaja caja;
 	
 
-	@RequestMapping(value = "/ventas", method=RequestMethod.GET)
+	@RequestMapping(value = "/ventas")
 	public ModelAndView iniciaVenta() throws LogicaNegocioExcepcion {
 		venta = ventaBl.nuevaVenta();
 		
-		detalles = new ArrayList<>();
 		
-		ModelAndView mav = new ModelAndView("/ventas");
-		mav.setViewName("venta");
-		mav.addObject("detalle",new DetalleVenta()); // agregar detalle venta
+		ModelAndView mav = new ModelAndView("/venta");
+		mav.addObject("detalle", new DetalleVenta()); // agregar detalle venta
 		mav.addObject("venta", venta); // carga nformacion inicial de venta
-		mav.addObject("productos", detalles); // muestra los productos
+		mav.addObject("detalles", detalles); // muestra los productos
 		
 		return mav;
 	}
 
-	@RequestMapping(value = "/ventas", method=RequestMethod.POST, params={"search"})
-	public ModelAndView ingresarProducto(DetalleVenta detalle) throws LogicaNegocioExcepcion {
-		System.out.println("DetalleVenta obtenido con idprod "
-				+ detalle.getProducto().getIdProducto() + " y cantidad "+ detalle.getCantidad());
-		DetalleVenta producto = ventaBl.agregarDetalleVenta(detalle.getProducto().getIdProducto(),detalle.getCantidad());
+	
+	@RequestMapping(value="/ventas", params={"producto.idProducto","cantidad"})
+	public ModelAndView ingresarProducto(HttpServletRequest req){
+		String idp = req.getParameter("producto.idProducto");
+		int cant= Integer.parseInt(req.getParameter("cantidad"));
+		
+		DetalleVenta producto = null;
+		
+		try{
+			producto = ventaBl.agregarDetalleVenta(idp,cant);
+		}catch (LogicaNegocioExcepcion e) {
+			e.printStackTrace();
+			//TODO: Definir excepción
+		}
 		
 		// Agrega producto a a lista de productos de venta
 		detalles.add(producto);
@@ -59,23 +66,25 @@ public class ControladorVentaImpl{
 			System.out.println("Detalle guardado en lista "+ detalleVenta.getProducto().getNombreProducto());
 		}
 		venta.setTotalVenta(sumarTotal());
+		
+		return new ModelAndView("redirect:/ventas");
+	}
+
+	@GetMapping("ventas/{idProducto}")
+	public ModelAndView eliminarProducto(@PathVariable("idProducto") String idProducto) {
 		ModelAndView mav = new ModelAndView("/venta");
+		
+		for(int i=0; i<detalles.size(); i++){
+			DetalleVenta dp = detalles.get(i);
+			if(dp.getProducto().getIdProducto().equals(idProducto))
+				detalles.remove(dp);
+		}
+		
 		mav.addObject("venta", venta);
 		mav.addObject("detalles", detalles);
 		mav.addObject("detalle", new DetalleVenta());
 		
-		return mav;
-	}
-
-	@RequestMapping(value = "/ventas", method=RequestMethod.GET, params={"id"})
-	
-	public ModelAndView eliminarProducto(HttpServletRequest req, RedirectAttributes redirect) {
-		String idProducto = req.getParameter("id");
-		for (DetalleVenta detalleVenta : detalles) {
-			if(detalleVenta.getProducto().getIdProducto().equals(idProducto))
-				detalles.remove(detalleVenta);
-		}
-		return new ModelAndView("redirect:/");
+		return new ModelAndView("redirect:/ventas");
 	}
 	
 	@RequestMapping(value = "/ventas", method=RequestMethod.POST, params="save")
@@ -99,6 +108,13 @@ public class ControladorVentaImpl{
 		
 		return suma;
 		
+	}
+	
+	@GetMapping("departamentos/a/{nombre}")
+	public ModelAndView getDepartamentosByName(@PathVariable("nombre") String departamentoname) {
+		
+
+		return null;
 	}
 	
 	
