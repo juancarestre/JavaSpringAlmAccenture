@@ -33,16 +33,6 @@ public class DetalleVenta{
 	private Venta venta;
 	private Integer cantidad;
 	private Float valorUnitario;
-	private Float subTotal;
-	
-	
-	public Float getSubTotal() {
-		return subTotal;
-	}
-
-	public void setSubTotal(Float subTotal) {
-		this.subTotal = subTotal;
-	}
 
 	public DetalleVenta() {
 
@@ -51,7 +41,6 @@ public class DetalleVenta{
 	public DetalleVenta(Integer cantidad, Float valorUnitario) {
 		this.cantidad = cantidad;
 		this.valorUnitario = valorUnitario;
-		subTotal=this.cantidad*this.valorUnitario;
 	}
 
 	

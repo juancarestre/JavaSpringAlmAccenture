@@ -45,7 +45,7 @@
 		<br>
 		<div class="row">
 			<div class="col-md-1">
-				<img src="../static/img/A.png" width="130" height="150">
+				<img src="C:/Users/Administrator/git/JavaSpringAlmAccenture/src/main/resources/static/img/A.png" width="130" height="150">
 			</div>
 			<div class="col-md-11">
 				<div class="page-header">
@@ -60,20 +60,22 @@
 		<div class="row text-center">
 			<div class="col-md-2"></div>
 			<div class="col-md-8">
-				<form id="cargar" th:action="@{/ventas}" th:object="${venta}"
-					action="#" th:method="post">
+				<!-- <form id="cargar" th:action="@{/ventas}" th:object="${venta}"
+					action="#" th:method="post"> -->
 					<div>
 						
 							<label for="fecha">Fecha:</label>
-							<label class="label label-default" type="text" th:value="${venta.fecha}" readonly="readonly" th:field="*{fecha}">21/07/2017</label>
+							<label class="label label-default" th:text="${venta.fechaVenta}"></label>
+							<!-- <label class="label label-default" type="text" th:value="${venta.fechaVenta}" readonly="readonly" th:field="*{fechaVenta}">22/07/2017</label> -->
 						    <!-- <input type="text" th:value="${venta.fecha}" readonly="readonly" th:field="*{fecha}"> -->
 						    
 						    <label for="caja">Caja:</label>
-						    <label class="label label-default"  type="text" th:value="${venta.caja}" readonly="readonly" th:field="*{fecha}">Caja 1</label>
+						    <label class="label label-default" th:text="${venta.caja.nombreCaja}"></label>
+						   <!--  <label class="label label-default"  type="text" th:value="${venta.caja}" readonly="readonly" th:field="*{caja}">Caja 1</label> -->
 						    <!--<input type="text" th:value="${venta.caja}" readonly="readonly" th:field="*{caja}">-->
 						
 					</div>
-				</form>
+				<!-- </form> -->
 			</div>
 			<div class="col-md-2"></div>
 		</div>
@@ -84,13 +86,13 @@
 
 		<div class="row text-center">
 
-			<form id="messageForm" th:action="@{/productos"
+			<form id="messageForm" th:action="@{/productos}"
 				th:object="${producto}" action="#" method="post">
 
 
 
 				<label for="codigo">Código del producto:</label> <input type="text"
-					th:field="*{codigo}"> <label for="cantidad">Cantidad:</label>
+					th:field="*{producto.idProducto}"> <label for="cantidad">Cantidad:</label>
 				<input type="Number" th:filed="*{cantidad}">
 
 
@@ -105,7 +107,7 @@
 
 		</div>
 
-		<br> <input type="hidden" th:field="*{activo}" />
+		<!-- <br> <input type="hidden" th:field="*{activo}" /> -->
 		<div th:if="${message == ''}"
 			class="alert alert-success alert-dismissible" role="alert">
 			<button type="button" class="close" data-dismis="alert"
@@ -139,17 +141,17 @@
 					</thead>
 					<tbody>
 						<tr th:each="producto : ${productos}">
-							<!--<td th:text="${producto.codigo}"></td>  -->
+							<!--<td th:text="${producto.idProducto}"></td>  -->
 							<td>1</td>
-							<!--<td th:text="${producto.nombre}"></td>-->
+							<!--<td th:text="${producto.nombreProducto}"></td>-->
 							<td>Jabon</td>
-							<!--<td th:text="${producto.cantidad}"></td>-->
+							<!--<td th:text="${producto.cantidadProducto}"></td>-->
 							<td>5</td>
-							<!--<td th:text="${producto.precio}"></td>-->
+							<!--<td th:text="${producto.precioProducto}"></td>-->
 							<td>1800</td>
-							<!--<td th:text="${producto.subtotal}"></td>-->
+							<!--<td th:text="${producto.precioProducto}"></td>-->
 							<td>9000</td>
-							<td><a href="@{'delete/'+${producto.codigo}}"><span
+							<td><a href="@{'delete/'+${producto.idProducto}}"><span
 									class="glyphicon glyphicon-trash"></span></a></td>
 
 						</tr>
