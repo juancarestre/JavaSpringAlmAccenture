@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import co.almaccenture.business.impl.LogicaNegocioVentaImpl;
 import co.almaccenture.exception.LogicaNegocioExcepcion;
 import co.almaccenture.model.DetalleVenta;
 import co.almaccenture.model.Venta;
@@ -38,23 +39,32 @@ public class LogicaNegocioVentaImplTest {
 		try {
 			detalle.add(logicaNegocio.agregarDetalleVenta(idProducto, cantidad));
 			System.out.println("Detalle venta encontrado " + detalle.get(0).getProducto().getCategoria().getNombreCategoria());
+			
 			venta = logicaNegocio.nuevaVenta();
+			
 			venta.setDetalles(detalle);
 			for(int i=0; i<detalle.size(); i++){
-				total += detalle.get(i).getCantidad()*detalle.get(i).getValorUnitario();				
+				total += detalle.get(i).getCantidad()*detalle.get(i).getValorUnitario();	
+				detalle.get(i).setVenta(venta);
 			}
 			venta.setTotalVenta(total);
-//			venta.setIdVenta();
 			v = logicaNegocio.guardarVenta(venta);
 			assertNotNull("No se guardo la venta",v);
+			System.out.println("Venta guardada con id "+v.getIdVenta());
 			
 		} catch (LogicaNegocioExcepcion e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			fail(e.getMessage());
-		}
-		//fail("Not yet implemented");
+		}		
+	}
+	
+	@Test
+	public void testNuevaVenta(){
 		
 	}
+	
+	
+	
 
 }
