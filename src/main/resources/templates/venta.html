@@ -105,16 +105,11 @@
 		</div>
 
 		<!-- <br> <input type="hidden" th:field="*{activo}" /> -->
-		<div th:if="${message == ''}"
-			class="alert alert-success alert-dismissible" role="alert">
-			<button type="button" class="close" data-dismis="alert"
-				aria-label="Close">
-				<span aria-hidden="true">&times;</span>
-			</button>
-			<div class="row text-center">
-				<strong>Cuidado:</strong>
-				<div th:text="${message}"></div>
-			</div>
+		<div th:if="${message != ''}" class="alert alert-warning alert-dismissible" role="alert">
+					<button type="button" class="close" data-dismis="alert" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<strong>Warning!</strong><div th:text="${message}"></div>
 		</div>
 
 		<hr class="featurette-divider">
