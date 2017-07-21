@@ -39,9 +39,6 @@ public class LogicaNegocioVentaImpl implements LogicaNegocioVenta {
 	public static final String MENSAJE_VENTA_TOTALVENTA_NO_EXISTE = "No se generó el total de la venta";
 	private static final String MENSAJE_VENTA_ELIMINADA = "La venta se encuentra eliminada.";
 	
-
-	@Autowired
-	private RepositorioProducto repositorioProducto;
 	@Autowired
 	private RepositorioVenta repositorioVenta;
 	@Autowired
@@ -68,7 +65,7 @@ public class LogicaNegocioVentaImpl implements LogicaNegocioVenta {
 			throw new LogicaNegocioExcepcion(MENSAJE_CANTIDAD_DETALLE_INVALIDA);
 		}
 		
-		Producto producto = repositorioProducto.findByIdProductoAndEstadoProducto(idProducto, ACTIVO);
+		Producto producto = productoBl.obtenerProducto(idProducto);
 		
 		
 		if (producto == null) {

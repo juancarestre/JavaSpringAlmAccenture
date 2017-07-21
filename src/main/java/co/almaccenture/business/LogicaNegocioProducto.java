@@ -20,5 +20,10 @@ public interface LogicaNegocioProducto {
 	 * @throws LogicaNegocioExcepcion
 	 */
 	public boolean verificarCantidadProducto(Producto producto) throws LogicaNegocioExcepcion;
+	
+	/**
+	 * Obtiene un producto Activo a partir del codigo
+	 */
+	public Producto obtenerProducto(String id) throws LogicaNegocioExcepcion;
 
 }

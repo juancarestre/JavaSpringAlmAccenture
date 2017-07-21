@@ -39,6 +39,12 @@ public class LogicaNegocioProductoImp implements LogicaNegocioProducto  {
 		return stock <= UMBRAL;
 		
 	}
+	@Override
+	public Producto obtenerProducto(String id) throws LogicaNegocioExcepcion {
+		if(id==null || "".equals(id.trim())) throw new LogicaNegocioExcepcion(MENSAJE_PRODUCTO_NO_ENCONTRADO);
+
+		return repositorioProducto.findByIdProductoAndEstadoProducto(id, false);
+	}
 	
 	
 		
