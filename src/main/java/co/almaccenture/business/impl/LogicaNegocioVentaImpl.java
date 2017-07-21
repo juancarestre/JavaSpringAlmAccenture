@@ -29,7 +29,8 @@ public class LogicaNegocioVentaImpl implements LogicaNegocioVenta {
 	public static final String MENSAJE_CANTIDAD_DETALLE_INVALIDA = "La cantidad especificada en el detalle no es válida.";
 	public static final String MENSAJE_PRODUCTO_NO_ENCONTRADO = "El Producto con el codigo especificado no existe.";
 	public static final String MENSAJE_PRODUCTO_AGOTADO = "El Producto especificado Está agotado.";
-	public static final String MENSAJE_ALERTA_PRODUCTO_ESCASO = "Alerta: Este producto tiene pocas existencias en inventario.";
+	public static final String MENSAJE_SIN_CANTIDAD_DISPONIBLE = "No hay cantidad disponible del producto para la venta.";
+	public static final String MENSAJE_CANTIDAD_MAYOR_QUE_INVENTARIO = "No hay unidades disponibles para la cantidad del producto: ";
 	public static final String MENSAJE_VENTA_INEXISTENTE = "No existe ninguna venta asociada a este codigo.";
 	public static final String MENSAJE_VENTA_SIN_DETALLES = "La venta no tiene Productos agregados, Se debe agregar por lo menos un producto a la venta.";
 	public static final String MENSAJE_VENTA_NULA = "Error: La venta no puede ser nula.";
@@ -45,6 +46,8 @@ public class LogicaNegocioVentaImpl implements LogicaNegocioVenta {
 	private RepositorioVenta repositorioVenta;
 	@Autowired
 	private LogicaNegocioCaja cajaBl;
+	@Autowired
+	private LogicaNegocioProductoImp productoBl;
 
 	
 	/**
@@ -64,11 +67,20 @@ public class LogicaNegocioVentaImpl implements LogicaNegocioVenta {
 		if (cantidad <= 0) {
 			throw new LogicaNegocioExcepcion(MENSAJE_CANTIDAD_DETALLE_INVALIDA);
 		}
+		
 		Producto producto = repositorioProducto.findByIdProductoAndEstadoProducto(idProducto, ACTIVO);
+		
+		
 		if (producto == null) {
 			throw new LogicaNegocioExcepcion(MENSAJE_PRODUCTO_NO_ENCONTRADO);
 		}
+		
+		Integer stock = producto.getCantidadProducto();
+		
+		if(stock <= 0){ throw new LogicaNegocioExcepcion(MENSAJE_SIN_CANTIDAD_DISPONIBLE);}
+		if(cantidad>=stock){throw new LogicaNegocioExcepcion(MENSAJE_CANTIDAD_MAYOR_QUE_INVENTARIO);}
 
+		
 		Float precioDeCompra = producto.getPrecioProducto();
 		detalleVenta = new DetalleVenta(cantidad, precioDeCompra);
 		detalleVenta.setProducto(producto);
@@ -98,8 +110,11 @@ public class LogicaNegocioVentaImpl implements LogicaNegocioVenta {
 		detalleVenta = venta.getDetalles();
 		
 		for(int i=0; i<detalleVenta.size(); i++){
-			total += detalleVenta.get(i).getCantidad()*detalleVenta.get(i).getValorUnitario();	
+			Integer cantidad = detalleVenta.get(i).getCantidad();
+			total += cantidad*detalleVenta.get(i).getValorUnitario();	
 			detalleVenta.get(i).setVenta(venta);
+			productoBl.restarProductos(detalleVenta.get(i).getProducto(), cantidad);
+			//detalleVenta.get(i).getProducto();
 		}
 		if(total != venta.getTotalVenta()){
 			throw new LogicaNegocioExcepcion(MENSAJE_VENTA_CAMPOS_SIN_COMPLETAR);

@@ -33,7 +33,7 @@ public class DetalleVenta{
 	private Venta venta;
 	private Integer cantidad;
 	private Float valorUnitario;
-	
+
 	public DetalleVenta() {
 
 	}
@@ -43,6 +43,8 @@ public class DetalleVenta{
 		this.valorUnitario = valorUnitario;
 	}
 
+	
+	
 	public Integer getIdDetalle() {
 		return idDetalle;
 	}

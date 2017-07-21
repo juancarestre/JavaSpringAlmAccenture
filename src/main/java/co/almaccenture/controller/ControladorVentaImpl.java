@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import co.almaccenture.business.LogicaNegocioCaja;
 import co.almaccenture.business.LogicaNegocioVenta;
 import co.almaccenture.exception.LogicaNegocioExcepcion;
 import co.almaccenture.model.DetalleVenta;
+import co.almaccenture.model.Producto;
 import co.almaccenture.model.Venta;
 
 @Controller
@@ -24,19 +26,25 @@ public class ControladorVentaImpl implements ControladorVenta {
 	
 	private Venta venta;
 	private List<DetalleVenta> productos;
+	@Autowired
 	private LogicaNegocioVenta ventaBl;
-	
+	@Autowired
+	private LogicaNegocioCaja caja;
 	
 
 	@RequestMapping(value = "/ventas", method=RequestMethod.GET)
 	@Override
 	public ModelAndView iniciaVenta() throws LogicaNegocioExcepcion {
 		venta = ventaBl.nuevaVenta();
-		productos = new ArrayList<>();
+		
+		//TODO: Que devuelve nuevaVenta();
 		
 		ModelAndView mav = new ModelAndView("/venta");
-		mav.addObject(venta);
-		mav.addObject(productos);
+		mav.setViewName("venta");
+		mav.addObject("producto",new DetalleVenta()); // agregar detalle venta
+		mav.addObject("venta", venta); // carga nformacion inicial de venta
+		mav.addObject("productos", new ArrayList<Producto>()); // muestra los productos
+//		mav.addObject(productos);
 		
 		return mav;
 	}
@@ -50,11 +58,13 @@ public class ControladorVentaImpl implements ControladorVenta {
 		
 		// Agrega producto a a lista de productos de venta
 		productos.add(producto);
+		venta.setTotalVenta(sumarTotal());
+		/***/	
 		
 		return new ModelAndView("redirect:/");
 	}
 
-	@RequestMapping(value = "/ventas/del", method=RequestMethod.GET, params={"id"})
+	@RequestMapping(value = "/ventas", method=RequestMethod.GET, params={"id"})
 	@Override
 	public ModelAndView eliminarProducto(HttpServletRequest req, RedirectAttributes redirect) {
 		String idProducto = req.getParameter("id");
@@ -74,5 +84,21 @@ public class ControladorVentaImpl implements ControladorVenta {
 		ventaBl.guardarVenta(venta);
 		return null;
 	}
+	
+	public float sumarTotal() {
+		float suma=0;
+		
+		
+		
+		for(int i=0; i<productos.size(); i++){
+			DetalleVenta dp = productos.get(i);
+			suma += (dp.getCantidad()*dp.getValorUnitario());			
+		}
+		
+		return suma;
+		
+	}
+	
+	
 
 }
