@@ -7,6 +7,7 @@
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
 <link rel="icon" href="../static/img/A.png">
 
+
 </head>
 
 <body>
@@ -39,9 +40,9 @@
 
 		</div>
 	</div>
-	<H2>
+	<h2>
 
-		<br> 
+		<br>
 		<div class="row">
 			<div class="col-md-1">
 				<img src="../static/img/A.png" width="130" height="150">
@@ -49,47 +50,77 @@
 			<div class="col-md-11">
 				<div class="page-header">
 					<h1>
-						Administrador web<small> Ventas</small>
+						Administrador<small>   Ventas</small>
 					</h1>
 
 				</div>
 			</div>
 		</div>
 
-		
-
 		<div class="row text-center">
+			<div class="col-md-2"></div>
 			<div class="col-md-8">
-
-				<div>
-					<div class=col-md-4>
-						<label th:text="${venta.fecha}"> Fecha:</label>
+				<form id="cargar" th:action="@{/ventas}" th:object="${venta}"
+					action="#" th:method="post">
+					<div>
+						
+							<label for="fecha">Fecha:</label>
+							<label class="label label-default" type="text" th:value="${venta.fecha}" readonly="readonly" th:field="*{fecha}">21/07/2017</label>
+						    <!-- <input type="text" th:value="${venta.fecha}" readonly="readonly" th:field="*{fecha}"> -->
+						    
+						    <label for="caja">Caja:</label>
+						    <label class="label label-default"  type="text" th:value="${venta.caja}" readonly="readonly" th:field="*{fecha}">Caja 1</label>
+						    <!--<input type="text" th:value="${venta.caja}" readonly="readonly" th:field="*{caja}">-->
+						
 					</div>
-				</div>
-				<div class=col-md-4>
-					<label>Caja:</label>
-				</div>
-				<div class=col-md-4>
-					<label>Código venta: </label>
-				</div>
-
+				</form>
 			</div>
+			<div class="col-md-2"></div>
 		</div>
 		</div>
 		<hr class="featurette-divider">
 
-		<br> 
+		<br>
 
 		<div class="row text-center">
 
-			<label path="producto">Producto:</label> <input path="producto"
-				cssClass="form-control"> <label path="cantidad">Cantidad:</label>
-			<input path="cantidad" cssClass="form-control"> <input
-				type="submit" value="Buscar" class="btn btn-success" />
+			<form id="messageForm" th:action="@{/productos"
+				th:object="${producto}" action="#" method="post">
+
+
+
+				<label for="codigo">Código del producto:</label> <input type="text"
+					th:field="*{codigo}"> <label for="cantidad">Cantidad:</label>
+				<input type="Number" th:filed="*{cantidad}">
+
+
+
+				<div class="form-actions">
+
+					<br> <input name="search" type="submit" value="Buscar"
+						class="btn btn-success btn-lg" />
+				</div>
+
+			</form>
 
 		</div>
 
-		<br> 
+		<br> <input type="hidden" th:field="*{activo}" />
+		<div th:if="${message == ''}"
+			class="alert alert-success alert-dismissible" role="alert">
+			<button type="button" class="close" data-dismis="alert"
+				aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+			<div class="row text-center">
+				<strong>Cuidado:</strong>
+				<div th:text="${message}"></div>
+			</div>
+		</div>
+
+		<hr class="featurette-divider">
+
+		<br>
 		<div class="row">
 			<div class=col-md-2></div>
 			<div class=col-md-8>
@@ -102,22 +133,33 @@
 							<th>Producto</th>
 							<th>Cantidad</th>
 							<th>Precio</th>
-
 							<th>Subtotal</th>
 							<th>Acción</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
+						<tr th:each="producto : ${productos}">
+							<!--<td th:text="${producto.codigo}"></td>  -->
 							<td>1</td>
+							<!--<td th:text="${producto.nombre}"></td>-->
 							<td>Jabon</td>
+							<!--<td th:text="${producto.cantidad}"></td>-->
 							<td>5</td>
+							<!--<td th:text="${producto.precio}"></td>-->
 							<td>1800</td>
-
+							<!--<td th:text="${producto.subtotal}"></td>-->
 							<td>9000</td>
-							<td><a href="<c:url value="
-								EliminarCategoria.htm?id=${dato.intCodigoCategoria} " /><span
-								class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></td>
+							<td><a href="@{'delete/'+${producto.codigo}}"><span
+									class="glyphicon glyphicon-trash"></span></a></td>
+
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td><span class="label label-danger">Total</span> <!-- th:text="${producto.total}" --></td>
+							<td></td>
 						</tr>
 					</tbody>
 
@@ -126,22 +168,16 @@
 			</div>
 			<div class=col-md-2></div>
 		</div>
+		<br>
+
 		<div class="row text-center">
-			<h2>
-				<span class="label label-primary">Total</span>
-			</h2>
+			<input name="accept" type="submit" value="Aceptar"
+				class="btn btn-success btn-lg" /> <input type="submit"
+				value="Cancelar" class="btn btn-primary btn-lg" />
 		</div>
+
 		<br> <br>
 
-		<div class="row text-center">
-			<input type="submit" value="Aceptar" class="btn btn-success" /> <input
-				type="submit" value="Cancelar" class="btn btn-primary" />
-		</div>
-
-
-
-		</div>
-
-	</H2>
+	</h2>
 </body>
 </html>
