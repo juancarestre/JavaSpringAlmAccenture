@@ -50,11 +50,13 @@ public class ControladorVentaImpl implements ControladorVenta {
 		
 		// Agrega producto a a lista de productos de venta
 		productos.add(producto);
+		venta.setTotalVenta(sumarTotal());
+		/***/
 		
 		return new ModelAndView("redirect:/");
 	}
 
-	@RequestMapping(value = "/ventas/del", method=RequestMethod.GET, params={"id"})
+	@RequestMapping(value = "/ventas", method=RequestMethod.GET, params={"id"})
 	@Override
 	public ModelAndView eliminarProducto(HttpServletRequest req, RedirectAttributes redirect) {
 		String idProducto = req.getParameter("id");
@@ -74,5 +76,21 @@ public class ControladorVentaImpl implements ControladorVenta {
 		ventaBl.guardarVenta(venta);
 		return null;
 	}
+	
+	public float sumarTotal() {
+		float suma=0;
+		
+		
+		
+		for(int i=0; i<productos.size(); i++){
+			
+			suma += productos.get(i).getSubTotal();			
+		}
+		
+		return suma;
+		
+	}
+	
+	
 
 }

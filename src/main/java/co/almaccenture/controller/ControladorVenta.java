@@ -9,6 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import co.almaccenture.exception.LogicaNegocioExcepcion;
+import co.almaccenture.model.DetalleVenta;
 
 /**
  * Esta clase es la encargada de agregar información a la vista así
@@ -66,6 +67,8 @@ public interface ControladorVenta {
 	 * @throws LogicaNegocioExcepcion 
 	 */
 	public ModelAndView confirmarVenta() throws LogicaNegocioExcepcion;
+	
+	public float sumarTotal ();
 	
 	
 }
