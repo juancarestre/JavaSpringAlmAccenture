@@ -139,7 +139,7 @@
 							
 							<td th:text="${detalle.valorUnitario}">1312</td>
 							
-							<td th:text="${detalle.producto.precioProducto * detalle.cantidad}">534534</td>
+							<td th:text="${detalle.cantidad*detalle.valorUnitario}">534534</td>
 							
 							<td><a href="@{'delete/'+${detalle.producto.idProducto}}"><span
 									class="glyphicon glyphicon-trash"></span></a></td>
