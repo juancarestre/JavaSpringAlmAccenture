@@ -19,6 +19,8 @@ public class LogicaNegocioProductoImp implements LogicaNegocioProducto  {
 	public static final int UMBRAL = 10;	
 	public static final String MENSAJE_ALERTA_PRODUCTO_ESCASO = "Alerta: Este producto tiene pocas existencias en inventario.";
 	public static final String MENSAJE_PRODUCTO_NO_ENCONTRADO = "El Producto con el codigo especificado no existe.";
+
+	private static final String MENSAJE_PRODUCTO_INACTIVO = "El producto se encuentra en estado inactivo";
 	
 	@Override
 	public void restarProductos(Producto producto, int cantidad) throws LogicaNegocioExcepcion {
@@ -42,8 +44,11 @@ public class LogicaNegocioProductoImp implements LogicaNegocioProducto  {
 	@Override
 	public Producto obtenerProducto(String id) throws LogicaNegocioExcepcion {
 		if(id==null || "".equals(id.trim())) throw new LogicaNegocioExcepcion(MENSAJE_PRODUCTO_NO_ENCONTRADO);
+		
+		Producto p = repositorioProducto.findOne(id);
+		if(!p.getEstadoProducto()) throw new LogicaNegocioExcepcion(MENSAJE_PRODUCTO_INACTIVO);
 
-		return repositorioProducto.findByIdProductoAndEstadoProducto(id, false);
+		return p;
 	}
 	
 	

@@ -86,17 +86,14 @@
 
 		<div class="row text-center">
 
-			<form id="messageForm" th:action="@{/productos}"
-				th:object="${producto}" action="#" method="post">
+			<form id="messageForm" th:action="@{/ventas}" th:object="${detalle}" action="#" method="post">
 
 
 
 				<label for="codigo">Código del producto:</label> <input type="text"
-					th:field="*{producto.idProducto}"> <label for="cantidad">Cantidad:</label>
-				<input type="Number" th:filed="*{cantidad}">
-
-
-
+					th:field="*{producto.idProducto}"> 
+				<label for="cantidad">Cantidad:</label>
+				<input type="number" th:field="*{cantidad}">
 				<div class="form-actions">
 
 					<br> <input name="search" type="submit" value="Buscar"
@@ -140,18 +137,17 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr th:each="producto : ${productos}">
-							<!--<td th:text="${producto.idProducto}"></td>  -->
-							<td>1</td>
-							<!--<td th:text="${producto.nombreProducto}"></td>-->
-							<td>Jabon</td>
-							<!--<td th:text="${producto.cantidadProducto}"></td>-->
-							<td>5</td>
-							<!--<td th:text="${producto.precioProducto}"></td>-->
-							<td>1800</td>
-							<!--<td th:text="${producto.precioProducto}"></td>-->
-							<td>9000</td>
-							<td><a href="@{'delete/'+${producto.idProducto}}"><span
+						<tr th:each="detalle : ${detalles}">
+							<td th:text="${detalle.producto.idProducto}">1</td> 
+							<td th:text="${detalle.producto.nombreProducto}">nombre</td>
+							
+							<td th:text="${detalle.cantidad}">2</td>
+							
+							<td th:text="${detalle.valorUnitario}">1312</td>
+							
+							<td th:text="${detalle.producto.precioProducto}">534534</td>
+							
+							<td><a href="@{'delete/'+${detalle.producto.idProducto}}"><span
 									class="glyphicon glyphicon-trash"></span></a></td>
 
 						</tr>

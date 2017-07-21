@@ -21,11 +21,11 @@ import co.almaccenture.model.Producto;
 import co.almaccenture.model.Venta;
 
 @Controller
-public class ControladorVentaImpl implements ControladorVenta {
+public class ControladorVentaImpl{
 	
 	
 	private Venta venta;
-	private List<DetalleVenta> productos;
+	private List<DetalleVenta> detalles;
 	@Autowired
 	private LogicaNegocioVenta ventaBl;
 	@Autowired
@@ -33,54 +33,56 @@ public class ControladorVentaImpl implements ControladorVenta {
 	
 
 	@RequestMapping(value = "/ventas", method=RequestMethod.GET)
-	@Override
 	public ModelAndView iniciaVenta() throws LogicaNegocioExcepcion {
 		venta = ventaBl.nuevaVenta();
 		
-		//TODO: Que devuelve nuevaVenta();
+		detalles = new ArrayList<>();
 		
-		ModelAndView mav = new ModelAndView("/venta");
+		ModelAndView mav = new ModelAndView("/ventas");
 		mav.setViewName("venta");
-		mav.addObject("producto",new DetalleVenta()); // agregar detalle venta
+		mav.addObject("detalle",new DetalleVenta()); // agregar detalle venta
 		mav.addObject("venta", venta); // carga nformacion inicial de venta
-		mav.addObject("productos", new ArrayList<Producto>()); // muestra los productos
-//		mav.addObject(productos);
+		mav.addObject("productos", detalles); // muestra los productos
 		
 		return mav;
 	}
 
-	@RequestMapping(value = "/ventas", method=RequestMethod.GET, params={"id","cant"})
-	@Override
-	public ModelAndView ingresarProducto(@QueryParam("id") String idProducto,
-			@QueryParam("cant") int cantidad) throws LogicaNegocioExcepcion {
-		
-		DetalleVenta producto = ventaBl.agregarDetalleVenta(idProducto, cantidad);
+	@RequestMapping(value = "/ventas", method=RequestMethod.POST, params={"search"})
+	public ModelAndView ingresarProducto(DetalleVenta detalle) throws LogicaNegocioExcepcion {
+		System.out.println("DetalleVenta obtenido con idprod "
+				+ detalle.getProducto().getIdProducto() + " y cantidad "+ detalle.getCantidad());
+		DetalleVenta producto = ventaBl.agregarDetalleVenta(detalle.getProducto().getIdProducto(),detalle.getCantidad());
 		
 		// Agrega producto a a lista de productos de venta
-		productos.add(producto);
+		detalles.add(producto);
+		for (DetalleVenta detalleVenta : detalles) {
+			System.out.println("Detalle guardado en lista "+ detalleVenta.getProducto().getNombreProducto());
+		}
 		venta.setTotalVenta(sumarTotal());
-		/***/	
+		ModelAndView mav = new ModelAndView("/venta");
+		mav.addObject("venta", venta);
+		mav.addObject("detalles", detalles);
+		mav.addObject("detalle", new DetalleVenta());
 		
-		return new ModelAndView("redirect:/");
+		return mav;
 	}
 
 	@RequestMapping(value = "/ventas", method=RequestMethod.GET, params={"id"})
-	@Override
+	
 	public ModelAndView eliminarProducto(HttpServletRequest req, RedirectAttributes redirect) {
 		String idProducto = req.getParameter("id");
-		for (DetalleVenta detalleVenta : productos) {
+		for (DetalleVenta detalleVenta : detalles) {
 			if(detalleVenta.getProducto().getIdProducto().equals(idProducto))
-				productos.remove(detalleVenta);
+				detalles.remove(detalleVenta);
 		}
 		return new ModelAndView("redirect:/");
 	}
 	
 	@RequestMapping(value = "/ventas", method=RequestMethod.POST, params="save")
-	@Override
 	public ModelAndView confirmarVenta() throws LogicaNegocioExcepcion {
 		//TODO: Popup de confirmación
 		
-		venta.setDetalles(productos);
+		venta.setDetalles(detalles);
 		ventaBl.guardarVenta(venta);
 		return null;
 	}
@@ -90,8 +92,8 @@ public class ControladorVentaImpl implements ControladorVenta {
 		
 		
 		
-		for(int i=0; i<productos.size(); i++){
-			DetalleVenta dp = productos.get(i);
+		for(int i=0; i<detalles.size(); i++){
+			DetalleVenta dp = detalles.get(i);
 			suma += (dp.getCantidad()*dp.getValorUnitario());			
 		}
 		
