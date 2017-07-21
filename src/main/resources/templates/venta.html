@@ -147,7 +147,8 @@
 							
 							<td th:text="${detalle.producto.precioProducto}">534534</td>
 							
-							<td><a href="@{'delete/'+${detalle.producto.idProducto}}"><span
+							<td><a th:href="@{'/ventas/' + ${detalle.producto.idProducto}}"><span							
+							
 									class="glyphicon glyphicon-trash"></span></a></td>
 
 						</tr>

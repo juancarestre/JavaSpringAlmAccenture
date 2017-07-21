@@ -8,6 +8,8 @@ import javax.ws.rs.QueryParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -67,15 +69,21 @@ public class ControladorVentaImpl{
 		return mav;
 	}
 
-	@RequestMapping(value = "/ventas", method=RequestMethod.GET, params={"id"})
-	
-	public ModelAndView eliminarProducto(HttpServletRequest req, RedirectAttributes redirect) {
-		String idProducto = req.getParameter("id");
-		for (DetalleVenta detalleVenta : detalles) {
-			if(detalleVenta.getProducto().getIdProducto().equals(idProducto))
-				detalles.remove(detalleVenta);
+	@GetMapping("ventas/{idProducto}")
+	public ModelAndView eliminarProducto(@PathVariable("idProducto") String idProducto) {
+		ModelAndView mav = new ModelAndView("/venta");
+		
+		for(int i=0; i<detalles.size(); i++){
+			DetalleVenta dp = detalles.get(i);
+			if(dp.getProducto().getIdProducto().equals(idProducto))
+				detalles.remove(dp);
 		}
-		return new ModelAndView("redirect:/");
+		
+		mav.addObject("venta", venta);
+		mav.addObject("detalles", detalles);
+		mav.addObject("detalle", new DetalleVenta());
+		
+		return new ModelAndView("redirect:/ventas");
 	}
 	
 	@RequestMapping(value = "/ventas", method=RequestMethod.POST, params="save")
@@ -99,6 +107,13 @@ public class ControladorVentaImpl{
 		
 		return suma;
 		
+	}
+	
+	@GetMapping("departamentos/a/{nombre}")
+	public ModelAndView getDepartamentosByName(@PathVariable("nombre") String departamentoname) {
+		
+
+		return null;
 	}
 	
 	
