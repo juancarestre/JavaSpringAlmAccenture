@@ -2,6 +2,8 @@ package co.almaccenture.repository;
 
 import static org.junit.Assert.*;
 
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,14 +43,31 @@ public class RepositorioDetalleVentaTest {
 
 	@Test
 	public void testFindByVenta() {
-		fail("Not yet implemented");
+		Venta v = ventaRepo.findOne(1);
+		try {
+			List<DetalleVenta> d = detalleRepo.findByVenta(v);
+			assertNotNull("No se encontro detalle con venta" + v.getIdVenta(), d);
+			System.out.println("Se encontraron " + d.size() +" detalles");
+			for (DetalleVenta detalleVenta : d) {
+				System.out.println("Producto encontrado "+ detalleVenta.getProducto().getNombreProducto());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail(e.getMessage());
+		}
 	}
 	
 	@Test
 	public void testFindOneDetalle(){
-		int idDetalle = 3;
+		int idDetalle = 5;
 		try {
-			assertNotNull("No encontro detalle",detalleRepo.findOne(idDetalle));
+			DetalleVenta d = detalleRepo.findOne(idDetalle);
+			assertNotNull("No encontro detalle",d);
+			Venta v = d.getVenta();
+			System.out.println("detalle "+idDetalle+" asociado a venta "+v.getIdVenta());
+			Producto p = d.getProducto();
+			System.out.println("Producto " + p.getNombreProducto());
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail(e.getMessage());

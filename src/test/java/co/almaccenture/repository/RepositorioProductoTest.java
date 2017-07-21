@@ -80,5 +80,22 @@ public class RepositorioProductoTest {
 		
 	}
 	
+	@Test
+	public void testUpdateProduct(){
+		// Solo elimina si no existe detalleventa asociado
+		// De igual manera no habrá borrado fisico de producto
+		String id = "abc123";
+		Producto p = productoRepo.findOne(id);
+		p.setEstadoProducto(false);
+				
+		try {
+			Producto p1 = productoRepo.save(p);
+			assertFalse("No se actualizo producto " + id,p1.getEstadoProducto());
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail(e.getMessage());
+		}
+	}
+	
 
 }

@@ -1,8 +1,8 @@
 package co.almaccenture.repository;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
 
-import java.nio.channels.AsynchronousServerSocketChannel;
 import java.sql.Date;
 import java.util.Calendar;
 import java.util.List;
@@ -12,10 +12,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.client.LocalHostUriTemplateHandler;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import co.almaccenture.model.Caja;
+import co.almaccenture.model.DetalleVenta;
 import co.almaccenture.model.Venta;
 
 @SpringBootTest
@@ -44,17 +44,20 @@ public class RepositorioVentaTest {
 
 	@Test
 	public void testFindOneInteger() {
-		// Esto es para tomar una venta aleatoria
-		List<Venta> ventas = (List<Venta>) ventaRepo.findAll();
-		int id = ventas.get(ThreadLocalRandom.current().nextInt(ventas.size())).getIdVenta();
+		int id = 3;
 
 		try {
-			assertNotNull("No se encontro la venta", ventaRepo.findOne(id));
-
-			int idNull = 7; // este id no existe
-
-			assertNull("La venta si existe", ventaRepo.findOne(idNull));
-
+			Venta v = ventaRepo.findOne(id);
+			assertNotNull("No se encontro la venta", v);
+			
+			List<DetalleVenta> detalles = v.getDetalles();
+			for (DetalleVenta detalleVenta : detalles) {
+				System.out.println("Detalle encontrado "+ detalleVenta.getIdDetalle());
+			}
+			System.out.println("Se encontro " + detalles.size()+ " de venta " + id);
+			System.out.println("Venta " + id + " pertenece a caja " + v.getCaja().getNombreCaja());
+			
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail(e.getMessage());
@@ -99,5 +102,7 @@ public class RepositorioVentaTest {
 			fail(e.getMessage());
 		}
 	}
+	
+	
 	
 }

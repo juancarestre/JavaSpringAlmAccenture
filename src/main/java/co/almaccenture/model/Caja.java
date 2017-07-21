@@ -1,5 +1,7 @@
 package co.almaccenture.model;
 
+import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -9,9 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import java.io.Serializable;
-import java.util.List;
-
 /**
  * Se implementa el modelo , set and get
  * 
@@ -20,14 +19,15 @@ import java.util.List;
  */
 @Entity
 @Table(name = "caja")
-public class Caja implements Serializable {
-
+public class Caja{
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer idCaja;
 	private String nombreCaja;
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "caja", orphanRemoval = true, targetEntity=Venta.class)
-	private List<Venta> ventas;
+	// Para obtener una venta dada una caja
+	@OneToMany(fetch=FetchType.EAGER, mappedBy="caja", cascade=CascadeType.MERGE)
+	private Set<Venta> ventas;
 
 	public Caja() {
 
@@ -55,11 +55,11 @@ public class Caja implements Serializable {
 		this.nombreCaja = nombreCaja;
 	}
 
-	public List<Venta> getVentas() {
+	public Set<Venta> getVentas() {
 		return ventas;
 	}
 
-	public void setVentas(List<Venta> ventas) {
+	public void setVentas(Set<Venta> ventas) {
 		this.ventas = ventas;
 	}
 

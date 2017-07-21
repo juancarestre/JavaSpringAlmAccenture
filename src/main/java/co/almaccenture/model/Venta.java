@@ -1,7 +1,9 @@
 package co.almaccenture.model;
 
+import java.sql.Date;
+import java.util.List;
+
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -11,10 +13,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import java.io.Serializable;
-import java.sql.Date;
-import java.util.List;
 
 /**
  * Se implementa el modelo , set and get
@@ -30,8 +28,8 @@ public class Venta{
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer idVenta;
 	private Date fechaVenta;
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "idCaja")
+	@ManyToOne
+	@JoinColumn(name="idCaja")
 	private Caja caja;
 	private Float totalVenta;
 	private Boolean estadoVenta = true; //Valor default para estado venta

@@ -9,7 +9,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -20,13 +19,14 @@ import java.util.List;
  */
 @Entity
 @Table(name = "categoria")
-public class Categoria implements Serializable {
+public class Categoria{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer idCategoria;
 	private String nombreCategoria;
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "categoria", targetEntity=Producto.class)
+	// Para obtener todos los productos dada una categoria
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "categoria")
 	private List<Producto> productos;
 
 	public Categoria() {

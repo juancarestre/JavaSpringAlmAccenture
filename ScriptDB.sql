@@ -1,3 +1,4 @@
+﻿-- 
 -- phpMyAdmin SQL Dump
 -- version 4.7.0
 -- https://www.phpmyadmin.net/
@@ -6,6 +7,7 @@
 -- Tiempo de generación: 20-07-2017 a las 00:39:58
 -- Versión del servidor: 10.1.22-MariaDB
 -- Versión de PHP: 7.1.4
+--
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -64,8 +66,7 @@ INSERT INTO `categoria` (`id_categoria`, `nombre_categoria`) VALUES
 (1, 'Aseo'),
 (2, 'Tecnologia'),
 (3, 'Hogar'),
-(4, 'Moda'),
-(5, 'Comida');
+(4, 'Moda');
 
 -- --------------------------------------------------------
 
@@ -132,7 +133,6 @@ INSERT INTO `producto` (`id_producto`, `nombre_producto`, `estado_producto`, `ca
 ('mmr732', 'Producto', 1, 20, 1800, 'Producto Prueba', 3, '2017-07-19'),
 ('mmr771', 'Jabon', 1, 20, 42000, 'JAbon de baño', 1, '2017-07-19'),
 ('mno596', 'chaqueta hombre', 1, 90, 150000, 'chaqueta cuero hombre negra', 4, '2017-07-05'),
-('nex432', 'Pasta', 1, 20, 42000, 'Una deliciosa comida', 5, '2017-07-19'),
 ('rpg001', 'nevecon', 1, 15, 3000000, 'Nevecon Haceb de 2 puertas no frost 50 kg', 2, '2017-07-04'),
 ('rst468', 'lava platos', 1, 48, 4500, 'Lava platos liquido axion', 1, '2017-07-29'),
 ('wxy045', 'celular', 1, 18, 850000, 'Smartphone lg G4', 2, '2017-08-30');
@@ -233,24 +233,20 @@ ALTER TABLE `venta`
 -- Filtros para la tabla `detalle_venta`
 --
 ALTER TABLE `detalle_venta`
-  ADD CONSTRAINT `FKoknpg31rxsqnjxrsu7iy47p1o` FOREIGN KEY (`id_venta`) REFERENCES `venta` (`id_venta`),
-  ADD CONSTRAINT `FKsntaik0t9jxcky777753wytsx` FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id_producto`),
-  ADD CONSTRAINT `detalle_venta_ibfk_1` FOREIGN KEY (`id_venta`) REFERENCES `venta` (`id_venta`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `detalle_venta_ibfk_2` FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id_producto`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `detalle_venta_ibfk_1` FOREIGN KEY (`id_venta`) REFERENCES `venta` (`id_venta`) ON UPDATE CASCADE ON DELETE CASCADE,
+  ADD CONSTRAINT `detalle_venta_ibfk_2` FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id_producto`) ON UPDATE CASCADE ON DELETE NO ACTION;
 
 --
 -- Filtros para la tabla `producto`
 --
 ALTER TABLE `producto`
-  ADD CONSTRAINT `FK9nyueixdsgbycfhf7allg8su` FOREIGN KEY (`id_categoria`) REFERENCES `categoria` (`id_categoria`),
-  ADD CONSTRAINT `producto_ibfk_1` FOREIGN KEY (`id_categoria`) REFERENCES `categoria` (`id_categoria`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `producto_ibfk_1` FOREIGN KEY (`id_categoria`) REFERENCES `categoria` (`id_categoria`) ON DELETE CASCADE;
 
 --
 -- Filtros para la tabla `venta`
 --
 ALTER TABLE `venta`
-  ADD CONSTRAINT `FKq3ld8tcfknkmn0enb4beay3uh` FOREIGN KEY (`id_caja`) REFERENCES `caja` (`id_caja`),
-  ADD CONSTRAINT `venta_ibfk_1` FOREIGN KEY (`id_caja`) REFERENCES `caja` (`id_caja`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `venta_ibfk_1` FOREIGN KEY (`id_caja`) REFERENCES `caja` (`id_caja`) ON UPDATE CASCADE ON DELETE NO ACTION;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
