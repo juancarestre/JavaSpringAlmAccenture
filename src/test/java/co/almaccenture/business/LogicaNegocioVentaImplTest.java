@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import ch.qos.logback.classic.net.SyslogAppender;
 import co.almaccenture.business.impl.LogicaNegocioVentaImpl;
 import co.almaccenture.exception.LogicaNegocioExcepcion;
 import co.almaccenture.model.DetalleVenta;
@@ -60,11 +61,30 @@ public class LogicaNegocioVentaImplTest {
 	}
 	
 	@Test
-	public void testNuevaVenta(){
+	public void testEliminarVenta(){
 		
+		int id = 3;
+		try {
+			logicaNegocio.eliminarVenta(id);
+			assertFalse("No se borro logicamente el elemento",logicaNegocio.obtenerVentaPorID(id).getEstadoVenta());
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail(e.getMessage());
+		}
 	}
 	
-	
-	
+	@Test
+	public void testNuevaVenta(){
+		try {
+			Venta v = logicaNegocio.nuevaVenta();
+			assertNotNull("No se genero nueva venta", v);
+			System.out.println("Nueva venta con caja"+ v.getCaja().getNombreCaja()
+					+ " y fecha "+ v.getFechaVenta()+ " y estado "+ v.getEstadoVenta());
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail(e.getMessage());
+		}
+	}
+
 
 }

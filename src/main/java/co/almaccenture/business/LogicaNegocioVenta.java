@@ -42,11 +42,17 @@ public interface LogicaNegocioVenta {
 	/**
 	 * Elimina una venta de forma lógica de la base de datos.
 	 * 
-	 * @param codigoVenta
-	 *            codigo de la venta que se eliminará de forma lógica.
+	 * 
+	 * @param codigoVenta codigo de la venta que se eliminará de forma lógica.
 	 * @throws LogicaNegocioExcepcion 
 	 */
 	public void eliminarVenta(int idVenta) throws LogicaNegocioExcepcion;
+	
+	/**
+	 * Obtiene una venta de la base de datos dado un id
+	 */
+	public Venta obtenerVentaPorID(int idVenta) throws LogicaNegocioExcepcion;
+	
 	
 	
 	//TODO: Crear método para buscar por el nombre con comodin contains

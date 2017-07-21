@@ -36,6 +36,7 @@ public class LogicaNegocioVentaImpl implements LogicaNegocioVenta {
 	public static final String MENSAJE_VENTA_CAMPOS_SIN_COMPLETAR = "Error: Hay campos de venta sin completar.";
 	public static final String MENSAJE_VENTA_TOTALVENTA_NO_COINCIDE = "El total de venta no es válido.";
 	public static final String MENSAJE_VENTA_TOTALVENTA_NO_EXISTE = "No se generó el total de la venta";
+	private static final String MENSAJE_VENTA_ELIMINADA = "La venta se encuentra eliminada.";
 	
 
 	@Autowired
@@ -116,15 +117,15 @@ public class LogicaNegocioVentaImpl implements LogicaNegocioVenta {
 	@Override
 	public void eliminarVenta(int idVenta) throws LogicaNegocioExcepcion {
 		
-		Venta venta = repositorioVenta.findByIdVentaAndEstadoVenta(idVenta, ACTIVO);
+		Venta venta = repositorioVenta.findOne(idVenta);
 		
-		if (venta == null || venta.getEstadoVenta() == INACTIVO) {
-			throw new LogicaNegocioExcepcion(MENSAJE_VENTA_INEXISTENTE);
-		}
+		if (venta == null) throw new LogicaNegocioExcepcion(MENSAJE_VENTA_INEXISTENTE);
+		if(venta.getEstadoVenta().equals(INACTIVO)) throw new LogicaNegocioExcepcion(MENSAJE_VENTA_ELIMINADA);
+		
 		venta.setEstadoVenta(INACTIVO);
 		repositorioVenta.save(venta);
-
 	}
+	
 	/**
 	 * Genera una nueva venta, ingresando la caja y la fecha, retrona la venta. 
 	 */
@@ -135,6 +136,16 @@ public class LogicaNegocioVentaImpl implements LogicaNegocioVenta {
 		venta.setCaja(cajaBl.generarCajaAleatoria());
 		Date date = new Date(Calendar.getInstance().getTimeInMillis());
 		venta.setFechaVenta(date);
+		return venta;
+	}
+
+	@Override
+	public Venta obtenerVentaPorID(int idVenta) throws LogicaNegocioExcepcion {
+		
+		Venta venta = repositorioVenta.findOne(idVenta);
+		if(venta==null) throw new LogicaNegocioExcepcion(MENSAJE_VENTA_INEXISTENTE);
+		if(venta.getEstadoVenta().equals(ACTIVO)) throw new LogicaNegocioExcepcion(MENSAJE_VENTA_ELIMINADA);
+		
 		return venta;
 	}
 	
