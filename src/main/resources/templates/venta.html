@@ -66,13 +66,9 @@
 						
 							<label for="fecha">Fecha:</label>
 							<label class="label label-default" th:text="${venta.fechaVenta}"></label>
-							<!-- <label class="label label-default" type="text" th:value="${venta.fechaVenta}" readonly="readonly" th:field="*{fechaVenta}">22/07/2017</label> -->
-						    <!-- <input type="text" th:value="${venta.fecha}" readonly="readonly" th:field="*{fecha}"> -->
 						    
 						    <label for="caja">Caja:</label>
 						    <label class="label label-default" th:text="${venta.caja.nombreCaja}"></label>
-						   <!--  <label class="label label-default"  type="text" th:value="${venta.caja}" readonly="readonly" th:field="*{caja}">Caja 1</label> -->
-						    <!--<input type="text" th:value="${venta.caja}" readonly="readonly" th:field="*{caja}">-->
 						
 					</div>
 				<!-- </form> -->
@@ -86,21 +82,19 @@
 
 		<div class="row text-center">
 
-			<form id="messageForm" th:action="@{/ventas}" th:object="${detalle}" action="#" method="post">
-
-
-
+			<form id="messageForm" th:action="@{/ventas}" action="#" th:object="${detalle}" method="get">
 				<label for="codigo">Código del producto:</label> <input type="text"
 					th:field="*{producto.idProducto}"> 
 				<label for="cantidad">Cantidad:</label>
 				<input type="number" th:field="*{cantidad}">
 				<div class="form-actions">
 
-					<br> <input name="search" type="submit" value="Buscar"
+					<br> <input type="submit" value="Buscar"
 						class="btn btn-success btn-lg" />
 				</div>
 
 			</form>
+			
 
 		</div>
 
@@ -145,7 +139,7 @@
 							
 							<td th:text="${detalle.valorUnitario}">1312</td>
 							
-							<td th:text="${detalle.producto.precioProducto}">534534</td>
+							<td th:text="${detalle.cantidad*detalle.valorUnitario}">534534</td>
 							
 							<td><a th:href="@{'/ventas/' + ${detalle.producto.idProducto}}"><span							
 							
