@@ -8,7 +8,8 @@ import javax.ws.rs.QueryParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -31,54 +32,72 @@ public class ControladorVentaImpl{
 	private LogicaNegocioVenta ventaBl;
 	
 	private Venta venta;
+	public static final String MENSAJE_ID_PRODUCTO_INVALIDO = "El código de producto debe contener algún valor.";
+	public static final String MENSAJE_CANTIDAD_INVALIDO = "La cantidad debe contener algún valor.";
 	
 	@RequestMapping(value = "/ventas")
 	public ModelAndView iniciaVenta() throws LogicaNegocioExcepcion {
 		venta = ventaBl.nuevaVenta();
 		
-		
 		ModelAndView mav = new ModelAndView("/venta");
 		mav.addObject("detalle", new DetalleVenta()); // agregar detalle venta
 		mav.addObject("venta", venta); // carga nformacion inicial de venta
 		mav.addObject("detalles", detalles); // muestra los productos
-		
 		return mav;
 	}
 
 	
 	@RequestMapping(value="/ventas", params={"producto.idProducto","cantidad"})
-	public ModelAndView ingresarProducto(HttpServletRequest req){
-		String idp = req.getParameter("producto.idProducto");
-		int cant= Integer.parseInt(req.getParameter("cantidad"));
+	public ModelAndView ingresarProducto(HttpServletRequest req, RedirectAttributes redirect){
 		
+		
+		String message="";
 		DetalleVenta producto = null;
 		
 		try{
+			if(req.getParameter("producto.idProducto").isEmpty()) throw new LogicaNegocioExcepcion(MENSAJE_ID_PRODUCTO_INVALIDO);
+			if(req.getParameter("cantidad").isEmpty()) throw new LogicaNegocioExcepcion(MENSAJE_ID_PRODUCTO_INVALIDO);
+			String idp = req.getParameter("producto.idProducto");
+			int cant= Integer.parseInt(req.getParameter("cantidad"));
+			
+			
 			producto = ventaBl.agregarDetalleVenta(idp,cant);
+			detalles.add(producto);
+			for (DetalleVenta detalleVenta : detalles) {
+				System.out.println("Detalle guardado en lista "+ detalleVenta.getProducto().getNombreProducto());
+			}
+			venta.setTotalVenta(sumarTotal());
 		}catch (LogicaNegocioExcepcion e) {
 			e.printStackTrace();
+			message=e.getMessage();
 			//TODO: Definir excepción
 		}
 		
 		// Agrega producto a a lista de productos de venta
-		detalles.add(producto);
-		for (DetalleVenta detalleVenta : detalles) {
-			System.out.println("Detalle guardado en lista "+ detalleVenta.getProducto().getNombreProducto());
-		}
-		venta.setTotalVenta(sumarTotal());
 		
-		return new ModelAndView("redirect:/ventas");
+		
+		
+		ModelAndView mav= new ModelAndView("redirect:/ventas");
+		redirect.addFlashAttribute("message", message);
+		
+		return mav;
 	}
 
-	@RequestMapping(value = "/ventas", method=RequestMethod.GET, params={"id"})
-	
-	public ModelAndView eliminarProducto(HttpServletRequest req, RedirectAttributes redirect) {
-		String idProducto = req.getParameter("id");
-		for (DetalleVenta detalleVenta : detalles) {
-			if(detalleVenta.getProducto().getIdProducto().equals(idProducto))
-				detalles.remove(detalleVenta);
+	@GetMapping("ventas/{idProducto}")
+	public ModelAndView eliminarProducto(@PathVariable("idProducto") String idProducto) {
+		ModelAndView mav = new ModelAndView("/venta");
+		
+		for(int i=0; i<detalles.size(); i++){
+			DetalleVenta dp = detalles.get(i);
+			if(dp.getProducto().getIdProducto().equals(idProducto))
+				detalles.remove(dp);
 		}
-		return new ModelAndView("redirect:/");
+		
+		mav.addObject("venta", venta);
+		mav.addObject("detalles", detalles);
+		mav.addObject("detalle", new DetalleVenta());
+		
+		return new ModelAndView("redirect:/ventas");
 	}
 	
 	@RequestMapping(value = "/ventas", method=RequestMethod.GET, params="guardar")
@@ -103,6 +122,13 @@ public class ControladorVentaImpl{
 		
 		return suma;
 		
+	}
+	
+	@GetMapping("departamentos/a/{nombre}")
+	public ModelAndView getDepartamentosByName(@PathVariable("nombre") String departamentoname) {
+		
+
+		return null;
 	}
 	
 	
