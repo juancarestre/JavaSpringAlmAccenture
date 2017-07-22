@@ -54,16 +54,16 @@ public class LogicaNegocioVentaImpl implements LogicaNegocioVenta {
 	 * el precio, y el producto para ser retornado. 
 	 */
 	@Override
-	public DetalleVenta agregarDetalleVenta(String idProducto, Integer cantidad) throws LogicaNegocioExcepcion {
+	public DetalleVenta agregarDetalleVenta(String idProducto, int cantidad) throws LogicaNegocioExcepcion {
 
 		DetalleVenta detalleVenta;
 		
 		if (idProducto.isEmpty()) {
 			throw new LogicaNegocioExcepcion(MENSAJE_ID_PRODUCTO_INVALIDO);
 		}
-		if ((cantidad.toString()).isEmpty()) {
-			throw new LogicaNegocioExcepcion(MENSAJE_CANTIDAD_DETALLE_INVALIDA);
-		}
+//		if (cantidad.) {
+//			throw new LogicaNegocioExcepcion(MENSAJE_CANTIDAD_DETALLE_INVALIDA);
+//		}
 		if (cantidad <= 0) {
 			throw new LogicaNegocioExcepcion(MENSAJE_CANTIDAD_DETALLE_INVALIDA);
 		}
