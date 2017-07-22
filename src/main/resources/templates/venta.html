@@ -45,12 +45,14 @@
 		<br>
 		<div class="row">
 			<div class="col-md-1">
-				<img src="C:/Users/Administrator/git/JavaSpringAlmAccenture/src/main/resources/static/img/A.png" width="130" height="150">
+				<img
+					src="C:/Users/Administrator/git/JavaSpringAlmAccenture/src/main/resources/static/img/A.png"
+					width="130" height="150">
 			</div>
 			<div class="col-md-11">
 				<div class="page-header">
 					<h1>
-						Administrador<small>   Ventas</small>
+						Administrador<small> Ventas</small>
 					</h1>
 
 				</div>
@@ -60,17 +62,15 @@
 		<div class="row text-center">
 			<div class="col-md-2"></div>
 			<div class="col-md-8">
-				<!-- <form id="cargar" th:action="@{/ventas}" th:object="${venta}"
-					action="#" th:method="post"> -->
-					<div>
-						
-							<label for="fecha">Fecha:</label>
-							<label class="label label-default" th:text="${venta.fechaVenta}"></label>
-						    
-						    <label for="caja">Caja:</label>
-						    <label class="label label-default" th:text="${venta.caja.nombreCaja}"></label>
-						
-					</div>
+				<div>
+					<label for="fecha">Fecha:</label> <label
+						class="label label-default" th:text="${venta.fechaVenta}"></label>
+
+					<label for="caja">Caja:</label> <label class="label label-default"
+						th:text="${venta.caja.nombreCaja}"></label>
+					<!-- Como inserto como th:field un objeto -->
+
+				</div>
 				<!-- </form> -->
 			</div>
 			<div class="col-md-2"></div>
@@ -82,10 +82,10 @@
 
 		<div class="row text-center">
 
-			<form id="messageForm" th:action="@{/ventas}" action="#" th:object="${detalle}" method="get">
+			<form id="messageForm" th:action="@{/ventas}" action="#"
+				th:object="${detalle}" method="get">
 				<label for="codigo">Código del producto:</label> <input type="text"
-					th:field="*{producto.idProducto}"> 
-				<label for="cantidad">Cantidad:</label>
+					th:field="*{producto.idProducto}"> <label for="cantidad">Cantidad:</label>
 				<input type="number" th:field="*{cantidad}">
 				<div class="form-actions">
 
@@ -94,7 +94,7 @@
 				</div>
 
 			</form>
-			
+
 
 		</div>
 
@@ -114,6 +114,7 @@
 		<hr class="featurette-divider">
 
 		<br>
+
 		<div class="row">
 			<div class=col-md-2></div>
 			<div class=col-md-8>
@@ -132,15 +133,15 @@
 					</thead>
 					<tbody>
 						<tr th:each="detalle : ${detalles}">
-							<td th:text="${detalle.producto.idProducto}">1</td> 
+							<td th:text="${detalle.producto.idProducto}">1</td>
 							<td th:text="${detalle.producto.nombreProducto}">nombre</td>
-							
+
 							<td th:text="${detalle.cantidad}">2</td>
-							
+
 							<td th:text="${detalle.valorUnitario}">1312</td>
-							
+
 							<td th:text="${detalle.cantidad*detalle.valorUnitario}">534534</td>
-							
+
 							<td><a href="@{'delete/'+${detalle.producto.idProducto}}"><span
 									class="glyphicon glyphicon-trash"></span></a></td>
 
@@ -161,15 +162,18 @@
 			<div class=col-md-2></div>
 		</div>
 		<br>
-
 		<div class="row text-center">
-			<input name="accept" type="submit" value="Aceptar"
-				class="btn btn-success btn-lg" /> <input type="submit"
-				value="Cancelar" class="btn btn-primary btn-lg" />
+			<form th:action="@{/ventas}" action="#" th:method="GET">
+
+				<input name="guardar" type="submit" value="Aceptar"
+					class="btn btn-success btn-lg" />
+				<input name="limpiar" type="submit" value="Cancelar" class="btn btn-primary btn-lg" />
+
+			</form>
+			
 		</div>
 
 		<br> <br>
-
 	</h2>
 </body>
 </html>

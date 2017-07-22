@@ -25,12 +25,13 @@ import co.almaccenture.model.Venta;
 public class ControladorVentaImpl{
 	
 	
-	private Venta venta;
+	
 	private List<DetalleVenta> detalles = new ArrayList<>();
 	@Autowired
 	private LogicaNegocioVenta ventaBl;
 	
-
+	private Venta venta;
+	
 	@RequestMapping(value = "/ventas")
 	public ModelAndView iniciaVenta() throws LogicaNegocioExcepcion {
 		venta = ventaBl.nuevaVenta();
@@ -80,13 +81,14 @@ public class ControladorVentaImpl{
 		return new ModelAndView("redirect:/");
 	}
 	
-	@RequestMapping(value = "/ventas", method=RequestMethod.POST, params="save")
-	public ModelAndView confirmarVenta() throws LogicaNegocioExcepcion {
+	@RequestMapping(value = "/ventas", method=RequestMethod.GET, params="guardar")
+	public String confirmarVenta() throws LogicaNegocioExcepcion {
 		//TODO: Popup de confirmación
-		
+		venta = ventaBl.nuevaVenta(); //temporal
 		venta.setDetalles(detalles);
+		venta.setTotalVenta(sumarTotal());
 		ventaBl.guardarVenta(venta);
-		return null;
+		return "Producto Guardado";
 	}
 	
 	public float sumarTotal() {
