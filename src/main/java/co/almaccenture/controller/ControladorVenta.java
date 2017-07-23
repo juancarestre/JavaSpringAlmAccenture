@@ -1,5 +1,6 @@
 package co.almaccenture.controller;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +25,7 @@ import co.almaccenture.model.Producto;
 import co.almaccenture.model.Venta;
 
 @Controller
-public class ControladorVentaImpl{
+public class ControladorVenta{
 	
 	
 	
@@ -35,6 +36,7 @@ public class ControladorVentaImpl{
 	private Venta venta;
 	public static final String MENSAJE_ID_PRODUCTO_INVALIDO = "El código de producto debe contener algún valor.";
 	public static final String MENSAJE_CANTIDAD_INVALIDO = "La cantidad debe contener algún valor.";
+	private static final String MENSAJE_DETALLE_ACTUALIZADO = "Se ha actualizado producto";
 	
 
 	/**
@@ -73,31 +75,38 @@ public class ControladorVentaImpl{
 		return mav;
 	}
 
-	
+	/**
+	 * Agrega un nuevo detalle a la venta. Hace la busqueda de la disponibilidad del producto en bl y
+	 * recibe de bl el detalleVenta validado. Hace validación con posible duplicados en lista DEtalleVenta
+	 * de Venta, en caso tal, hace merge de cantidad y actualiza detalle antiguo.
+	 * @param req
+	 * @param redirect
+	 * @return
+	 * @throws RemoteException Excepcion remota
+	 */
 	@RequestMapping(value="/ventas", params={"producto.idProducto","cantidad"})
-	public ModelAndView ingresarProducto(HttpServletRequest req, RedirectAttributes redirect){
+	public ModelAndView ingresarProducto(HttpServletRequest req, RedirectAttributes redirect) throws RemoteException{
 		
+		if(req.getParameter("producto.idProducto").isEmpty()) throw new RemoteException(MENSAJE_ID_PRODUCTO_INVALIDO);
+		if(req.getParameter("cantidad").isEmpty()) throw new RemoteException(MENSAJE_ID_PRODUCTO_INVALIDO);
+		String idp = req.getParameter("producto.idProducto");
+		int cant= Integer.parseInt(req.getParameter("cantidad"));
 		
 		String message="";
 		DetalleVenta producto = null;
 		
 		try{
-			if(req.getParameter("producto.idProducto").isEmpty()) throw new LogicaNegocioExcepcion(MENSAJE_ID_PRODUCTO_INVALIDO);
-			if(req.getParameter("cantidad").isEmpty()) throw new LogicaNegocioExcepcion(MENSAJE_ID_PRODUCTO_INVALIDO);
-			String idp = req.getParameter("producto.idProducto");
-			int cant= Integer.parseInt(req.getParameter("cantidad"));
-			
-			
 			producto = ventaBl.agregarDetalleVenta(idp,cant);
-			venta.getDetalles().add(producto);
-			for (DetalleVenta detalleVenta : venta.getDetalles()) {
-				System.out.println("Detalle guardado en lista "+ detalleVenta.getProducto().getNombreProducto());
+			
+			if(mergeDetalles(producto, venta.getDetalles())){
+				message = MENSAJE_DETALLE_ACTUALIZADO + " " + producto.getProducto().getNombreProducto();
+			}else{
+				venta.getDetalles().add(producto);
 			}
 			venta.setTotalVenta(sumarTotal());
 		}catch (LogicaNegocioExcepcion e) {
 			e.printStackTrace();
 			message=e.getMessage();
-			//TODO: Definir excepción
 		}
 		
 		// Agrega producto a a lista de productos de venta
@@ -105,6 +114,23 @@ public class ControladorVentaImpl{
 		redirect.addFlashAttribute("message", message);
 		
 		return mav;
+	}
+	
+	/**
+	 * Hace merge en detalles si detalle ya existe.
+	 * @param detalle detalle que quiere agregarse a detalles
+	 * @param detalles lista de detalle
+	 * @return true si se hizo merge, false de lo contrario
+	 */
+	private Boolean mergeDetalles(DetalleVenta detalle, List<DetalleVenta> detalles) {
+		
+		for (DetalleVenta detalleVenta : detalles) {
+			if(detalleVenta.getProducto().getIdProducto().equals(detalle.getProducto().getIdProducto())){
+				detalleVenta.setCantidad(detalleVenta.getCantidad()+detalle.getCantidad());
+				return true;
+			}
+		}
+		return false;
 	}
 
 	@GetMapping("ventas/{idProducto}")

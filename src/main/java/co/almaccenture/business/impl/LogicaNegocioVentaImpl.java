@@ -61,9 +61,6 @@ public class LogicaNegocioVentaImpl implements LogicaNegocioVenta {
 		if (idProducto.isEmpty()) {
 			throw new LogicaNegocioExcepcion(MENSAJE_ID_PRODUCTO_INVALIDO);
 		}
-//		if (cantidad.) {
-//			throw new LogicaNegocioExcepcion(MENSAJE_CANTIDAD_DETALLE_INVALIDA);
-//		}
 		if (cantidad <= 0) {
 			throw new LogicaNegocioExcepcion(MENSAJE_CANTIDAD_DETALLE_INVALIDA);
 		}
