@@ -137,7 +137,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr th:each="detalle : ${detalles}">
+						<tr th:each="detalle : ${venta.detalles}">
 							<td th:text="${detalle.producto.idProducto}">1</td>
 							<td th:text="${detalle.producto.nombreProducto}">nombre</td>
 

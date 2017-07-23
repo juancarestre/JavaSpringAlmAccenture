@@ -49,7 +49,7 @@ public class LogicaNegocioProductoImp implements LogicaNegocioProducto  {
 		
 		Producto p = repositorioProducto.findOne(id);
 		
-		if(p!=null){throw new LogicaNegocioExcepcion(MENSAJE_PRODUCTO_NO_ENCONTRADO);}
+		if(p==null){throw new LogicaNegocioExcepcion(MENSAJE_PRODUCTO_NO_ENCONTRADO);}
 		if(!p.getEstadoProducto()) throw new LogicaNegocioExcepcion(MENSAJE_PRODUCTO_INACTIVO);
 
 		return p;
