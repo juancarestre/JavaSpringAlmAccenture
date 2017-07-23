@@ -153,8 +153,6 @@ public class ControladorVenta{
 	@RequestMapping(value = "/ventas", method=RequestMethod.GET, params="guardar")
 	public String confirmarVenta() throws LogicaNegocioExcepcion {
 		//TODO: Popup de confirmación
-		venta = ventaBl.nuevaVenta(); //temporal
-		venta.setDetalles(detalles);
 		venta.setTotalVenta(sumarTotal());
 		ventaBl.guardarVenta(venta);
 		return "Producto Guardado";
