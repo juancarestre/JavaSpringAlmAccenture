@@ -1,7 +1,7 @@
 package co.almaccenture.business;
 
 import co.almaccenture.exception.LogicaNegocioExcepcion;
-import co.almaccenture.model.Caja;
+
 import co.almaccenture.model.DetalleVenta;
 import co.almaccenture.model.Venta;
 
@@ -52,7 +52,6 @@ public interface LogicaNegocioVenta {
 	 * Obtiene una venta de la base de datos dado un id
 	 */
 	public Venta obtenerVentaPorID(int idVenta) throws LogicaNegocioExcepcion;
-	
 	
 	
 	//TODO: Crear método para buscar por el nombre con comodin contains

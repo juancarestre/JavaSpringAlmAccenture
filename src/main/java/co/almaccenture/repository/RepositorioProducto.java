@@ -1,5 +1,7 @@
 package co.almaccenture.repository;
 
+import java.util.List;
+
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -9,5 +11,7 @@ import co.almaccenture.model.Producto;
 public interface RepositorioProducto extends CrudRepository<Producto, String> {
 
 	public Producto findByIdProductoAndEstadoProducto(String idProducto, boolean estadoProducto);
+	
+	public List<Producto> findByNombreProductoContaining(String nombreProducto);
 	
 }

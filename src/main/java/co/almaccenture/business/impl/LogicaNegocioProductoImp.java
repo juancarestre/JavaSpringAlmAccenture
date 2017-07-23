@@ -1,5 +1,7 @@
 package co.almaccenture.business.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +25,7 @@ public class LogicaNegocioProductoImp implements LogicaNegocioProducto  {
 	private static final String MENSAJE_PRODUCTO_INACTIVO = "El producto se encuentra en estado inactivo";
 	
 	@Override
-	public void restarProductos(Producto producto, int cantidad) throws LogicaNegocioExcepcion {
+	public void restarProducto(Producto producto, int cantidad) throws LogicaNegocioExcepcion {
 		
 		Integer stock;
 		stock=producto.getCantidadProducto();
@@ -53,6 +55,13 @@ public class LogicaNegocioProductoImp implements LogicaNegocioProducto  {
 		if(!p.getEstadoProducto()) throw new LogicaNegocioExcepcion(MENSAJE_PRODUCTO_INACTIVO);
 
 		return p;
+	}
+	
+
+	@Override
+	public List<Producto> obtenerProductoPorNombre(String nombre) throws LogicaNegocioExcepcion {
+		if(nombre==null) throw new LogicaNegocioExcepcion(MENSAJE_PRODUCTO_NO_ENCONTRADO);
+		return repositorioProducto.findByNombreProductoContaining(nombre);
 	}
 	
 	

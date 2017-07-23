@@ -1,4 +1,4 @@
-package co.almaccenture.business;
+package co.almaccenture.business.impl;
 
 import static org.junit.Assert.*;
 

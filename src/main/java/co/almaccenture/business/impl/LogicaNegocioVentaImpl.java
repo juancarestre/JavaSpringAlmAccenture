@@ -113,7 +113,7 @@ public class LogicaNegocioVentaImpl implements LogicaNegocioVenta {
 			Integer cantidad = detalleVenta.get(i).getCantidad();
 			total += cantidad*detalleVenta.get(i).getValorUnitario();	
 			detalleVenta.get(i).setVenta(venta);
-			productoBl.restarProductos(detalleVenta.get(i).getProducto(), cantidad);
+			productoBl.restarProducto(detalleVenta.get(i).getProducto(), cantidad);
 			//detalleVenta.get(i).getProducto();
 		}
 		if(total != venta.getTotalVenta()){

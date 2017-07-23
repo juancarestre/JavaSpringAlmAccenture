@@ -97,5 +97,21 @@ public class RepositorioProductoTest {
 		}
 	}
 	
+	@Test
+	public void testBuscarProductoPorNombre(){
+		String nombre = "baño";
+		String nombre1 = "";
+		try {
+			List<Producto> p = productoRepo.findByNombreProductoContaining(nombre);
+			assertTrue("No encontro producto con nombre like " + nombre, p.size()>0);
+			assertNotNull("Encontro productos con string vacio",productoRepo.findByNombreProductoContaining(nombre1));
+			assertTrue("No encontro productos con string vacio",productoRepo.findByNombreProductoContaining(nombre1).size()>0);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail(e.getMessage());
+		}
+	}
+	
 
 }

@@ -1,5 +1,7 @@
 package co.almaccenture.business;
 
+import java.util.List;
+
 import co.almaccenture.exception.LogicaNegocioExcepcion;
 import co.almaccenture.model.Producto;
 
@@ -11,7 +13,7 @@ public interface LogicaNegocioProducto {
 	 * @param producto
 	 * @throws LogicaNegocioExcepcion 
 	 */
-	public void restarProductos(Producto producto, int cantidad) throws LogicaNegocioExcepcion;
+	public void restarProducto(Producto producto, int cantidad) throws LogicaNegocioExcepcion;
 	
 	/**
 	 * Verifica si un producto está próximo a agotarse 
@@ -25,5 +27,13 @@ public interface LogicaNegocioProducto {
 	 * Obtiene un producto Activo a partir del codigo
 	 */
 	public Producto obtenerProducto(String id) throws LogicaNegocioExcepcion;
+	
+	/**
+	 * Obtiene los producto cuyo nombre contiene el parametro string dado
+	 * @param nombre - Nombre del producto
+	 * @return Producto(s) encontrado(s) con el nombre o null si no existe
+	 * @throws LogicaNegocioExcepcion
+	 */
+	public List<Producto> obtenerProductoPorNombre(String nombre) throws LogicaNegocioExcepcion;
 
 }
