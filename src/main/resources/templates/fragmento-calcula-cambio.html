@@ -1,10 +1,19 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <div th:fragment="calculaCambio">
-	<div>Total: $[[${venta.totalVenta}]]</div>
-		<label>Efectivo</label> <input type="number" id="inpEfectivo"></input>
-		<button th:inline="javascript" onclick="calcularCambio()">Calcular</button>
-	<label id="lblCambio"></label>
+	<h2>
+		<font color="red">
+			<div>Total: $[[${venta.totalVenta}]]</div>
+		</font> <br> <label>Efectivo</label> <input type="number"
+			id="inpEfectivo"></input> <br> <br>
+		<div class="row text-center">
+			<button th:inline="javascript" onclick="calcularCambio()"
+				class="btn btn-success btn-lg">Calcular</button>
+		</div>
+		<br> <label>Su cambio es de:</label> <label id="lblCambio"></label>
+	</h2>
 	<script th:inline="javascript">
+	
+	
 	//calcula cambio a partir de efectivo entregado y total de la venta
 	function calcularCambio(){
 		let efe = document.getElementById('inpEfectivo').value;

@@ -169,14 +169,18 @@
 			<div class=col-md-2></div>
 		</div>
 		<br>
+
 		<div class="row text-center">
+		
 		<button class="btn btn-success btn-lg" onclick="preparaModalPago()">Pagar</button>
-			<form th:action="@{/ventas}" action="#" th:method="GET">
+		
+			<form th:action="@{/ventas}" action="#" th:method="GET" style="display:inline;">
 				
 				<input name="limpiar" type="submit" value="Cancelar" 
 					class="btn btn-primary btn-lg" />
 			</form>
 		</div>
+	
 
 		<script th:inline="javascript">
 			/*llama ruta de controlador para inyectar data en el modal*/
@@ -198,7 +202,7 @@
 					nl2br : false, //para que no genere <br> por cada salto de linea
 					buttons : [ {
 						label : 'Pagar',
-						cssClass : 'btn-primary',
+						cssClass : 'btn-primary btn-lg',
 						hotkey: 13, 
 						action : function(dialogItself) {
 							var $button = this;
@@ -209,7 +213,7 @@
 						}
 					}, {
 						label : 'Cerrar',
-						cssClass : 'btn-info',
+						cssClass : 'btn-danger btn-lg',
 						action : function(dialogItself) {
 							dialogItself.close();
 						}
