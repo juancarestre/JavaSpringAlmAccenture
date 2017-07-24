@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns="http://www.w3.org/1999/xhtml">
+<div th:fragment="calculaCambio">
+	<div>Total: [[${venta.totalVenta}]]</div>
+
+	<label>Efectivo</label> <input th:value="${efectivo}"></input>
+	<button th:inline="javascript"
+		onclick="'document.getElementById(\'lblCambio\').textContent=\''+${venta.totalVenta}+'\'-\''+${efectivo}'\;'">Calcular</button>
+
+	<label id="lblCambio"></label>
+
+</div>
+
+
+
+</html>

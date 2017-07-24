@@ -5,10 +5,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.GET;
 import javax.ws.rs.QueryParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,8 +30,6 @@ import co.almaccenture.model.Venta;
 public class ControladorVenta{
 	
 	
-	
-	private List<DetalleVenta> detalles = new ArrayList<>();
 	@Autowired
 	private LogicaNegocioVenta ventaBl;
 	
@@ -37,6 +37,7 @@ public class ControladorVenta{
 	public static final String MENSAJE_ID_PRODUCTO_INVALIDO = "El código de producto debe contener algún valor.";
 	public static final String MENSAJE_CANTIDAD_INVALIDO = "La cantidad debe contener algún valor.";
 	private static final String MENSAJE_DETALLE_ACTUALIZADO = "Se ha actualizado producto";
+	private static final String FRAGMENTO_CALCULA_CAMBIO = "fragmento-calcula-cambio";
 	
 
 	/**
@@ -136,7 +137,7 @@ public class ControladorVenta{
 	@GetMapping("ventas/{idProducto}")
 	public ModelAndView eliminarProducto(@PathVariable("idProducto") String idProducto) {
 		ModelAndView mav = new ModelAndView("/venta");
-		
+		List<DetalleVenta> detalles = venta.getDetalles();
 		for(int i=0; i<detalles.size(); i++){
 			DetalleVenta dp = detalles.get(i);
 			if(dp.getProducto().getIdProducto().equals(idProducto))
@@ -148,6 +149,20 @@ public class ControladorVenta{
 		mav.addObject("detalle", new DetalleVenta());
 		
 		return new ModelAndView("redirect:/ventas");
+	}
+	
+	/**
+	 * le agrega a fragmento de calculo cambio la venta con el calculo del total
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value="/ventas/pago",method= RequestMethod.GET)
+	public String calculaCambio(final Model model){
+		venta.setTotalVenta(sumarTotal());
+//		ModelAndView mav = new ModelAndView(FRAGMENTO_CALCULA_CAMBIO);
+//		mav.addObject("venta", venta);
+		model.addAttribute(venta);
+		return FRAGMENTO_CALCULA_CAMBIO;
 	}
 	
 	@RequestMapping(value = "/ventas", method=RequestMethod.GET, params="guardar")
@@ -162,7 +177,7 @@ public class ControladorVenta{
 		float suma=0;
 		
 		
-		
+		List<DetalleVenta> detalles = venta.getDetalles();
 		for(int i=0; i<detalles.size(); i++){
 			DetalleVenta dp = detalles.get(i);
 			suma += (dp.getCantidad()*dp.getValorUnitario());			
