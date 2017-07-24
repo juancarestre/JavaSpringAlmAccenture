@@ -139,15 +139,14 @@
 					</thead>
 					<tbody>
 						<tr th:each="detalle : ${venta.detalles}">
-							<td th:text="${detalle.producto.idProducto}">1</td>
-							<td th:text="${detalle.producto.nombreProducto}">nombre</td>
+							<td th:text="${detalle.producto.idProducto}"></td>
+							<td th:text="${detalle.producto.nombreProducto}"></td>
 
-							<td th:text="${detalle.cantidad}">2</td>
+							<td th:text="${detalle.cantidad}"></td>
 
-							<td th:text="${detalle.valorUnitario}">1312</td>
+							<td> $ <span th:text="${#numbers.formatDecimal(detalle.valorUnitario, 0, 'COMMA', 0, 'POINT')}"></span></td>
 
-							<td th:text="${detalle.cantidad*detalle.valorUnitario}">534534</td>
-
+							<td> $ <span th:text="${#numbers.formatDecimal(detalle.cantidad*detalle.valorUnitario, 0, 'COMMA', 0, 'POINT')}"></span></td>
 							<td><a
 								th:href="@{'/ventas/' + ${detalle.producto.idProducto}}"><span
 									class="glyphicon glyphicon-trash"></span></a></td>
@@ -158,7 +157,8 @@
 							<td></td>
 							<td></td>
 							<td><span class="label label-danger" th:text="Total"></span></td>
-							<td><span class="label label-danger" th:text="${venta.totalVenta}"></span></td>
+							<td>  <span class="label label-danger">  $ <span th:text= "${#numbers.formatDecimal(venta.totalVenta, 0, 'COMMA', 0, 'POINT')}"> </span></span></td>
+<!-- 							<td> $ <span th:text="${#numbers.formatDecimal(detalle.valorUnitario, 0, 'COMMA', 2, 'POINT')}"></span></td> -->
 							<td></td>
 						</tr>
 					</tbody>
