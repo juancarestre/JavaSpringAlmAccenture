@@ -147,6 +147,8 @@ public class ControladorVenta{
 			DetalleVenta dp = detalles.get(i);
 			if(dp.getProducto().getIdProducto().equals(idProducto))
 				detalles.remove(dp);
+//				venta.setTotalVenta(venta.getTotalVenta()-dp.getValorUnitario()*dp.getCantidad());
+				venta.setTotalVenta(sumarTotal());
 		}
 		
 		mav.addObject("venta", venta);
