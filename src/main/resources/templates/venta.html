@@ -95,7 +95,7 @@
 				<input type="number" th:field="*{cantidad}">
 				<div class="form-actions">
 
-					<br> <input type="submit" value="Buscar"
+					<br> <input type="submit" value="Buscar" id="agregar"
 						class="btn btn-success btn-lg" />
 				</div>
 
@@ -171,12 +171,12 @@
 		<br>
 
 		<div class="row text-center">
-		
-		<button class="btn btn-success btn-lg" onclick="preparaModalPago()">Pagar</button>
-		
+
+		<button th:if="${not #lists.isEmpty(venta.detalles)}" class="btn btn-success btn-lg" id= "pagar" onclick="preparaModalPago()">Pagar</button>
 			<form th:action="@{/ventas}" action="#" th:method="GET" style="display:inline;">
+
 				
-				<input name="limpiar" type="submit" value="Cancelar" 
+				<input name="limpiar" type="submit" value="Cancelar"  id=cancelar""
 					class="btn btn-primary btn-lg" />
 			</form>
 		</div>
@@ -203,6 +203,7 @@
 					buttons : [ {
 						label : 'Pagar',
 						cssClass : 'btn-primary btn-lg',
+						id:'btnpagar',
 						hotkey: 13, 
 						action : function(dialogItself) {
 							var $button = this;
@@ -212,6 +213,7 @@
 					}, {
 						label : 'Cerrar',
 						cssClass : 'btn-danger btn-lg',
+						id:'btncancelar',
 						action : function(dialogItself) {
 							dialogItself.close();
 						}
