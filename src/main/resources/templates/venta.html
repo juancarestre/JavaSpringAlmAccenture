@@ -207,9 +207,7 @@
 						action : function(dialogItself) {
 							var $button = this;
 							$button.spin();
-							$.get('/ventas/guardar',function(result){
-								dialogItself.close();
-							});
+							location.replace('/ventas/guardar');
 						}
 					}, {
 						label : 'Cerrar',
