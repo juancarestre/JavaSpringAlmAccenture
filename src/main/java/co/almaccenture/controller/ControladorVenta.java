@@ -5,25 +5,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.GET;
-import javax.ws.rs.QueryParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import co.almaccenture.business.LogicaNegocioCaja;
 import co.almaccenture.business.LogicaNegocioVenta;
 import co.almaccenture.exception.LogicaNegocioExcepcion;
 import co.almaccenture.model.DetalleVenta;
-import co.almaccenture.model.Producto;
 import co.almaccenture.model.Venta;
 
 @Controller
@@ -46,8 +41,10 @@ public class ControladorVenta{
 	 */
 	@RequestMapping(value="/ventas/new")
 	public ModelAndView nuevaVenta(){
+		float totalInicial=0;
 		try {
 			venta = ventaBl.nuevaVenta();
+			venta.setTotalVenta(totalInicial);
 		} catch (LogicaNegocioExcepcion e) {
 			e.printStackTrace();
 		}
@@ -193,17 +190,13 @@ public class ControladorVenta{
 	}
 	
 	public float sumarTotal() {
-		float suma=0;
-		
-		
+		float suma=0;		
 		List<DetalleVenta> detalles = venta.getDetalles();
 		for(int i=0; i<detalles.size(); i++){
 			DetalleVenta dp = detalles.get(i);
 			suma += (dp.getCantidad()*dp.getValorUnitario());			
 		}
-		
 		return suma;
-		
 	}
 	
 	
