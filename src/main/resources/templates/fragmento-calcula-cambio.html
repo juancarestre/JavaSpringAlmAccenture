@@ -2,14 +2,16 @@
 <div th:fragment="calculaCambio">
 	<h2>
 		<font color="red">
-			<div>Total: $[[${venta.totalVenta}]]</div>
+			<div>Total: <td> $ <span th:text="${#numbers.formatDecimal(venta.totalVenta, 0, 'COMMA', 0, 'POINT')}"></span></td> </div>
+			
 		</font> <br> <label>Efectivo</label> <input type="number"
 			id="inpEfectivo"></input> <br> <br>
 		<div class="row text-center">
 			<button th:inline="javascript" onclick="calcularCambio()"
 				class="btn btn-success btn-lg">Calcular</button>
 		</div>
-		<br> <label>Su cambio es de:</label> <label id="lblCambio"></label>
+		<br> <label>Su cambio es de:</label>  
+		 <label id="lblCambio"></label>
 	</h2>
 	<script th:inline="javascript">
 	

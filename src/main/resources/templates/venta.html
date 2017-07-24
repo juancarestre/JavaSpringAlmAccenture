@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -48,29 +49,53 @@
 	</div>
 	<h2>
 
-		</br>
-		</br>
+		</br></br>
+
 		<div class="row text-center">
-			<div>
-				<label for="fecha">Fecha:</label> <label class="label label-default"
-					th:text="${venta.fechaVenta}"></label> <label for="caja">Caja:</label>
-				<label class="label label-default"
-					th:text="${venta.caja.nombreCaja}"></label>
+			<div class="col-md-2"></div>
+			<div class="col-md-8">
+				<div>
+					<!-- <form id="cargar" th:action="@{/ventas}" th:object="${venta}"
+					action="#" th:method="post"> -->
+					<div>
+
+						<label for="fecha">Fecha:</label> <label
+							class="label label-default" th:text="${venta.fechaVenta}"></label>
+
+						<label for="caja">Caja:</label> <label class="label label-default"
+							th:text="${venta.caja.nombreCaja}"></label>
+						<!-- Como inserto como th:field un objeto -->
+
+					</div>
+					<!-- </form> -->
+				</div>
+				<div class="col-md-2"></div>
 			</div>
 		</div>
 		<hr class="featurette-divider">
+
+		<br>
+
 		<div class="row text-center">
+
+
 			<form id="messageForm" th:action="@{/ventas}" action="#"
 				th:object="${detalle}" method="get">
 				<label for="codigo">Código del producto:</label> <input type="text"
 					th:field="*{producto.idProducto}"> <label for="cantidad">Cantidad:</label>
 				<input type="number" th:field="*{cantidad}">
 				<div class="form-actions">
-					<br> <input type="submit" value="Agregar"
+
+					<br> <input type="submit" value="Buscar" id="agregar"
 						class="btn btn-success btn-lg" />
 				</div>
+
 			</form>
+
+
 		</div>
+		<br>
+		<!-- <br> <input type="hidden" th:field="*{activo}" /> -->
 		<div th:if="${message != ''}"
 			class="alert alert-warning alert-dismissible" role="alert">
 			<div class="text-center">
@@ -85,6 +110,7 @@
 
 		<hr class="featurette-divider">
 
+		<br>
 
 		<div class="row">
 			<div class=col-md-2></div>
@@ -104,37 +130,29 @@
 					</thead>
 					<tbody>
 						<tr th:each="detalle : ${venta.detalles}">
-							<td th:text="${detalle.producto.idProducto}">1</td>
-							<td th:text="${detalle.producto.nombreProducto}">nombre</td>
+							<td th:text="${detalle.producto.idProducto}"></td>
+							<td th:text="${detalle.producto.nombreProducto}"></td>
 
-							<td th:text="${detalle.cantidad}">2</td>
+							<td th:text="${detalle.cantidad}"></td>
 
-							<td th:text="${detalle.valorUnitario}">1312</td>
+							<td> $ <span th:text="${#numbers.formatDecimal(detalle.valorUnitario, 0, 'COMMA', 0, 'POINT')}"></span></td>
 
-							<td th:text="${detalle.cantidad*detalle.valorUnitario}">534534</td>
-
+							<td> $ <span th:text="${#numbers.formatDecimal(detalle.cantidad*detalle.valorUnitario, 0, 'COMMA', 0, 'POINT')}"></span></td>
 							<td><a
 								th:href="@{'/ventas/' + ${detalle.producto.idProducto}}"><span
 									class="glyphicon glyphicon-trash"></span></a></td>
 
 						</tr>
-<!-- 						<tr th:if="${not #lists.isEmpty(venta.detalles)}"> -->
-<!-- 							<td><span class="label label-danger" th:text="Total"></span></td> -->
-<!-- 							<td><span class="label label-danger" -->
-<!-- 								th:text="${venta.totalVenta}"></span></td> -->
-<!-- 							<td></td> -->
-<!-- 						</tr> -->
 					</tbody>
 
 				</table>
+				
 				<div class="row">
 					<div class="col-md-10"></div>
 					<div class="col-md-2">
 					<p class="label label-danger" th:if="${not #lists.isEmpty(venta.detalles)}"> Total: [[${venta.totalVenta}]]</p>
 					</div>
 				</div>
-				
-				
 
 			</div>
 			<div class=col-md-2></div>
@@ -142,11 +160,9 @@
 		<br>
 
 		<div class="row text-center">
-		
-		<button class="btn btn-success btn-lg" onclick="preparaModalPago()">Pagar</button>
-		
+
+		<button th:if="${not #lists.isEmpty(venta.detalles)}" class="btn btn-success btn-lg" id= "pagar" onclick="preparaModalPago()">Pagar</button>
 			<form th:action="@{/ventas}" action="#" th:method="GET" style="display:inline;">
-				
 				<input name="limpiar" type="submit" value="Cancelar" 
 					class="btn btn-primary btn-lg" />
 			</form>
@@ -174,7 +190,8 @@
 					buttons : [ {
 						label : 'Pagar',
 						cssClass : 'btn-primary btn-lg',
-						hotkey : 13,
+						id:'btnpagar',
+						hotkey: 13, 
 						action : function(dialogItself) {
 							var $button = this;
 							$button.spin();
@@ -183,6 +200,7 @@
 					}, {
 						label : 'Cerrar',
 						cssClass : 'btn-danger btn-lg',
+						id:'btncancelar',
 						action : function(dialogItself) {
 							dialogItself.close();
 						}
@@ -194,4 +212,5 @@
 		<br> <br>
 	</h2>
 </body>
+	
 </html>
