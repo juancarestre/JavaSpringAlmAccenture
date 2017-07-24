@@ -46,8 +46,10 @@ public class ControladorVenta{
 	 */
 	@RequestMapping(value="/ventas/new")
 	public ModelAndView nuevaVenta(){
+		float totalInicial=0;
 		try {
 			venta = ventaBl.nuevaVenta();
+			venta.setTotalVenta(totalInicial);
 		} catch (LogicaNegocioExcepcion e) {
 			e.printStackTrace();
 		}

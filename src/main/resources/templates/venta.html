@@ -8,7 +8,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.9/css/bootstrap-dialog.min.css" rel="stylesheet" type="text/css" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.9/js/bootstrap-dialog.min.js"></script>
-<link rel="icon" href="../static/img/A.png">
+<link rel="icon" href="/img/A.png">
 </head>
 
 <body>
@@ -45,11 +45,6 @@
 
 		<br>
 		<div class="row">
-			<div class="col-md-1">
-				<img
-					src="img/Almaccenture.png">
-<!-- 					width="130" height="150"> -->
-			</div>
 			<div class="col-md-11">
 				<div class="page-header">
 					<h1>
@@ -112,7 +107,7 @@
 					aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
-				<strong>¡Señor(a) usuario!</strong>
+				<strong>¡Señor usuario!</strong>
 				<div th:text="${message}"></div>
 			</div>
 		</div>
@@ -157,9 +152,9 @@
 							<td></td>
 							<td></td>
 							<td></td>
+							<td><span class="label label-danger" th:text="Total"></span></td>
+							<td><span class="label label-danger" th:text="${venta.totalVenta}"></span></td>
 							<td></td>
-							<td><span class="label label-danger">Total</span> <!-- th:text="${producto.total}" --></td>
-							<td th:text="${venta.totalVenta}"></td>
 						</tr>
 					</tbody>
 
