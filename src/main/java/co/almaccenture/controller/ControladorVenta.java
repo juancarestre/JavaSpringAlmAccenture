@@ -183,12 +183,22 @@ public class ControladorVenta{
 		return "redirect:/ventas/new";
 	}
 	
+	/**
+	 * Reinicia la venta cuando se preciona Cancelar en la vista ventas
+	 * @return inicia nueva venta
+	 * @throws LogicaNegocioExcepcion
+	 */
 	@RequestMapping(value = "/ventas", method=RequestMethod.GET, params="limpiar")
 	public ModelAndView limpiarVenta() throws LogicaNegocioExcepcion {
 		return new ModelAndView("redirect:/ventas/new");
 
 	}
 	
+	
+	/**
+	 * Suma el total de los subtotales que se visualizan en la vista ventas
+	 * @return la suma de todos los subtotales presentes
+	 */
 	public float sumarTotal() {
 		float suma=0;		
 		List<DetalleVenta> detalles = venta.getDetalles();
