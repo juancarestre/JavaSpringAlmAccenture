@@ -176,7 +176,7 @@
 		</div>
 		<br>
 		<div class="row text-center">
-		<button class="btn btn-success btn-lg" onclick="preparaModalPago()">Pagar</button>
+		<button th:if="${not #lists.isEmpty(venta.detalles)}" class="btn btn-success btn-lg" onclick="preparaModalPago()">Pagar</button>
 			<form th:action="@{/ventas}" action="#" th:method="GET">
 				
 				<input name="limpiar" type="submit" value="Cancelar" 

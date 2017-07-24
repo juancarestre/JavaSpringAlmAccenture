@@ -38,8 +38,8 @@ public class ControladorVenta{
 	public static final String MENSAJE_CANTIDAD_INVALIDO = "La cantidad debe contener algún valor.";
 	private static final String MENSAJE_DETALLE_ACTUALIZADO = "Se ha actualizado producto";
 	private static final String FRAGMENTO_CALCULA_CAMBIO = "fragmento-calcula-cambio :: calculaCambio";
-	
-
+	private static final String MENSAJE_SIN_DETALLES = "No hay detalles en la venta.";
+	private static final String REDIRECT_VENTAS ="redirect:/ventas";
 	/**
 	 * Genera una nueva venta, iniciando todos los form-backing beans.
 	 * url: /ventas/new ---- > retorna /ventas
@@ -141,7 +141,7 @@ public class ControladorVenta{
 
 	@GetMapping("ventas/{idProducto}")
 	public ModelAndView eliminarProducto(@PathVariable("idProducto") String idProducto) {
-		ModelAndView mav = new ModelAndView("/venta");
+		ModelAndView mav = new ModelAndView("venta");
 		List<DetalleVenta> detalles = venta.getDetalles();
 		for(int i=0; i<detalles.size(); i++){
 			DetalleVenta dp = detalles.get(i);
@@ -152,10 +152,9 @@ public class ControladorVenta{
 		}
 		
 		mav.addObject("venta", venta);
-		mav.addObject("detalles", detalles);
 		mav.addObject("detalle", new DetalleVenta());
-		
-		return new ModelAndView("redirect:/ventas");
+		mav.addObject("message", "");
+		return mav;
 	}
 	
 	/**
@@ -165,9 +164,12 @@ public class ControladorVenta{
 	 */
 	@RequestMapping(value="/ventas/pago",method= RequestMethod.GET)
 	public String preparaModalPago(final Model model){
-		venta.setTotalVenta(sumarTotal());
-		model.addAttribute(venta);
-		return FRAGMENTO_CALCULA_CAMBIO;
+		
+			
+			venta.setTotalVenta(sumarTotal());
+			model.addAttribute(venta);
+			return FRAGMENTO_CALCULA_CAMBIO;
+		
 	}
 	
 	/**
