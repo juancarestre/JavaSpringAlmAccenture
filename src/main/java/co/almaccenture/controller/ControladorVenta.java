@@ -37,7 +37,7 @@ public class ControladorVenta{
 	public static final String MENSAJE_ID_PRODUCTO_INVALIDO = "El código de producto debe contener algún valor.";
 	public static final String MENSAJE_CANTIDAD_INVALIDO = "La cantidad debe contener algún valor.";
 	private static final String MENSAJE_DETALLE_ACTUALIZADO = "Se ha actualizado producto";
-	private static final String FRAGMENTO_CALCULA_CAMBIO = "fragmento-calcula-cambio";
+	private static final String FRAGMENTO_CALCULA_CAMBIO = "fragmento-calcula-cambio :: calculaCambio";
 	
 
 	/**
@@ -152,25 +152,29 @@ public class ControladorVenta{
 	}
 	
 	/**
-	 * le agrega a fragmento de calculo cambio la venta con el calculo del total
-	 * @param model
-	 * @return
+	 * Inyecta objecto venta a fragmento para mostrar en el bootstrap dialog
+	 * @param model modelo que se le inyecta a fragmento
+	 * @return fragmento para ser usado por el bootstrap dialog
 	 */
 	@RequestMapping(value="/ventas/pago",method= RequestMethod.GET)
-	public String calculaCambio(final Model model){
+	public String preparaModalPago(final Model model){
 		venta.setTotalVenta(sumarTotal());
-//		ModelAndView mav = new ModelAndView(FRAGMENTO_CALCULA_CAMBIO);
-//		mav.addObject("venta", venta);
 		model.addAttribute(venta);
 		return FRAGMENTO_CALCULA_CAMBIO;
 	}
 	
-	@RequestMapping(value = "/ventas", method=RequestMethod.GET, params="guardar")
+	/**
+	 * Confirma la venta y la envia a la base de datos
+	 * @return inicia una nueva venta
+	 * @throws LogicaNegocioExcepcion
+	 */
+	@RequestMapping(value = "/ventas/guardar", method=RequestMethod.GET)
 	public String confirmarVenta() throws LogicaNegocioExcepcion {
 		//TODO: Popup de confirmación
+		System.out.println("Entro a confirmar venta");
 		venta.setTotalVenta(sumarTotal());
 		ventaBl.guardarVenta(venta);
-		return "Producto Guardado";
+		return "redirect:/ventas/new";
 	}
 	
 	public float sumarTotal() {

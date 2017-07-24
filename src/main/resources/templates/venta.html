@@ -4,10 +4,16 @@
 <meta charset="UTF-8">
 <title>Almaccenture Ventas</title>
 <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.9/css/bootstrap-dialog.min.css" rel="stylesheet" type="text/css" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.9/js/bootstrap-dialog.min.js"></script>
+<link
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	rel="stylesheet" type="text/css" />
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.9/css/bootstrap-dialog.min.css"
+	rel="stylesheet" type="text/css" />
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.9/js/bootstrap-dialog.min.js"></script>
 <link rel="icon" href="../static/img/A.png">
 </head>
 
@@ -170,47 +176,50 @@
 		</div>
 		<br>
 		<div class="row text-center">
-			<form th:action="@{/ventas}" action="#" th:method="GET">
-
-				<input name="guardar" type="submit" value="Aceptar"
-					class="btn btn-success btn-lg" />
-				
-				<input name="limpiar" type="submit" value="Cancelar"
-					class="btn btn-primary btn-lg" />
-
+		<button class="btn btn-success btn-lg" onclick="preparaModalPago()">Pagar</button>
+			<form th:action="@{/ventas}" action="#" th:method="GET"><input name="limpiar"
+					type="submit" value="Cancelar" class="btn btn-primary btn-lg" />
 			</form>
-			
-			<button onclick="calculaCambio()">Pagar</button>
-
 		</div>
 
 		<script th:inline="javascript">
-			function calculaCambio() {
-				
+			/*llama ruta de controlador para inyectar data en el modal*/
+			function preparaModalPago() {
 				let url = "/ventas/pago";
-				$.get(url,function(result){
+				$.get(url, function(result) {
 					mostrarModal(result);
 				})
-				
+
 			}
-			
-			function mostrarModal(result){
+
+			/*muestra modal-dialog y lo rellena con lo que viene en parametro result*/
+			function mostrarModal(result) {
 				BootstrapDialog.show({
-	                type: BootstrapDialog.TYPE_PRIMARY,
-	                title: "Calcular Cambio",
-	                message: result,
-	                draggable: true,
-	                buttons: [{
-	                    label: 'Close',
-	                    cssClass: 'btn-info',
-	                    action: function (dialogItself) {
-	                        dialogItself.close();
-	                    }
-	                }]
-	            })
+					type : BootstrapDialog.TYPE_PRIMARY,
+					title : "Calcular Cambio",
+					message : result,
+					draggable : true,
+					nl2br : false, //para que no genere <br> por cada salto de linea
+					buttons : [ {
+						label : 'Pagar',
+						cssClass : 'btn-primary',
+						hotkey: 13, 
+						action : function(dialogItself) {
+							var $button = this;
+							$button.spin();
+							$.get('/ventas/guardar',function(result){
+								dialogItself.close();
+							});
+						}
+					}, {
+						label : 'Cerrar',
+						cssClass : 'btn-info',
+						action : function(dialogItself) {
+							dialogItself.close();
+						}
+					} ]
+				})
 			}
-			
-			
 		</script>
 
 		<br> <br>
