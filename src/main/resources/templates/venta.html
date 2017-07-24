@@ -36,8 +36,8 @@
 					</div>
 					<div id="navbar" class="navbar-collapse collapse">
 						<ul class="nav navbar-nav">
-							<li><a href="main.html">Página principal</a></li>
-							<li class="active"><a href="venta.html">Venta</a></li>
+							<li><a th:href="@{/}" href="#">Página principal</a></li>
+							<li class="active" ><a th:href="@{/ventas}" href="#">Venta</a></li>
 							<li><a href="#contact">Inventario</a></li>
 							<li><a href="#contact">Reportes</a></li>
 						</ul>
@@ -53,8 +53,8 @@
 		<div class="row">
 			<div class="col-md-1">
 				<img
-					src="C:/Users/Administrator/git/JavaSpringAlmAccenture/src/main/resources/static/img/A.png"
-					width="130" height="150">
+					src="img/Almaccenture.png">
+<!-- 					width="130" height="150"> -->
 			</div>
 			<div class="col-md-11">
 				<div class="page-header">
@@ -165,7 +165,7 @@
 							<td></td>
 							<td></td>
 							<td><span class="label label-danger">Total</span> <!-- th:text="${producto.total}" --></td>
-							<td></td>
+							<td th:text="${venta.totalVenta}"></td>
 						</tr>
 					</tbody>
 
@@ -177,8 +177,10 @@
 		<br>
 		<div class="row text-center">
 		<button class="btn btn-success btn-lg" onclick="preparaModalPago()">Pagar</button>
-			<form th:action="@{/ventas}" action="#" th:method="GET"><input name="limpiar"
-					type="submit" value="Cancelar" class="btn btn-primary btn-lg" />
+			<form th:action="@{/ventas}" action="#" th:method="GET">
+				
+				<input name="limpiar" type="submit" value="Cancelar" 
+					class="btn btn-primary btn-lg" />
 			</form>
 		</div>
 
