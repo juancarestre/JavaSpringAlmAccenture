@@ -175,6 +175,12 @@ public class ControladorVenta{
 		return "Producto Guardado";
 	}
 	
+	@RequestMapping(value = "/ventas", method=RequestMethod.GET, params="limpiar")
+	public ModelAndView limpiarVenta() throws LogicaNegocioExcepcion {
+		return new ModelAndView("redirect:/ventas/new");
+
+	}
+	
 	public float sumarTotal() {
 		float suma=0;
 		
