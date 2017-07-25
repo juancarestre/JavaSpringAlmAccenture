@@ -65,7 +65,7 @@ public class LogicaNegocioVentaImpl implements LogicaNegocioVenta {
 			throw new LogicaNegocioExcepcion(MENSAJE_CANTIDAD_DETALLE_INVALIDA);
 		}
 		
-		Producto producto = productoBl.obtenerProducto(idProducto);
+		Producto producto = productoBl.obtenerProductoActivo(idProducto);
 		
 		
 		if (producto == null) {

@@ -26,7 +26,7 @@ public interface LogicaNegocioProducto {
 	/**
 	 * Obtiene un producto Activo a partir del codigo
 	 */
-	public Producto obtenerProducto(String id) throws LogicaNegocioExcepcion;
+	public Producto obtenerProductoActivo(String id) throws LogicaNegocioExcepcion;
 	
 	/**
 	 * Obtiene los producto cuyo nombre contiene el parametro string dado
@@ -35,5 +35,8 @@ public interface LogicaNegocioProducto {
 	 * @throws LogicaNegocioExcepcion
 	 */
 	public List<Producto> obtenerProductoPorNombre(String nombre) throws LogicaNegocioExcepcion;
+
+	public Producto obtenerProductoPorId(String id) throws LogicaNegocioExcepcion;
+	
 
 }

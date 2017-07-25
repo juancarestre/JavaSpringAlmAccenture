@@ -17,5 +17,8 @@ public interface RepositorioVenta extends CrudRepository<Venta, Integer> {
 	public List<Venta> findByCaja(Caja caja);
 	
 	public List<Venta> findByFechaVenta(Date date);
+	
+	public List<Venta> findByFechaVentaBetween(Date date1, Date date2);
+
 		
 }
