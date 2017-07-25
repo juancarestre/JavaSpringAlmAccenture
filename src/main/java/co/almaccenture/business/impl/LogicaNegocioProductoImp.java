@@ -1,5 +1,7 @@
 package co.almaccenture.business.impl;
 
+import java.sql.Date;
+import java.util.Calendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import co.almaccenture.business.LogicaNegocioProducto;
 import co.almaccenture.exception.LogicaNegocioExcepcion;
+import co.almaccenture.model.Categoria;
 import co.almaccenture.model.Producto;
 import co.almaccenture.repository.RepositorioProducto;
 
@@ -25,9 +28,11 @@ public class LogicaNegocioProductoImp implements LogicaNegocioProducto  {
 	public static final String MENSAJE_NO_ID = "El campo de código de producto está vacío";
 	public static final String MENSAJE_NO_NOMBRE_PRODUCTO = "El campo de nombre de producto está vacío";
 	public static final String MENSAJE_NO_CANTIDAD = "El campo de cantidad de producto está vacío";
+	public static final String MENSAJE_CANTIDAD_NO_VALIDA = "La cantidad debe ser mayor de cero.";
 	public static final String MENSAJE_NO_DESCRIPCION = "El campo de descripción de producto está vacío";
 	public static final String MENSAJE_NO_CATEGORIA = "El campo de categoria de producto está vacío";
 	public static final String MENSAJE_NO_PRECIO = "El campo de precio de producto está vacío";
+	public static final String MENSAJE_PRECIO_NO_VALIDO = "El precio debe ser un campo mayor y diferente a cero";
 	public static final String MENSAJE_NO_FECHA = "El campo de fecha de producto está vacío";
 	public static final String MENSAJE_NO_ESTADO = "El campo de estado de producto está vacío";
 	
@@ -79,6 +84,28 @@ public class LogicaNegocioProductoImp implements LogicaNegocioProducto  {
 		if(p==null){throw new LogicaNegocioExcepcion(MENSAJE_PRODUCTO_NO_ENCONTRADO);}
 		
 		return p;
+	}
+	@Override
+	public Producto agregarProducto(Producto producto) throws LogicaNegocioExcepcion {
+		
+		String idProducto=producto.getIdProducto();
+		if(idProducto==null || "".equals(idProducto.trim())) throw new LogicaNegocioExcepcion(MENSAJE_NO_ID);
+	    String nombreProducto=producto.getNombreProducto();
+		if(nombreProducto==null || "".equals(nombreProducto)) throw new LogicaNegocioExcepcion(MENSAJE_NO_NOMBRE_PRODUCTO);
+		Float precioProducto = producto.getPrecioProducto();
+		if(precioProducto==null || "".equals(precioProducto)) throw new LogicaNegocioExcepcion(MENSAJE_NO_PRECIO);
+		if(precioProducto<=0) throw new LogicaNegocioExcepcion(MENSAJE_PRECIO_NO_VALIDO);
+		String descripcionProducto = producto.getDescripcionProducto();
+		if(descripcionProducto==null || "".equals(descripcionProducto)) throw new LogicaNegocioExcepcion(MENSAJE_NO_DESCRIPCION);
+		Integer cantidadProducto =producto.getCantidadProducto();
+		if(cantidadProducto==null || "".equals(cantidadProducto)) throw new LogicaNegocioExcepcion(MENSAJE_NO_CANTIDAD);
+		if(cantidadProducto<0) throw new LogicaNegocioExcepcion(MENSAJE_CANTIDAD_NO_VALIDA);
+		Categoria categoria = producto.getCategoria();
+		if(categoria==null) throw new LogicaNegocioExcepcion(MENSAJE_NO_CATEGORIA);
+		Date date = new Date(Calendar.getInstance().getTimeInMillis());
+		producto.setFechaModificacion(date);
+        return repositorioProducto.save(producto);
+		
 	}
 	
 	

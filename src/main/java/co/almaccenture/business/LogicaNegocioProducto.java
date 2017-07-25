@@ -38,5 +38,7 @@ public interface LogicaNegocioProducto {
 
 	public Producto obtenerProductoPorId(String id) throws LogicaNegocioExcepcion;
 	
+	public Producto agregarProducto(Producto producto) throws LogicaNegocioExcepcion;
+	
 
 }
