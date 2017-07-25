@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -24,5 +25,13 @@ public interface RepositorioProducto extends CrudRepository<Producto, String> {
 	 * @return Paginacion de producto, con todas las slice disponibles.
 	 */
 	public Page<Producto> findAll(Pageable pageable);
+	
+	/**
+	 * Retorna paginacion de productos cuya cantidad menor que < cantidad >
+	 * @param cantidad - umbral de busqueda
+	 * @param pageable - informacion de la paginacion
+	 * @return Paginacion de productos
+	 */
+	public Page<Producto> findByCantidadProductoLessThan(int cantidad,Pageable pageable);
 	
 }

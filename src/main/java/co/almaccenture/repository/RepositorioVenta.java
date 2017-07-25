@@ -3,6 +3,8 @@ package co.almaccenture.repository;
 import java.sql.Date;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -18,7 +20,7 @@ public interface RepositorioVenta extends CrudRepository<Venta, Integer> {
 	
 	public List<Venta> findByFechaVenta(Date date);
 	
-	public List<Venta> findByFechaVentaBetween(Date date1, Date date2);
+	public Page<Venta> findByFechaVentaBetween(Date date1, Date date2, Pageable pageabe);
 
 		
 }

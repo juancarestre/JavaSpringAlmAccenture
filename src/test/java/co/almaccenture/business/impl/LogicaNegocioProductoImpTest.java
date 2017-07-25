@@ -15,6 +15,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import co.almaccenture.business.LogicaNegocioProducto;
 import co.almaccenture.exception.LogicaNegocioExcepcion;
+import co.almaccenture.model.Producto;
 
 /**
  * @author Administrator
@@ -70,6 +71,7 @@ public class LogicaNegocioProductoImpTest {
 		
 	}
 	
+
 	@Transactional
 	@Test
 	public void testEliminarLogicamenteProducto() {
@@ -87,5 +89,28 @@ public class LogicaNegocioProductoImpTest {
 	}
 	
 	
+
+	@Test
+	public void testModificarProducto() {
+		
+		Producto producto = new Producto();
+		String id = "mmr732";
+		try {
+			producto = prodBl.obtenerProductoPorId(id);
+			producto.setNombreProducto("Producto Capilar anti-calvicie");
+			producto.setCantidadProducto(400);
+			prodBl.modificarProducto(producto);
+			
+			assertEquals("Se modificó el producto exitosamente", "Producto Capilar anti-calvicie", producto.getNombreProducto());
+		} catch (LogicaNegocioExcepcion e) {
+			e.printStackTrace();
+			fail(e.getMessage());
+		}
+		
+	}
+	
+	
+	
+
 
 }
