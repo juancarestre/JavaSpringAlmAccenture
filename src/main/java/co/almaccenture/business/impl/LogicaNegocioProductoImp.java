@@ -1,5 +1,7 @@
 package co.almaccenture.business.impl;
 
+import java.sql.Date;
+import java.util.Calendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,6 +65,7 @@ public class LogicaNegocioProductoImp implements LogicaNegocioProducto  {
 		return p;
 	}
 	
+	
 
 	@Override
 	public List<Producto> obtenerProductoPorNombre(String nombre) throws LogicaNegocioExcepcion {
@@ -79,6 +82,14 @@ public class LogicaNegocioProductoImp implements LogicaNegocioProducto  {
 		if(p==null){throw new LogicaNegocioExcepcion(MENSAJE_PRODUCTO_NO_ENCONTRADO);}
 		
 		return p;
+	}
+	@Override
+	public void eliminarLogicamenteProducto(String id) throws LogicaNegocioExcepcion {
+		Producto p=obtenerProductoActivo(id);
+		p.setFechaModificacion(new Date(Calendar.getInstance().getTimeInMillis()));
+		p.setEstadoProducto(false);
+		repositorioProducto.save(p);
+	
 	}
 	
 	
