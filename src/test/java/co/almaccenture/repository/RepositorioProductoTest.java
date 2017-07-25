@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Slice;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import co.almaccenture.model.Categoria;
@@ -121,9 +122,10 @@ public class RepositorioProductoTest {
 		int pagSize = 5;
 		try{
 			
-			Page<Producto> prods = productoRepo.findAll(new PageRequest(1, pagSize));
+			Page<Producto> prods = productoRepo.findAll(new PageRequest(0, pagSize));
 			
 			assertEquals("No se mostraron "+pagSize+" productos", pagSize,prods.getNumberOfElements());
+			System.out.println("Cantidad total de productos "+prods.getTotalElements());
 			System.out.println("Numero de paginas de prods "+prods.getTotalPages());
 			
 			System.out.println("Mostrando primera pagina de 5 productos");
@@ -132,7 +134,7 @@ public class RepositorioProductoTest {
 				System.out.println("Producto "+producto.getNombreProducto());
 			}
 			
-			prods = productoRepo.findAll(new PageRequest(2, pagSize));
+			prods = productoRepo.findAll(new PageRequest(1, pagSize));
 			
 			assertEquals("No se mostraron "+pagSize+" productos", pagSize,prods.getNumberOfElements());
 			
@@ -153,6 +155,29 @@ public class RepositorioProductoTest {
 			Iterable<Producto> p = productoRepo.findAll();
 			for (Producto producto : p) {
 				System.out.println("Producto: " + producto.getIdProducto());
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+			fail(e.getMessage());
+		}
+	}
+	
+	@Test
+	public void testFindProductosAgotados(){
+		int umbral = 100;
+		int pagSize = 5;
+		int numPagExpected = 2;
+		try{
+			Page<Producto> pages = productoRepo.findByCantidadProductoLessThan(umbral, new PageRequest(0, pagSize));
+			
+			assertEquals("Encontro diferente numero de paginas",numPagExpected, pages.getTotalPages());
+			
+			for(int i=0;i<pages.getTotalPages();i++){
+				System.out.println("Page "+pages.getNumber());
+				for (Producto producto : pages) {
+					System.out.println("Producto " + producto.getNombreProducto()+" cantidad "+producto.getCantidadProducto());
+				}
+				pages = productoRepo.findByCantidadProductoLessThan(umbral, pages.nextPageable());
 			}
 		}catch(Exception e){
 			e.printStackTrace();
