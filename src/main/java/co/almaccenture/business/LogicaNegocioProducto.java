@@ -2,6 +2,9 @@ package co.almaccenture.business;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import co.almaccenture.exception.LogicaNegocioExcepcion;
 import co.almaccenture.model.Producto;
 
@@ -34,9 +37,22 @@ public interface LogicaNegocioProducto {
 	 * @return Producto(s) encontrado(s) con el nombre o null si no existe
 	 * @throws LogicaNegocioExcepcion
 	 */
-	public List<Producto> obtenerProductoPorNombre(String nombre) throws LogicaNegocioExcepcion;
+	public Page<Producto> obtenerProductosPorNombre(String nombre, Pageable pageable) throws LogicaNegocioExcepcion;
 
 	public Producto obtenerProductoPorId(String id) throws LogicaNegocioExcepcion;
+	
+	/**
+	 * Obtiene todos los productos en una pagina definida por Pageable,
+	 * Pageable puede inicializarse asi
+	 * 
+	 * new PageRequest(0,5)
+	 * 
+	 * va a retornar la primera pagina con un tamaño de 5 productos por pagina
+	 * @param pageable
+	 * @return
+	 * @throws LogicaNegocioExcepcion
+	 */
+	public Page<Producto> obtenerTodos(Pageable pageable) throws LogicaNegocioExcepcion;
 	
 
 }

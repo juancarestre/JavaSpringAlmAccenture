@@ -3,6 +3,8 @@ package co.almaccenture.business.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import co.almaccenture.business.LogicaNegocioProducto;
@@ -30,6 +32,10 @@ public class LogicaNegocioProductoImp implements LogicaNegocioProducto  {
 	public static final String MENSAJE_NO_PRECIO = "El campo de precio de producto está vacío";
 	public static final String MENSAJE_NO_FECHA = "El campo de fecha de producto está vacío";
 	public static final String MENSAJE_NO_ESTADO = "El campo de estado de producto está vacío";
+
+	private static final String MENSAJE_NOINFO_PAGINACION = "No hay info para la paginación";
+
+	private static final String MENSAJE_TAMANO_PAG_INCORRECTO = "La cantidad de items por pagina no es correcto";
 	
 	
 	@Override
@@ -65,9 +71,11 @@ public class LogicaNegocioProductoImp implements LogicaNegocioProducto  {
 	
 
 	@Override
-	public List<Producto> obtenerProductoPorNombre(String nombre) throws LogicaNegocioExcepcion {
+	public Page<Producto> obtenerProductosPorNombre(String nombre, Pageable pageable) throws LogicaNegocioExcepcion {
 		if(nombre==null) throw new LogicaNegocioExcepcion(MENSAJE_PRODUCTO_NO_ENCONTRADO);
-		return repositorioProducto.findByNombreProductoContaining(nombre);
+		if(pageable==null) throw new LogicaNegocioExcepcion(MENSAJE_NOINFO_PAGINACION);
+		if(pageable.getPageSize()<0) throw new LogicaNegocioExcepcion(MENSAJE_TAMANO_PAG_INCORRECTO);
+		return repositorioProducto.findByNombreProductoContaining(nombre,pageable);
 	}
 	
 	@Override
@@ -79,6 +87,11 @@ public class LogicaNegocioProductoImp implements LogicaNegocioProducto  {
 		if(p==null){throw new LogicaNegocioExcepcion(MENSAJE_PRODUCTO_NO_ENCONTRADO);}
 		
 		return p;
+	}
+	
+	@Override
+	public Page<Producto> obtenerTodos(Pageable pageable) throws LogicaNegocioExcepcion {
+		return repositorioProducto.findAll(pageable);
 	}
 	
 	

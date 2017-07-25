@@ -106,10 +106,18 @@ public class RepositorioProductoTest {
 		String nombre = "baño";
 		String nombre1 = "";
 		try {
-			List<Producto> p = productoRepo.findByNombreProductoContaining(nombre);
-			assertTrue("No encontro producto con nombre like " + nombre, p.size()>0);
-			assertNotNull("Encontro productos con string vacio",productoRepo.findByNombreProductoContaining(nombre1));
-			assertTrue("No encontro productos con string vacio",productoRepo.findByNombreProductoContaining(nombre1).size()>0);
+			Page<Producto> p = productoRepo.findByNombreProductoContaining(nombre, new PageRequest(0, 4));
+			for(int i=0;i<p.getTotalPages();i++){
+				assertTrue("No encontro producto con nombre like " + nombre, p.getContent().size()>0);
+				for (Producto producto : p) {
+					System.out.println("Producto encontrado "+producto.getNombreProducto());
+				}
+			}
+			assertTrue("No encontro producto con nombre like " + nombre, p.getNumberOfElements()>0);
+			assertNotNull("Encontro productos con string vacio",productoRepo.findByNombreProductoContaining(nombre1,new PageRequest(0, 3)));
+			assertTrue("No encontro productos con string vacio",productoRepo
+					.findByNombreProductoContaining(nombre1,new PageRequest(0, 3))
+					.getNumberOfElements()>0);
 			
 		} catch (Exception e) {
 			e.printStackTrace();

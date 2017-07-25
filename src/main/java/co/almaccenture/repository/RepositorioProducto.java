@@ -15,7 +15,7 @@ public interface RepositorioProducto extends CrudRepository<Producto, String> {
 
 	public Producto findByIdProductoAndEstadoProducto(String idProducto, boolean estadoProducto);
 	
-	public List<Producto> findByNombreProductoContaining(String nombreProducto);
+	public Page<Producto> findByNombreProductoContaining(String nombreProducto, Pageable pageable);
 	
 	/**
 	 * Retorna todos los productos paginados, cada pagina de productos se denomina slice. 
