@@ -35,7 +35,9 @@ public interface LogicaNegocioProducto {
 	 * @throws LogicaNegocioExcepcion
 	 */
 	public List<Producto> obtenerProductoPorNombre(String nombre) throws LogicaNegocioExcepcion;
-
+	
+	public void modificarProducto(Producto producto) throws LogicaNegocioExcepcion;
+	
 	public Producto obtenerProductoPorId(String id) throws LogicaNegocioExcepcion;
 	
 
