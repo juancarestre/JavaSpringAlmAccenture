@@ -4,6 +4,8 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
 import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
@@ -29,6 +31,45 @@ public class RepositorioVentaTest {
 	@Autowired
 	RepositorioDetalleVenta detaRepo;
 
+	@Test
+	public void testfindByFechaVentaBetween()  {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+
+		String myDate1 = "2017/07/10";
+		String myDate2 = "2017/07/20";
+		
+		
+		try {
+			
+			java.util.Date date1 = sdf.parse(myDate1);
+			long millisDate1 = date1.getTime();
+			
+			
+			java.util.Date date2 = sdf.parse(myDate2);
+			long millisDate2 = date2.getTime();
+			
+			
+			Date sqldate1=new Date(millisDate1);
+			Date sqldate2=new Date(millisDate2);
+			
+			
+			List<Venta> ventas = (List<Venta>) ventaRepo.findByFechaVentaBetween(sqldate1, sqldate2);
+			assertNotNull("Lista vacia", ventas);
+			System.out.println("Entre las fechas: " + date1 + " y " + date2 + " se ENCONTRARON: " + ventas.size() 
+			+ " registros de venta");
+			for(int i=0; i<ventas.size(); i++) {
+				System.out.println("Venta encontrada registrada con ID: " + ventas.get(i).getIdVenta());
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail(e.getMessage());
+		}
+		
+	}
+	
+	
+	
 	@Test
 	public void testFindByIdVentaAndEstadoVenta() {
 
