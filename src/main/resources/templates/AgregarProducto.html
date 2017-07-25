@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Almaccenture Agregar producto</title>
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<link
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	rel="stylesheet" type="text/css" />
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.9/css/bootstrap-dialog.min.css"
+	rel="stylesheet" type="text/css" />
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.9/js/bootstrap-dialog.min.js"></script>
+<link rel="icon" href="../static/img/A.png">
+</head>
+<body>
+
+
+	<div class="navbar-wrapper">
+		<div class="container">
+
+			<nav class="navbar navbar-inverse navbar-fixed-top">
+				<div class="container">
+					<div class="navbar-header">
+						<button type="button" class="navbar-toggle collapsed"
+							data-toggle="collapse" data-target="#navbar"
+							aria-expanded="false" aria-controls="navbar">
+							<span class="sr-only">Navegación</span> <span class="icon-bar"></span>
+							<span class="icon-bar"></span> <span class="icon-bar"></span>
+						</button>
+						<a class="navbar-brand" href="#">Almaccenture</a>
+					</div>
+					<div id="navbar" class="navbar-collapse collapse">
+						<ul class="nav navbar-nav">
+							<li><a th:href="@{/}" href="#">Home</a></li>
+							<li><a href="#">Venta</a></li>
+							<li class="active"><a href="#">Inventario</a></li>
+							<li><a href="#">Reportes</a></li>
+						</ul>
+					</div>
+				</div>
+			</nav>
+
+		</div>
+	</div>
+	
+
+		</br>
+		</br> 
+		
+		<h1  align="center"><font color="blue"><label for="codigo">Agregar producto</label></font></h1>
+		
+
+</br>
+		</br>
+	
+	
+	<h2>
+
+
+	<div class="row text-center">
+
+
+			<form id="messageForm" th:action="@{/inventario}" action="#"
+				th:object="${detalle}" method="get">
+			<div>	<label for="codigo">Nombre:</label> <input type="text"
+					th:field="*{producto.idProducto}"> <br> <br> </div>
+				<div>	<label for="codigo">Código:</label> <input type="text"
+					th:field="*{producto.idProducto}"> <br> <br> </div>
+					<div><label for="codigo">Descripcion:</label> <input type="text"
+					th:field="*{producto.idProducto}"> <br> <br> </div>
+				<div>	<label for="codigo">Precio:</label> <input type="text"
+					th:field="*{producto.idProducto}"> <br> <br> </div>
+					<div><label for="codigo">Cantidad:</label> <input type="text"
+					th:field="*{producto.idProducto}"> <br> <br> </div>
+<!-- 				<div>	 <input type="text" -->
+<!-- 					th:field="*{producto.idProducto}"> <br> <br> </div> -->
+					
+<!-- 					<div> -->
+
+					<div>		<label for="codigo">Categoria:</label> <select th:field="*{rol}"
+							cssClass="form-control">
+							<option value="Aseo">Aseo</option>
+							<option value="Hogar">Hogar</option>
+							<option value="Moda">Moda</option> 
+							<option value="Tecnologia">Tecnologia</option> </div>	
+							
+							<!-- 							<option value="Gerencia">Gerencia</option> -->
+
+						</select>
+						
+						<br> <br>
+
+					</div>
+					
+				<div class="form-actions">
+
+					<input type="submit" value="Agregar producto" id="agregar1"
+						class="btn btn-success btn-lg" /> <input type="submit"
+						value="Cancelar" id="Cancelar1" class="btn btn-success btn-lg" />
+						<input type="submit"
+						value="Limpiar" id="Limpiar" class="btn btn-success btn-lg" />
+				</div>
+
+			</form>
+
+
+		</div>
+		<br>
+		<!-- <br> <input type="hidden" th:field="*{activo}" /> -->
+		<div th:if="${message != ''}"
+			class="alert alert-warning alert-dismissible" role="alert">
+			<div class="text-center">
+				<button type="button" class="close" data-dismis="alert"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<strong>¡Señor usuario!</strong>
+				<div th:text="${message}"></div>
+			</div>
+		</div>
+
+	</h2>
