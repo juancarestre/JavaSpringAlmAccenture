@@ -39,7 +39,6 @@ public interface LogicaNegocioProducto {
 	 */
 	public Page<Producto> obtenerProductosPorNombre(String nombre, Pageable pageable) throws LogicaNegocioExcepcion;
 
-	public Producto obtenerProductoPorId(String id) throws LogicaNegocioExcepcion;
 	
 	/**
 	 * Obtiene todos los productos en una pagina definida por Pageable,
@@ -53,6 +52,13 @@ public interface LogicaNegocioProducto {
 	 * @throws LogicaNegocioExcepcion
 	 */
 	public Page<Producto> obtenerTodos(Pageable pageable) throws LogicaNegocioExcepcion;
+
+	
+	public void modificarProducto(Producto producto) throws LogicaNegocioExcepcion;
+	
+	public Producto obtenerProductoPorId(String id) throws LogicaNegocioExcepcion;
+	
+	public void eliminarLogicamenteProducto(String id) throws LogicaNegocioExcepcion;
 	
 
 }
