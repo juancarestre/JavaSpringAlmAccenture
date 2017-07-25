@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.sql.Date;
 import java.util.Calendar;
+import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -11,6 +12,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import co.almaccenture.model.Categoria;
@@ -108,6 +111,50 @@ public class RepositorioProductoTest {
 			assertTrue("No encontro productos con string vacio",productoRepo.findByNombreProductoContaining(nombre1).size()>0);
 			
 		} catch (Exception e) {
+			e.printStackTrace();
+			fail(e.getMessage());
+		}
+	}
+	
+	@Test
+	public void testBuscarProductosPageable(){
+		int pagSize = 5;
+		try{
+			
+			Page<Producto> prods = productoRepo.findAll(new PageRequest(1, pagSize));
+			
+			assertEquals("No se mostraron "+pagSize+" productos", pagSize,prods.getNumberOfElements());
+			System.out.println("Numero de paginas de prods "+prods.getTotalPages());
+			
+			System.out.println("Mostrando primera pagina de 5 productos");
+			
+			for (Producto producto : prods.getContent()) {
+				System.out.println("Producto "+producto.getNombreProducto());
+			}
+			
+			prods = productoRepo.findAll(new PageRequest(2, pagSize));
+			
+			assertEquals("No se mostraron "+pagSize+" productos", pagSize,prods.getNumberOfElements());
+			
+			System.out.println("Mostrando segunda pagina de 5 productos");
+			
+			for (Producto producto : prods.getContent()) {
+				System.out.println("Producto "+producto.getNombreProducto());
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+			fail(e.getMessage());
+		}
+	}
+	
+	@Test
+	public void testFindAll(){
+		try{
+			Iterable<Producto> p = productoRepo.findAll();
+			for (Producto producto : p) {
+				System.out.println("Producto: " + producto.getIdProducto());
+			}
+		}catch(Exception e){
 			e.printStackTrace();
 			fail(e.getMessage());
 		}
