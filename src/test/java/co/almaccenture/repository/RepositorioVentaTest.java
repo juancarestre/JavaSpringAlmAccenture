@@ -14,6 +14,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import co.almaccenture.model.Caja;
@@ -35,17 +37,19 @@ public class RepositorioVentaTest {
 	public void testfindByFechaVentaBetween()  {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 
-		String myDate1 = "2017/07/10";
-		String myDate2 = "2017/07/20";
+		String iniDate = "2017/07/10";
+		String endDate = "2017/07/24";
+		
+		int pagSize = 5; //numero de ventas por pagina
 		
 		
 		try {
 			
-			java.util.Date date1 = sdf.parse(myDate1);
+			java.util.Date date1 = sdf.parse(iniDate);
 			long millisDate1 = date1.getTime();
 			
 			
-			java.util.Date date2 = sdf.parse(myDate2);
+			java.util.Date date2 = sdf.parse(endDate);
 			long millisDate2 = date2.getTime();
 			
 			
@@ -53,12 +57,17 @@ public class RepositorioVentaTest {
 			Date sqldate2=new Date(millisDate2);
 			
 			
-			List<Venta> ventas = (List<Venta>) ventaRepo.findByFechaVentaBetween(sqldate1, sqldate2);
-			assertNotNull("Lista vacia", ventas);
-			System.out.println("Entre las fechas: " + date1 + " y " + date2 + " se ENCONTRARON: " + ventas.size() 
+			Page<Venta> pages = ventaRepo.findByFechaVentaBetween(sqldate1, sqldate2, new PageRequest(0,pagSize));
+			
+			System.out.println("Entre las fechas: " + date1 + " y " + date2 + " se ENCONTRARON: " + pages.getTotalElements() 
 			+ " registros de venta");
-			for(int i=0; i<ventas.size(); i++) {
-				System.out.println("Venta encontrada registrada con ID: " + ventas.get(i).getIdVenta());
+			
+			for(int i = 0;i<pages.getTotalPages();i++){
+				for (Venta venta : pages) {
+					System.out.println("Venta encontrada registrada con ID: " + venta.getIdVenta());
+				}
+				pages = ventaRepo.findByFechaVentaBetween(sqldate1, sqldate2, pages.nextPageable());
+				assertNotNull("Lista vacia", pages);
 			}
 
 		} catch (Exception e) {
