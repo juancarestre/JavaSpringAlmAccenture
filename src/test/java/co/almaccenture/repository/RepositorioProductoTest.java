@@ -44,13 +44,14 @@ public class RepositorioProductoTest {
 	@Test
 	public void testFindOneString() {
 		
-		String codigo = " bne667";
+		String codigo = "ryt032";
 		
 		try {
 			
 			Producto prod = productoRepo.findByIdProductoAndEstadoProducto(codigo, true);
 			assertNotNull("El producto no existe",prod);
 			System.out.println("Categoria obtenida" + prod.getCategoria().getNombreCategoria());
+			System.out.println("Fecha de modificacion: "+prod.getFechaModificacion());
 				
 		} catch (Exception e) {
 			e.printStackTrace();

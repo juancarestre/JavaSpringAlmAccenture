@@ -15,4 +15,5 @@ import co.almaccenture.model.Categoria;
 @Repository
 public interface RepositorioCategoria extends CrudRepository<Categoria, Integer> {
 
+	public Categoria findBynombreCategoria(String nombreCategoria);
 }
