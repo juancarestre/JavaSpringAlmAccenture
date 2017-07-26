@@ -26,6 +26,7 @@ public class LogicaNegocioProductoImp implements LogicaNegocioProducto  {
 	public static final int UMBRAL = 100;	
 	public static final String MENSAJE_ALERTA_PRODUCTO_ESCASO = "Alerta: Este producto tiene pocas existencias en inventario.";
 	public static final String MENSAJE_PRODUCTO_NO_ENCONTRADO = "El Producto con el codigo especificado no existe.";
+	public static final String MENSAJE_PRODUCTO_EXISTENTE = "El Producto con el codigo especificado ya existe.";
 	public static final String MENSAJE_PRODUCTO_INACTIVO = "El producto se encuentra en estado inactivo";
 	public static final String MENSAJE_NO_ID = "El campo de código de producto está vacío";
 	public static final String MENSAJE_NO_NOMBRE_PRODUCTO = "El campo de nombre de producto está vacío";
@@ -137,7 +138,8 @@ public class LogicaNegocioProductoImp implements LogicaNegocioProducto  {
 		
 		String idProducto=producto.getIdProducto();
 		if(idProducto==null || "".equals(idProducto.trim())) throw new LogicaNegocioExcepcion(MENSAJE_NO_ID);
-	    String nombreProducto=producto.getNombreProducto();
+	    if(repositorioProducto.findOne(idProducto)!=null) throw new LogicaNegocioExcepcion(MENSAJE_PRODUCTO_EXISTENTE);
+		String nombreProducto=producto.getNombreProducto();
 		if(nombreProducto==null || "".equals(nombreProducto)) throw new LogicaNegocioExcepcion(MENSAJE_NO_NOMBRE_PRODUCTO);
 		Float precioProducto = producto.getPrecioProducto();
 		if(precioProducto==null || "".equals(precioProducto)) throw new LogicaNegocioExcepcion(MENSAJE_NO_PRECIO);
