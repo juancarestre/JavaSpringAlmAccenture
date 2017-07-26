@@ -17,7 +17,7 @@
 <link rel="icon" href="../static/img/A.png">
 </head>
 <body>
-<h2>
+
 
 	<div class="navbar-wrapper">
 		<div class="container">
@@ -31,12 +31,12 @@
 							<span class="sr-only">Navegación</span> <span class="icon-bar"></span>
 							<span class="icon-bar"></span> <span class="icon-bar"></span>
 						</button>
-						<a class="navbar-brand" href="#">Almaccenture</a>
+						<a class="navbar-brand" href="#">Administrador</a>
 					</div>
 					<div id="navbar" class="navbar-collapse collapse">
 						<ul class="nav navbar-nav">
 							<li><a th:href="@{/}" href="#">Página principal</a></li>
-							<li><a href="#">Venta</a></li>
+							<li><a th:href="@{/ventas/new}" href="#">Venta</a></li>
 							<li class="active"><a href="#">Inventario</a></li>
 							<li class="dropdown"><a href="#" class="dropdown-toggle"
 								data-toggle="dropdown" role="button" aria-haspopup="true"
@@ -52,34 +52,15 @@
 
 		</div>
 	</div>
-	
 
+	<h2>
 		</br> </br>
 
 
 
 
 
-		<div class="row text-center">
-
-
-<!-- 			<form id="messageForm" th:action="@{/inventario}" th : -->
-<!-- 				object="${producto}" action="#" th:object="${producto}" method="get"> -->
-<!-- 				<label for="codigo">Buscar producto:</label> <input type="text" -->
-<!-- 					th:field="*{producto.idProducto}"> <input type="submit" -->
-<!-- 					value="Buscar" id="agregar" class="btn btn-success btn-lg" /> <br> -->
-<!-- 				<br> -->
-
-<!-- 				<div class="form-actions"> -->
-
-<!-- 					<input type="submit" value="Agregar producto" id="agregar1" -->
-<!-- 						class="btn btn-success btn-lg" /> -->
-<!-- 				</div> -->
-
-<!-- 			</form> -->
-
-
-		</div>
+		<div class="row text-center"></div>
 		<br>
 		<!-- <br> <input type="hidden" th:field="*{activo}" /> -->
 		<div th:if="${message != ''}"
@@ -99,131 +80,54 @@
 		<br>
 
 		<div class="row">
-			<!-- 			<div class=col-md-1></div> -->
-			<div class=col-md-12>
+			<div class=col-md-1></div>
+			<div class=col-md-10>
 
-				<!-- 				<table th:if="${not #lists.isEmpty(venta.detalles)}" -->
-						<table		class="table table-bordered table-striped table-hover"> 
-						
-						
 
-				<thead>
-					<tr>
-						<th>Código</th>
-						<th>Fecha</th>
-						<th>Producto</th>
-						<th>Cantidad</th>
-						<th>Precio</th>
-						<th>Estado</th>
-						<th>Categoria</th>
-						<th>Descripcion</th>
-						<th>Acción</th>
-					</tr>
-<!-- 				sfhisdh -->
-
-					<tr th:each="inventario : ${producto}">
-						<td th:text="${inventario.idProducto}" class="tg-yw4l"></td>
-						<td th:text="${inventario.fechaModificacion}" class="tg-yw4l"></td>
-						<td th:text="${inventario.nombreProducto}" class="tg-yw4l"></td>
-						<td th:text="${inventario.cantidadProducto}" class="tg-yw4l"></td>
-						<td th:text="${inventario.precioProducto}" class="tg-yw4l"></td>
-						<td th:text="${inventario.estadoProducto}" class="tg-yw4l"></td>
-						<td th:text="${inventario.categoria.nombreCategoria}" class="tg-yw4l"></td>
-						<td th:text="${inventario.descripcionProducto}" class="tg-yw4l"></td>
-						<td><a class="btn btn-danger" href="modificar.html"
-							th:href="@{/product/modificar?id='+${inventario.nombreProducto}}">Modificar</a>
-							<a class="btn btn-danger"
-							th:href="@{'/product/eliminar?id='+${inventario.estadoProducto}}">Eliminar</a>
-						</td>
-						
-
-					</tr>
+				<table class="table table-bordered table-striped table-hover">
 
 
 
-				</thead>
-				<!-- 					<tbody> -->
-				<!-- 						<tr th:each="detalle : ${venta.detalles}"> -->
-				<!-- 							<td th:text="${detalle.producto.idProducto}"></td> -->
-				<!-- 							<td th:text="${detalle.producto.nombreProducto}"></td> -->
+					<thead>
+						<tr>
+							<th>Código</th>
+							<th>Fecha</th>
+							<th>Producto</th>
+							<th>Cantidad</th>
+							<th>Precio</th>
+							<th>Estado</th>
+							<th>Categoria</th>
+							<th>Descripcion</th>
+							<th>Acción</th>
+						</tr>
 
-				<!-- 							<td th:text="${detalle.cantidad}"></td> -->
 
-				<!-- 							<td> $ <span th:text="${#numbers.formatDecimal(detalle.valorUnitario, 0, 'COMMA', 0, 'POINT')}"></span></td> -->
+						<tr th:each="inventario : ${producto}">
+							<td th:text="${inventario.idProducto}" class="tg-yw4l"></td>
+							<td th:text="${inventario.fechaModificacion}" class="tg-yw4l"></td>
+							<td th:text="${inventario.nombreProducto}" class="tg-yw4l"></td>
+							<td th:text="${inventario.cantidadProducto}" class="tg-yw4l"></td>
+							<td th:text="${inventario.precioProducto}" class="tg-yw4l"></td>
+							<td th:text="${inventario.estadoProducto}" class="tg-yw4l"></td>
+							<td th:text="${inventario.categoria.nombreCategoria}"
+								class="tg-yw4l"></td>
+							<td th:text="${inventario.descripcionProducto}" class="tg-yw4l"></td>
+							<td><a class="btn btn-danger" href="modificar.html"
+								th:href="@{/product/modificar?id='+${inventario.nombreProducto}}">Modificar</a>
+								<a class="btn btn-danger"
+								th:href="@{'/product/eliminar?id='+${inventario.estadoProducto}}">Eliminar</a>
+							</td>
 
-				<!-- 							<td> $ <span th:text="${#numbers.formatDecimal(detalle.cantidad*detalle.valorUnitario, 0, 'COMMA', 0, 'POINT')}"></span></td> -->
-				<!-- 							<td><a -->
-				<!-- 								th:href="@{'/inventario/' + ${detalle.producto.idProducto}}"><span -->
-				<!-- 									class="glyphicon glyphicon-trash"></span></a></td> -->
 
-				<!-- 						</tr> -->
-				<!-- 					</tbody> -->
+						</tr>
 
+
+
+					</thead>
 				</table>
-
-				<!-- 				<div class="row"> -->
-				<!-- 					<div class="col-md-10"></div> -->
-				<!-- 					<div class="col-md-2"> -->
-				<!-- 					<p class="label label-danger" th:if="${not #lists.isEmpty(venta.detalles)}"> Total: [[${venta.totalVenta}]]</p> -->
-				<!-- 					</div> -->
-				<!-- 				</div> -->
-
-				<!-- 			</div> -->
-				<!-- 			<div class=col-md-1></div> -->
-				<!-- 		</div> -->
-				<!-- 		<br> -->
-
-				<!-- 		<div class="row text-center"> -->
-
-				<!-- 		<button th:if="${not #lists.isEmpty(venta.detalles)}" class="btn btn-success btn-lg" id= "pagar" onclick="preparaModalPago()">Pagar</button> -->
-				<!-- 			<form th:action="@{/ventas}" action="#" th:method="GET" style="display:inline;"> -->
-				<!-- 				<input name="limpiar" type="submit" value="Cancelar"  -->
-				<!-- 					class="btn btn-primary btn-lg" /> -->
-				<!-- 			</form> -->
-				<!-- 		</div> -->
-
-
-<!-- 				<script th:inline="javascript"> -->
-// 					/*llama ruta de controlador para inyectar data en el modal*/
-// 					function preparaModalPago() {
-// 						let url = "/ventas/pago";
-// 						$.get(url, function(result) {
-// 							mostrarModal(result);
-// 						})
-
-// 					}
-
-// 					/*muestra modal-dialog y lo rellena con lo que viene en parametro result*/
-// 					function mostrarModal(result) {
-// 						BootstrapDialog.show({
-// 							type : BootstrapDialog.TYPE_PRIMARY,
-// 							title : "Calcular Cambio",
-// 							message : result,
-// 							draggable : true,
-// 							nl2br : false, //para que no genere <br> por cada salto de linea
-// 							buttons : [ {
-// 								label : 'Pagar',
-// 								cssClass : 'btn-primary btn-lg',
-// 								id : 'btnpagar',
-// 								hotkey : 13,
-// 								action : function(dialogItself) {
-// 									var $button = this;
-// 									$button.spin();
-// 									location.replace('/ventas/guardar');
-// 								}
-// 							}, {
-// 								label : 'Cerrar',
-// 								cssClass : 'btn-danger btn-lg',
-// 								id : 'btncancelar',
-// 								action : function(dialogItself) {
-// 									dialogItself.close();
-// 								}
-// 							} ]
-// 						})
-// 					}
-				</script>
-
-				<br> <br>
+			</div>
+			<div class=col-md-1></div>
+			<br> <br>
 	</h2>
 </body>
 
