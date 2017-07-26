@@ -3,13 +3,17 @@ package co.almaccenture.controller;
 import java.util.stream.IntStream;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.aspectj.bridge.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,10 +28,13 @@ import co.almaccenture.exception.LogicaNegocioExcepcion;
 import co.almaccenture.model.Categoria;
 import co.almaccenture.model.Producto;
 import co.almaccenture.repository.RepositorioCategoria;
+import co.almaccenture.repository.RepositorioProducto;
 
 @Controller
 public class ControladorInventario {
 	
+	private static final String INVENTARIO_HTML = "inventario";
+
 	@Autowired
 	private LogicaNegocioProducto producto;
 	
@@ -93,6 +100,29 @@ public class ControladorInventario {
 		ModelAndView mav= new ModelAndView("main");
 
 		return mav;
+	}
+	
+	/**
+	 * Busca un producto por el id enviado como queryParam.
+	 * url: /inventario/consulta?id
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(method=RequestMethod.GET, value="/inventario/consulta", params={"id"})
+	public String buscarProductoPorCodigo(final Model model, final HttpServletRequest req){
+		String id = req.getParameter("id");
+		String message = "";
+		List<Producto> p = new ArrayList<>();
+		try {
+			p.add(producto.obtenerProductoPorId(id));
+			message = p!=null ? "":"No se encontro producto";
+		} catch (LogicaNegocioExcepcion e) {
+			e.printStackTrace();
+		}	
+		
+		model.addAttribute("productos", p);
+		model.addAttribute(message);
+		return INVENTARIO_HTML;
 	}
 	
 
