@@ -50,38 +50,15 @@
 
 		</br> </br>
 
-		<!-- 		<div class="row text-center"> -->
-		<!-- 			<div class="col-md-2"></div> -->
-		<!-- 			<div class="col-md-8"> -->
-		<!-- 				<div> -->
-		<!-- 					<form id="cargar" th:action="@{/ventas}" th:object="${venta}"
-<!-- 					action="#" th:method="post"> -->
-		
-		<!-- 					<div> -->
 
-		<!-- 						<label for="fecha">Fecha:</label> <label -->
-		<!-- 							class="label label-default" th:text="${venta.fechaVenta}"></label> -->
-
-		<!-- 						<label for="caja">Caja:</label> <label class="label label-default" -->
-		<!-- 							th:text="${venta.caja.nombreCaja}"></label> -->
-		<!-- 						Como inserto como th:field un objeto -->
-
-		<!-- 					</div> -->
-		<!-- 					</form> -->
-		<!-- 				</div> -->
-		<!-- 				<div class="col-md-2"></div> -->
-		<!-- 			</div> -->
-		<!-- 		</div> -->
-
-		<!-- 		<hr class="featurette-divider"> -->
 
 
 
 		<div class="row text-center">
 
 
-			<form id="messageForm" th:action="@{/inventario}" action="#"
-				th:object="${detalle}" method="get">
+			<form id="messageForm" th:action="@{/inventario}" th :
+				object="${producto}" action="#" th:object="${detalle}" method="get">
 				<label for="codigo">Buscar producto:</label> <input type="text"
 					th:field="*{producto.idProducto}"> <input type="submit"
 					value="Buscar" id="agregar" class="btn btn-success btn-lg" /> <br>
@@ -119,38 +96,59 @@
 			<!-- 			<div class=col-md-1></div> -->
 			<div class=col-md-12>
 
-				<table th:if="${not #lists.isEmpty(venta.detalles)}"
-					class="table table-bordered table-striped table-hover">
+				<!-- 				<table th:if="${not #lists.isEmpty(venta.detalles)}" -->
+				<!-- 					class="table table-bordered table-striped table-hover"> -->
 
-					<thead>
-						<tr>
-							<th>Código</th>
-							<th>Fecha</th>
-							<th>Producto</th>
-							<th>Cantidad</th>
-							<th>Precio</th>
-							<th>Estado</th>
-							<th>Categoria</th>
-							<th>Descripcion</th>
-							<th>Acción</th>
-						</tr>
-					</thead>
-					<!-- 					<tbody> -->
-					<!-- 						<tr th:each="detalle : ${venta.detalles}"> -->
-					<!-- 							<td th:text="${detalle.producto.idProducto}"></td> -->
-					<!-- 							<td th:text="${detalle.producto.nombreProducto}"></td> -->
+				<thead>
+					<tr>
+						<th>Código</th>
+						<th>Fecha</th>
+						<th>Producto</th>
+						<th>Cantidad</th>
+						<th>Precio</th>
+						<th>Estado</th>
+						<th>Categoria</th>
+						<th>Descripcion</th>
+						<th>Acción</th>
+					</tr>
+				
 
-					<!-- 							<td th:text="${detalle.cantidad}"></td> -->
+					<tr th:each="inventario : ${producto}">
+						<td th:text="${inventario.idProducto}" class="tg-yw4l"></td>
+						<td th:text="${inventario.fechaModificacion}" class="tg-yw4l"></td>
+						<td th:text="${inventario.nombreProducto}" class="tg-yw4l"></td>
+						<td th:text="${inventario.cantidadProducto}" class="tg-yw4l"></td>
+						<td th:text="${inventario.precioProducto}" class="tg-yw4l"></td>
+						<td th:text="${inventario.estadoProducto}" class="tg-yw4l"></td>
+						<td th:text="${inventario.idCategoria}" class="tg-yw4l"></td>
+						<td th:text="${inventario.descripcionProduto}" class="tg-yw4l"></td>
+						<td><a class="btn btn-danger" href="modificar.html"
+							th:href="@{/product/modificar?id='+${inventario.identificacion}}">Modificar</a>
+							<a class="btn btn-danger"
+							th:href="@{'/product/eliminar?id='+${inventario.identificacion}}">Eliminar</a>
+						</td>
 
-					<!-- 							<td> $ <span th:text="${#numbers.formatDecimal(detalle.valorUnitario, 0, 'COMMA', 0, 'POINT')}"></span></td> -->
+					</tr>
 
-					<!-- 							<td> $ <span th:text="${#numbers.formatDecimal(detalle.cantidad*detalle.valorUnitario, 0, 'COMMA', 0, 'POINT')}"></span></td> -->
-					<!-- 							<td><a -->
-					<!-- 								th:href="@{'/inventario/' + ${detalle.producto.idProducto}}"><span -->
-					<!-- 									class="glyphicon glyphicon-trash"></span></a></td> -->
 
-					<!-- 						</tr> -->
-					<!-- 					</tbody> -->
+
+				</thead>
+				<!-- 					<tbody> -->
+				<!-- 						<tr th:each="detalle : ${venta.detalles}"> -->
+				<!-- 							<td th:text="${detalle.producto.idProducto}"></td> -->
+				<!-- 							<td th:text="${detalle.producto.nombreProducto}"></td> -->
+
+				<!-- 							<td th:text="${detalle.cantidad}"></td> -->
+
+				<!-- 							<td> $ <span th:text="${#numbers.formatDecimal(detalle.valorUnitario, 0, 'COMMA', 0, 'POINT')}"></span></td> -->
+
+				<!-- 							<td> $ <span th:text="${#numbers.formatDecimal(detalle.cantidad*detalle.valorUnitario, 0, 'COMMA', 0, 'POINT')}"></span></td> -->
+				<!-- 							<td><a -->
+				<!-- 								th:href="@{'/inventario/' + ${detalle.producto.idProducto}}"><span -->
+				<!-- 									class="glyphicon glyphicon-trash"></span></a></td> -->
+
+				<!-- 						</tr> -->
+				<!-- 					</tbody> -->
 
 				</table>
 
