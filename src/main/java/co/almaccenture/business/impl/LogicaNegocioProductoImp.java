@@ -169,6 +169,14 @@ public class LogicaNegocioProductoImp implements LogicaNegocioProducto  {
 		return repositorioProducto.findAll(pageable);
 	}
 	
+	@Override
+	public Page<Producto> obtenerAgotados(Pageable pageable) throws LogicaNegocioExcepcion {
+		//No es necesario hacer validacion de argumento pageable es non-null
+		//ya que por defecto desde el controlador se genera un pageable de pag 0
+		// y tamanoPagina 20
+		return repositorioProducto.findByCantidadProductoLessThan(UMBRAL, pageable);
+	}
+	
 
 
 

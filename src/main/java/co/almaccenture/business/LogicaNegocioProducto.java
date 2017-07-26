@@ -62,6 +62,14 @@ public interface LogicaNegocioProducto {
 	public Producto agregarProducto(Producto producto) throws LogicaNegocioExcepcion;
 
 	public void eliminarLogicamenteProducto(String id) throws LogicaNegocioExcepcion;
+	
+	/**
+	 * Obtiene una lista paginada de productos agotados (productos cuya cantidad es menor que 100)
+	 * @param pageable Pagina requerida
+	 * @return Lista de productos agotados
+	 * @throws LogicaNegocioExcepcion
+	 */
+	public Page<Producto> obtenerAgotados(Pageable pageable) throws LogicaNegocioExcepcion;
 
 	
 

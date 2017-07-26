@@ -143,18 +143,16 @@ public class LogicaNegocioProductoImpTest {
 	
 	@Test
 	public void testObtenerProductos(){
-		PageRequest paginaReq = new PageRequest(0, 5);
+		int pageSize = 5;
 		try {
-			Page<Producto> productos = prodBl.obtenerTodos(paginaReq);
-			for(int i=0;i<productos.getTotalElements();i++){
-				//Recorro las paginas
-				for (Producto producto : productos) {
+			Page<Producto> pageProductos = null;
+			do{
+				pageProductos = (pageProductos!=null) ? prodBl.obtenerTodos(pageProductos.nextPageable()) : prodBl.obtenerTodos(new PageRequest(0, pageSize));
+				for (Producto producto : pageProductos) {
 					//Recorro los productos de la pagina dada
 					System.out.println("Producto encontrado "+producto.getNombreProducto());
 				}
-				//Obtengo la siguiente pagina
-				productos = prodBl.obtenerTodos(productos.nextPageable());
-			}
+			}while(pageProductos.hasNext());
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail(e.getMessage());
@@ -198,6 +196,27 @@ public class LogicaNegocioProductoImpTest {
 			fail(e.getMessage());
 		}
 		
+	}
+	
+	@Test
+	public void testObtenerAgotados(){
+		try {
+			Page<Producto> pageProductos = null;
+			do {
+				//inicializa la pagina, si pageProductos es null, obtiene la primera pagina, si no es null, obtiene la siguiente pagina
+				// a traves de .nextPageable()
+				pageProductos = (pageProductos!=null) ? prodBl.obtenerAgotados(pageProductos.nextPageable()) : prodBl.obtenerAgotados(new PageRequest(0, 5));
+				System.out.println("Pagina de producto: "+pageProductos.getNumber());
+				for (Producto producto : pageProductos) {
+					System.out.println("Producto agotado "+producto.getNombreProducto()+ " cantidad "+producto.getCantidadProducto());
+					assertTrue("El producto no esta agotado", producto.getCantidadProducto() < prodBl.UMBRAL);
+				}	
+				//recorre paginas mientras pageProductos tenga siguiente pagina
+			} while (pageProductos.hasNext());
+		} catch (LogicaNegocioExcepcion e) {
+			e.printStackTrace();
+			fail(e.getMessage());
+		}
 	}
 	
 	
