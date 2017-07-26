@@ -94,7 +94,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr th:each="inventario : ${producto}">
+						<tr th:each="inventario : ${productos}">
 							<td th:text="${inventario.idProducto}" class="tg-yw4l"></td>
 							<td th:text="${inventario.fechaModificacion}" class="tg-yw4l"></td>
 							<td th:text="${inventario.nombreProducto}" class="tg-yw4l"></td>
@@ -118,21 +118,29 @@
 					</tbody>
 
 				</table>
+
+				<div class="funkyradio-danger">
+					<input type="checkbox" name="checkbox" id="checkbox4" checked /> <label
+						for="checkbox4">Fourth Option danger</label>
+				</div>
 			</div>
 			<div class=col-md-1></div>
 			</br> </br>
+			<div class="text-center">
+				<div th:fragment='paginationbar'>
+					<ul class='pagination justify-content-center'>
+						<li th:each='page : ${pages}'><a
+							th:href='@{/inventario(page=${page-1},size=5)}'><span
+								th:text='${page}'>1</span></a></li>
+					</ul>
+				</div>
+			</div>
 		</div>
-		<div th:fragment='paginationbar'>
-			<ul class='pagination justify-content-center'>
-				<li th:each='page : ${pages}'><a
-					th:href='@{/inventario/list(page=${page-1},size=5)}'><span
-						th:text='${page}'>1</span></a></li>
-			</ul>
-		</div>
+
 
 
 		<br> <br>
-	</h2>
+		</h2>
 </body>
 
 </html>
