@@ -71,6 +71,8 @@
 		<hr class="featurette-divider">
 
 		<br>
+		
+		<div th:insert="inventario :: paginationbar"></div>
 
 		<div class="row">
 			<div class=col-md-1></div>
@@ -93,20 +95,20 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr th:each="inventario : ${producto}">
-							<td th:text="${inventario.idProducto}" class="tg-yw4l"></td>
-							<td th:text="${inventario.fechaModificacion}" class="tg-yw4l"></td>
-							<td th:text="${inventario.nombreProducto}" class="tg-yw4l"></td>
-							<td th:text="${inventario.cantidadProducto}" class="tg-yw4l"></td>
-							<td th:text="${inventario.precioProducto}" class="tg-yw4l"></td>
-							<td th:text="${inventario.estadoProducto}" class="tg-yw4l"></td>
-							<td th:text="${inventario.categoria.nombreCategoria}"
+						<tr th:each="producto : ${productos}">
+							<td th:text="${producto.idProducto}" class="tg-yw4l"></td>
+							<td th:text="${producto.fechaModificacion}" class="tg-yw4l"></td>
+							<td th:text="${producto.nombreProducto}" class="tg-yw4l"></td>
+							<td th:text="${producto.cantidadProducto}" class="tg-yw4l"></td>
+							<td th:text="${producto.precioProducto}" class="tg-yw4l"></td>
+							<td th:text="${producto.estadoProducto}" class="tg-yw4l"></td>
+							<td th:text="${producto.categoria.nombreCategoria}"
 								class="tg-yw4l"></td>
-							<td th:text="${inventario.descripcionProducto}" class="tg-yw4l"></td>
+							<td th:text="${producto.descripcionProducto}" class="tg-yw4l"></td>
 							<td><a class="btn btn-danger" href="modificar.html"
-								th:href="@{/product/modificar?id='+${inventario.nombreProducto}}">Modificar</a>
+								th:href="@{/product/modificar?id='+${producto.idProducto}}">Modificar</a>
 								<a class="btn btn-danger"
-								th:href="@{'/product/eliminar?id='+${inventario.estadoProducto}}">Eliminar</a>
+								th:href="@{'/product/eliminar?id='+${producto.idProducto}}">Eliminar</a>
 							</td>
 
 
@@ -120,17 +122,20 @@
 			<div class=col-md-1></div>
 			</br> </br>
 		</div>
-		<div th:fragment='paginationbar'>
-				<ul class='pagination justify-content-center'>
+		<div class="text-center" th:fragment='paginationbar'>
+				<ul class="pagination">
 					<li th:each='page : ${pages}'><a
-						th:href='@{/inventario/list(page=${page-1},size=5)}'><span
+						th:href='@{/inventario(page=${page-1},size=5)}'><span
 							th:text='${page}'>1</span></a></li>
 				</ul>
 		</div>
+		
 
 
 		<br> <br>
 	</h2>
+	
+	
 </body>
 
 </html>
