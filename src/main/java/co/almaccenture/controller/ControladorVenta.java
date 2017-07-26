@@ -205,18 +205,7 @@ public class ControladorVenta{
 		return suma;
 	}
 	
-	@RequestMapping(method = RequestMethod.GET, value = "/inventario")
-	public ModelAndView listar(Pageable pageable) { //metodo
-		ModelAndView mav = new ModelAndView("inventario"); // constructor , html
-		// mav.setViewName("/list");
-		try {
-			mav.addObject("producto", producto.obtenerTodos(pageable)); // crud
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return mav;
-	}
+	
 	
 
 }
