@@ -17,36 +17,42 @@
 <link rel="icon" href="../static/img/A.png">
 </head>
 <body>
-
-
-	<div class="navbar-wrapper">
-		<div class="container">
-
-			<nav class="navbar navbar-inverse navbar-fixed-top">
-				<div class="container">
-					<div class="navbar-header">
-						<button type="button" class="navbar-toggle collapsed"
-							data-toggle="collapse" data-target="#navbar"
-							aria-expanded="false" aria-controls="navbar">
-							<span class="sr-only">Navegación</span> <span class="icon-bar"></span>
-							<span class="icon-bar"></span> <span class="icon-bar"></span>
-						</button>
-						<a class="navbar-brand" href="#">Almaccenture</a>
-					</div>
-					<div id="navbar" class="navbar-collapse collapse">
-						<ul class="nav navbar-nav">
-							<li><a th:href="@{/}" href="#">Home</a></li>
-							<li><a href="#">Venta</a></li>
-							<li class="active"><a href="#">Inventario</a></li>
-							<li><a href="#">Reportes</a></li>
-						</ul>
-					</div>
-				</div>
-			</nav>
-
-		</div>
-	</div>
 	<h2>
+
+		<div class="navbar-wrapper">
+			<div class="container">
+
+				<nav class="navbar navbar-inverse navbar-fixed-top">
+					<div class="container">
+						<div class="navbar-header">
+							<button type="button" class="navbar-toggle collapsed"
+								data-toggle="collapse" data-target="#navbar"
+								aria-expanded="false" aria-controls="navbar">
+								<span class="sr-only">Navegación</span> <span class="icon-bar"></span>
+								<span class="icon-bar"></span> <span class="icon-bar"></span>
+							</button>
+							<a class="navbar-brand" href="#">Almaccenture</a>
+						</div>
+						<div id="navbar" class="navbar-collapse collapse">
+							<ul class="nav navbar-nav">
+								<li><a th:href="@{/}" href="#">Página principal</a></li>
+								<li><a href="#">Venta</a></li>
+								<li class="active"><a href="#">Inventario</a></li>
+								<li class="dropdown"><a href="#" class="dropdown-toggle"
+									data-toggle="dropdown" role="button" aria-haspopup="true"
+									aria-expanded="false">Reportes<span class="caret"></span></a>
+									<ul class="dropdown-menu">
+										<li><a href="#">Ventas</a></li>
+										<li><a href="#">Productos agotados</a></li>
+									</ul></li>
+							</ul>
+						</div>
+					</div>
+				</nav>
+
+			</div>
+		</div>
+
 
 		</br> </br>
 
@@ -58,7 +64,7 @@
 
 
 			<!-- 			<form id="messageForm" th:action="@{/inventario}" th : -->
-			<!-- 				object="${producto}" action="#" th:object="${detalle}" method="get"> -->
+			<!-- 				object="${producto}" action="#" th:object="${producto}" method="get"> -->
 			<!-- 				<label for="codigo">Buscar producto:</label> <input type="text" -->
 			<!-- 					th:field="*{producto.idProducto}"> <input type="submit" -->
 			<!-- 					value="Buscar" id="agregar" class="btn btn-success btn-lg" /> <br> -->
@@ -96,9 +102,10 @@
 			<!-- 			<div class=col-md-1></div> -->
 			<div class=col-md-12>
 
-				<!-- 				<table th:if="${not #lists.isEmpty(venta.detalles)}" -->
-				<!-- 					class="table table-bordered table-striped table-hover"> -->
-				<table>
+				<table class="table table-bordered table-striped table-hover">
+
+
+
 					<thead>
 						<tr>
 							<th>Código</th>
@@ -111,7 +118,6 @@
 							<th>Descripcion</th>
 							<th>Acción</th>
 						</tr>
-						<!-- 				sfhisdh -->
 
 						<tr th:each="inventario : ${producto}">
 							<td th:text="${inventario.idProducto}" class="tg-yw4l"></td>
@@ -120,13 +126,14 @@
 							<td th:text="${inventario.cantidadProducto}" class="tg-yw4l"></td>
 							<td th:text="${inventario.precioProducto}" class="tg-yw4l"></td>
 							<td th:text="${inventario.estadoProducto}" class="tg-yw4l"></td>
-							<td th:text="${inventario.categoria.idCategoria}" class="tg-yw4l"></td>
+							<td th:text="${inventario.categoria.nombreCategoria}"
+								class="tg-yw4l"></td>
 							<td th:text="${inventario.descripcionProducto}" class="tg-yw4l"></td>
-							<!-- 						<td><a class="btn btn-danger" href="modificar.html" -->
-							<!-- 							th:href="@{/product/modificar?id='+${inventario.identificacion}}">Modificar</a> -->
-							<!-- 							<a class="btn btn-danger" -->
-							<!-- 							th:href="@{'/product/eliminar?id='+${inventario.identificacion}}">Eliminar</a> -->
-							<!-- 						</td> -->
+							<td><a class="btn btn-danger" href="modificar.html"
+								th:href="@{/product/modificar?id='+${inventario.nombreProducto}}">Modificar</a>
+								<a class="btn btn-danger"
+								th:href="@{'/product/eliminar?id='+${inventario.estadoProducto}}">Eliminar</a>
+							</td>
 
 
 						</tr>
@@ -134,28 +141,12 @@
 
 
 					</thead>
-					<!-- 					<tbody> -->
-					<!-- 						<tr th:each="detalle : ${venta.detalles}"> -->
-					<!-- 							<td th:text="${detalle.producto.idProducto}"></td> -->
-					<!-- 							<td th:text="${detalle.producto.nombreProducto}"></td> -->
-
-					<!-- 							<td th:text="${detalle.cantidad}"></td> -->
-
-					<!-- 							<td> $ <span th:text="${#numbers.formatDecimal(detalle.valorUnitario, 0, 'COMMA', 0, 'POINT')}"></span></td> -->
-
-					<!-- 							<td> $ <span th:text="${#numbers.formatDecimal(detalle.cantidad*detalle.valorUnitario, 0, 'COMMA', 0, 'POINT')}"></span></td> -->
-					<!-- 							<td><a -->
-					<!-- 								th:href="@{'/inventario/' + ${detalle.producto.idProducto}}"><span -->
-					<!-- 									class="glyphicon glyphicon-trash"></span></a></td> -->
-
-					<!-- 						</tr> -->
-					<!-- 					</tbody> -->
 
 				</table>
-				
+
 				<div th:fragment='paginationbar'>
 					<div>
-						<ul class='pagination pagination-centered'>
+						<ul class='pagination justify-content-center'>
 							<li th:each='page : ${pages}'><a
 								th:href='@{/inventario/list(page=${page-1},size=5)}'><span
 									th:text='${page}'>1</span></a></li>
@@ -163,46 +154,6 @@
 					</div>
 				</div>
 
-
-				<script th:inline="javascript">
-					/*llama ruta de controlador para inyectar data en el modal*/
-					function preparaModalPago() {
-						let url = "/ventas/pago";
-						$.get(url, function(result) {
-							mostrarModal(result);
-						})
-
-					}
-
-					/*muestra modal-dialog y lo rellena con lo que viene en parametro result*/
-					function mostrarModal(result) {
-						BootstrapDialog.show({
-							type : BootstrapDialog.TYPE_PRIMARY,
-							title : "Calcular Cambio",
-							message : result,
-							draggable : true,
-							nl2br : false, //para que no genere <br> por cada salto de linea
-							buttons : [ {
-								label : 'Pagar',
-								cssClass : 'btn-primary btn-lg',
-								id : 'btnpagar',
-								hotkey : 13,
-								action : function(dialogItself) {
-									var $button = this;
-									$button.spin();
-									location.replace('/ventas/guardar');
-								}
-							}, {
-								label : 'Cerrar',
-								cssClass : 'btn-danger btn-lg',
-								id : 'btncancelar',
-								action : function(dialogItself) {
-									dialogItself.close();
-								}
-							} ]
-						})
-					}
-				</script>
 
 				<br> <br>
 	</h2>

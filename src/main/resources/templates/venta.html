@@ -35,10 +35,16 @@
 					</div>
 					<div id="navbar" class="navbar-collapse collapse">
 						<ul class="nav navbar-nav">
-							<li><a th:href="@{/}" href="#">Home</a></li>
+							<li><a th:href="@{/}" href="#">Página principal</a></li>
 							<li class="active"><a href="#">Venta</a></li>
 							<li><a href="#">Inventario</a></li>
-							<li><a href="#">Reportes</a></li>
+							<li class="dropdown"><a href="#" class="dropdown-toggle"
+								data-toggle="dropdown" role="button" aria-haspopup="true"
+								aria-expanded="false">Reportes<span class="caret"></span></a>
+								<ul class="dropdown-menu">
+									<li><a href="#">Ventas</a></li>
+									<li><a href="#">Productos agotados</a></li>
+								</ul></li>
 						</ul>
 					</div>
 				</div>
@@ -48,7 +54,8 @@
 	</div>
 	<h2>
 
-		</br></br>
+		</br>
+		</br>
 
 		<div class="row text-center">
 			<div class="col-md-2"></div>
@@ -115,7 +122,8 @@
 			<div class=col-md-2></div>
 			<div class=col-md-8>
 
-				<table th:if="${not #lists.isEmpty(venta.detalles)}" class="table table-bordered table-striped table-hover">
+				<table th:if="${not #lists.isEmpty(venta.detalles)}"
+					class="table table-bordered table-striped table-hover">
 
 					<thead>
 						<tr>
@@ -134,9 +142,11 @@
 
 							<td th:text="${detalle.cantidad}"></td>
 
-							<td> $ <span th:text="${#numbers.formatDecimal(detalle.valorUnitario, 0, 'COMMA', 0, 'POINT')}"></span></td>
+							<td>$ <span
+								th:text="${#numbers.formatDecimal(detalle.valorUnitario, 0, 'COMMA', 0, 'POINT')}"></span></td>
 
-							<td> $ <span th:text="${#numbers.formatDecimal(detalle.cantidad*detalle.valorUnitario, 0, 'COMMA', 0, 'POINT')}"></span></td>
+							<td>$ <span
+								th:text="${#numbers.formatDecimal(detalle.cantidad*detalle.valorUnitario, 0, 'COMMA', 0, 'POINT')}"></span></td>
 							<td><a
 								th:href="@{'/ventas/' + ${detalle.producto.idProducto}}"><span
 									class="glyphicon glyphicon-trash"></span></a></td>
@@ -145,11 +155,13 @@
 					</tbody>
 
 				</table>
-				
+
 				<div class="row">
 					<div class="col-md-10"></div>
 					<div class="col-md-2">
-					<p class="label label-danger" th:if="${not #lists.isEmpty(venta.detalles)}"> Total: [[${venta.totalVenta}]]</p>
+						<p class="label label-danger"
+							th:if="${not #lists.isEmpty(venta.detalles)}">Total:
+							[[${venta.totalVenta}]]</p>
 					</div>
 				</div>
 
@@ -160,13 +172,16 @@
 
 		<div class="row text-center">
 
-		<button th:if="${not #lists.isEmpty(venta.detalles)}" class="btn btn-success btn-lg" id= "pagar" onclick="preparaModalPago()">Pagar</button>
-			<form th:action="@{/ventas}" action="#" th:method="GET" style="display:inline;">
-				<input name="limpiar" type="submit" value="Cancelar" 
+			<button th:if="${not #lists.isEmpty(venta.detalles)}"
+				class="btn btn-success btn-lg" id="pagar"
+				onclick="preparaModalPago()">Pagar</button>
+			<form th:action="@{/ventas}" action="#" th:method="GET"
+				style="display: inline;">
+				<input name="limpiar" type="submit" value="Cancelar"
 					class="btn btn-primary btn-lg" />
 			</form>
 		</div>
-	
+
 
 		<script th:inline="javascript">
 			/*llama ruta de controlador para inyectar data en el modal*/
@@ -189,8 +204,8 @@
 					buttons : [ {
 						label : 'Pagar',
 						cssClass : 'btn-primary btn-lg',
-						id:'btnpagar',
-						hotkey: 13, 
+						id : 'btnpagar',
+						hotkey : 13,
 						action : function(dialogItself) {
 							var $button = this;
 							$button.spin();
@@ -199,7 +214,7 @@
 					}, {
 						label : 'Cerrar',
 						cssClass : 'btn-danger btn-lg',
-						id:'btncancelar',
+						id : 'btncancelar',
 						action : function(dialogItself) {
 							dialogItself.close();
 						}
@@ -211,5 +226,5 @@
 		<br> <br>
 	</h2>
 </body>
-	
+
 </html>
