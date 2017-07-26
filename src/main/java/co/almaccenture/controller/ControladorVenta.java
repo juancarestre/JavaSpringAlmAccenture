@@ -7,6 +7,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import co.almaccenture.business.LogicaNegocioProducto;
 import co.almaccenture.business.LogicaNegocioVenta;
+import co.almaccenture.business.impl.LogicaNegocioProductoImp;
 import co.almaccenture.exception.LogicaNegocioExcepcion;
 import co.almaccenture.model.DetalleVenta;
 import co.almaccenture.model.Venta;
@@ -27,6 +30,9 @@ public class ControladorVenta{
 	
 	@Autowired
 	private LogicaNegocioVenta ventaBl;
+	@Autowired
+	private LogicaNegocioProducto producto;
+	
 	
 	private Venta venta;
 	public static final String MENSAJE_ID_PRODUCTO_INVALIDO = "El código de producto debe contener algún valor.---";
@@ -199,6 +205,18 @@ public class ControladorVenta{
 		return suma;
 	}
 	
+	@RequestMapping(method = RequestMethod.GET, value = "/inventario")
+	public ModelAndView listar(Pageable pageable) { //metodo
+		ModelAndView mav = new ModelAndView("inventario"); // constructor , html
+		// mav.setViewName("/list");
+		try {
+			mav.addObject("producto", producto.obtenerTodos(pageable)); // crud
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return mav;
+	}
 	
 
 }
