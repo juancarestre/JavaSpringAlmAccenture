@@ -50,10 +50,17 @@
 					</div>
 					<div id="navbar" class="navbar-collapse collapse">
 						<ul class="nav navbar-nav">
-							<li  class="active"><a th:href="@{/}" href="#">Página principal</a></li>
+							<li class="active"><a th:href="@{/}" href="#">Página
+									principal</a></li>
 							<li><a th:href="@{/ventas/new}" href="#">Venta</a></li>
-							<li><a href="#contact">Inventario</a></li>
-							<li><a href="#contact">Reportes</a></li>
+							<li><a href="inventario.html">Inventario</a></li>
+							<li class="dropdown"><a href="#" class="dropdown-toggle"
+								data-toggle="dropdown" role="button" aria-haspopup="true"
+								aria-expanded="false">Reportes<span class="caret"></span></a>
+								<ul class="dropdown-menu">
+									<li><a href="#">Ventas</a></li>
+									<li><a href="#">Productos agotados</a></li>
+								</ul></li>
 						</ul>
 					</div>
 				</div>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Reportes Ventas</title>
+
+<meta charset="UTF-8">
+<title>Reportes Ventas</title>
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<link
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	rel="stylesheet" type="text/css" />
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.9/css/bootstrap-dialog.min.css"
+	rel="stylesheet" type="text/css" />
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.9/js/bootstrap-dialog.min.js"></script>
+<link rel="icon" href="../static/img/A.png">
+
+</head>
+<body>
+
+	<div class="navbar-wrapper">
+		<div class="container">
+
+			<nav class="navbar navbar-inverse navbar-fixed-top">
+				<div class="container">
+					<div class="navbar-header">
+						<button type="button" class="navbar-toggle collapsed"
+							data-toggle="collapse" data-target="#navbar"
+							aria-expanded="false" aria-controls="navbar">
+							<span class="sr-only">Navegación</span> <span class="icon-bar"></span>
+							<span class="icon-bar"></span> <span class="icon-bar"></span>
+						</button>
+						<a class="navbar-brand" href="#">Almaccenture</a>
+					</div>
+					<div id="navbar" class="navbar-collapse collapse">
+						<ul class="nav navbar-nav">
+							<li><a th:href="@{/}" href="#">Página principal</a></li>
+							<li><a th:href="@{/ventas/new}" href="#">Venta</a></li>
+							<li><a href="inventario.html">Inventario</a></li>
+							<li class="dropdown"><a href="#" class="dropdown-toggle"
+								data-toggle="dropdown" role="button" aria-haspopup="true"
+								aria-expanded="false">Reportes<span class="caret"></span></a>
+								<ul class="dropdown-menu">
+									<li><a href="#">Ventas</a></li>
+									<li><a href="#">Productos agotados</a></li>
+								</ul></li>
+						</ul>
+					</div>
+				</div>
+			</nav>
+
+		</div>
+	</div>
+
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+
+	<h2>
+
+		<div class="row text-center">
+
+
+			<form id="messageForm" th:action="@{/ventas}" action="#"
+				th:object="${detalle}" method="get">
+				<label for="fechaInicio">Fecha de inicio:</label> <input type="Date"
+					th:field="*{producto.idProducto}"> <label for="cantidad">Fecha
+					final:</label> <input type="Date" th:field="*{cantidad}">
+				<div class="form-actions">
+
+					<br> <input type="submit" value="Buscar" id="agregar"
+						class="btn btn-success btn-lg" />
+				</div>
+
+			</form>
+
+
+		</div>
+
+		<hr class="featurette-divider">
+
+		<br> <br>
+
+		<div class="row">
+			<div class=col-md-2></div>
+			<div class=col-md-8>
+
+				<table class="table table-bordered table-striped table-hover">
+
+					<thead>
+						<tr>
+							<th>Código</th>
+							<th>Fecha</th>
+							<th>Caja</th>
+							<th>Total</th>
+							<th>Acción</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td th:text="${detalle.producto.idProducto}"></td>
+							<td th:text="${detalle.producto.nombreProducto}"></td>
+							<td th:text="${detalle.cantidad}"></td>
+							<td>$ <span
+								th:text="${#numbers.formatDecimal(detalle.valorUnitario, 0, 'COMMA', 0, 'POINT')}"></span></td>
+							<td><a
+								th:href="@{'/ventas/' + ${detalle.producto.idProducto}}"><span
+									class="glyphicon glyphicon-eye-open"></span></a></td>
+
+						</tr>
+					</tbody>
+
+				</table>
+
+				<div class="row">
+					<div class="col-md-10"></div>
+					<div class="col-md-2">
+						<p class="label label-danger"
+							th:if="${not #lists.isEmpty(venta.detalles)}">
+							Total:
+							<!-- 							[[${venta.totalVenta}]]</p> -->
+					</div>
+				</div>
+
+			</div>
+			<div class=col-md-2></div>
+		</div>
+
+	</h2>
+
+
+
+
+
+
+</body>
+</html>
