@@ -37,7 +37,7 @@
 						<ul class="nav navbar-nav">
 							<li><a th:href="@{/}" href="#">Página principal</a></li>
 							<li><a th:href="@{/ventas/new}" href="#">Venta</a></li>
-							<li class="active"><a href="#">Inventario</a></li>
+							<li class="active"><a th:href="@{/inventario}" href="#">Inventario</a></li>
 							<li class="dropdown"><a href="#" class="dropdown-toggle"
 								data-toggle="dropdown" role="button" aria-haspopup="true"
 								aria-expanded="false">Reportes<span class="caret"></span></a>
@@ -53,30 +53,29 @@
 		</div>
 	</div>
 
-	<h2>
+	<h4>
 		</br> </br>
-		<!-- <br> <input type="hidden" th:field="*{activo}" /> -->
-		<div th:if="${message != ''}"
-			class="alert alert-warning alert-dismissible" role="alert">
-			<div class="text-center">
-				<button type="button" class="close" data-dismis="alert"
-					aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-				<strong>¡Señor usuario!</strong>
-				<div th:text="${message}"></div>
-			</div>
-		</div>
 
-		<hr class="featurette-divider">
+		<div class="col-md-1"></div>
+		<div class="col-md-10">
+			<h1>Inventario</h1>
 
-		<br>
-		
-		<div th:insert="inventario :: paginationbar"></div>
+			<hr class="featurette-divider">
 
-		<div class="row">
-			<div class=col-md-1></div>
-			<div class=col-md-10>
+			<p>
+				<a th:href="@{/inventario/new}" class="btn
+			btn-primary"><span
+					class="glyphicon glyphicon-plus" aria-hidden="true"></span>Agregar
+					Producto</a>
+			</p>
+
+
+			<hr class="featurette-divider">
+
+			<br>
+
+			<div class="row">
+
 				<table class="table table-bordered table-striped table-hover">
 
 
@@ -95,20 +94,21 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr th:each="producto : ${productos}">
-							<td th:text="${producto.idProducto}" class="tg-yw4l"></td>
-							<td th:text="${producto.fechaModificacion}" class="tg-yw4l"></td>
-							<td th:text="${producto.nombreProducto}" class="tg-yw4l"></td>
-							<td th:text="${producto.cantidadProducto}" class="tg-yw4l"></td>
-							<td th:text="${producto.precioProducto}" class="tg-yw4l"></td>
-							<td th:text="${producto.estadoProducto}" class="tg-yw4l"></td>
-							<td th:text="${producto.categoria.nombreCategoria}"
+						<tr th:each="inventario : ${producto}">
+							<td th:text="${inventario.idProducto}" class="tg-yw4l"></td>
+							<td th:text="${inventario.fechaModificacion}" class="tg-yw4l"></td>
+							<td th:text="${inventario.nombreProducto}" class="tg-yw4l"></td>
+							<td th:text="${inventario.cantidadProducto}" class="tg-yw4l"></td>
+							<td th:text="${inventario.precioProducto}" class="tg-yw4l"></td>
+							<td th:text="${inventario.estadoProducto}" class="tg-yw4l"></td>
+							<td th:text="${inventario.categoria.nombreCategoria}"
 								class="tg-yw4l"></td>
-							<td th:text="${producto.descripcionProducto}" class="tg-yw4l"></td>
-							<td><a class="btn btn-danger" href="modificar.html"
-								th:href="@{/product/modificar?id='+${producto.idProducto}}">Modificar</a>
-								<a class="btn btn-danger"
-								th:href="@{'/product/eliminar?id='+${producto.idProducto}}">Eliminar</a>
+							<td th:text="${inventario.descripcionProducto}" class="tg-yw4l"></td>
+							<td><a class="glyphicon glyphicon-pencil"
+								href="modificar.html"
+								th:href="@{/product/modificar?id='+${inventario.nombreProducto}}"></a>
+								<a class="glyphicon glyphicon-trash"
+								th:href="@{'/product/eliminar?id='+${inventario.estadoProducto}}"></a>
 							</td>
 
 
@@ -122,20 +122,17 @@
 			<div class=col-md-1></div>
 			</br> </br>
 		</div>
-		<div class="text-center" th:fragment='paginationbar'>
-				<ul class="pagination">
-					<li th:each='page : ${pages}'><a
-						th:href='@{/inventario(page=${page-1},size=5)}'><span
-							th:text='${page}'>1</span></a></li>
-				</ul>
+		<div th:fragment='paginationbar'>
+			<ul class='pagination justify-content-center'>
+				<li th:each='page : ${pages}'><a
+					th:href='@{/inventario/list(page=${page-1},size=5)}'><span
+						th:text='${page}'>1</span></a></li>
+			</ul>
 		</div>
-		
 
 
 		<br> <br>
 	</h2>
-	
-	
 </body>
 
 </html>

@@ -41,7 +41,17 @@ public class ControladorInventario {
 	@Autowired
 	private RepositorioCategoria repositorioCategoria;
 	
-	private Producto p = new Producto();
+	
+	
+	public static final String MENSAJE_NO_ID = "El campo de código de producto está vacío";
+	public static final String MENSAJE_NO_NOMBRE_PRODUCTO = "El campo de nombre de producto está vacío";
+	public static final String MENSAJE_NO_CANTIDAD = "El campo de cantidad de producto está vacío";
+	public static final String MENSAJE_CANTIDAD_NO_VALIDA = "El campo de cantidad de producto está vacío.";
+	public static final String MENSAJE_NO_DESCRIPCION = "El campo de descripción de producto está vacío";
+	public static final String MENSAJE_NO_CATEGORIA = "El campo de categoria de producto está vacío";
+	public static final String MENSAJE_NO_PRECIO = "El campo de precio de producto está vacío";
+	public static final String MENSAJE_PRECIO_NO_VALIDO = "El precio debe ser un campo mayor y diferente a cero";
+
 	
 	/**
 	 * Muestra lista de todos los productos en inventario, pageable es rellenado
@@ -69,7 +79,8 @@ public class ControladorInventario {
 	public ModelAndView nuevoProducto() {
 		
 		ModelAndView mav = new ModelAndView("AgregarProducto");
-		mav.addObject("producto",p);
+		mav.addObject("producto", new Producto());
+		mav.addObject("message", "");
 		return mav;
 	}
 	
@@ -79,9 +90,18 @@ public class ControladorInventario {
 			"cantidadProducto","categoria.nombreCategoria"})
 	public ModelAndView ingresarProducto(HttpServletRequest req){
 		
-		
+		String message="";
+		ModelAndView mav= new ModelAndView();
 		
 		try{
+			Producto p = new Producto();
+			if(req.getParameter("idProducto").isEmpty()) throw new LogicaNegocioExcepcion(MENSAJE_NO_ID);
+			if(req.getParameter("nombreProducto").isEmpty()) throw new LogicaNegocioExcepcion(MENSAJE_NO_NOMBRE_PRODUCTO);
+			if(req.getParameter("cantidadProducto").isEmpty()) throw new LogicaNegocioExcepcion(MENSAJE_NO_CANTIDAD);
+			if(req.getParameter("descripcionProducto").isEmpty()) throw new LogicaNegocioExcepcion(MENSAJE_NO_DESCRIPCION);
+			if(req.getParameter("precioProducto").isEmpty()) throw new LogicaNegocioExcepcion(MENSAJE_NO_PRECIO);
+			if(req.getParameter("categoria.nombreCategoria").isEmpty()) throw new LogicaNegocioExcepcion(MENSAJE_NO_CATEGORIA);
+			
 			p.setIdProducto(req.getParameter("idProducto"));
 			p.setNombreProducto(req.getParameter("nombreProducto"));
 			p.setCantidadProducto(Integer.parseInt(req.getParameter("cantidadProducto")));
@@ -91,14 +111,19 @@ public class ControladorInventario {
 			cate = repositorioCategoria.findBynombreCategoria(req.getParameter("categoria.nombreCategoria"));
 			p.setCategoria(cate);
 			producto.agregarProducto(p);
+			mav.setViewName("main");
+
+			
 		
 		}catch (LogicaNegocioExcepcion e) {
+			message=e.getMessage();
+			mav.addObject("producto", new Producto());
+			mav.setViewName("/AgregarProducto");
 			e.printStackTrace();
 		}
 		
-		// Agrega producto a a lista de productos de venta
-		ModelAndView mav= new ModelAndView("main");
-
+		mav.addObject("message", message);
+		
 		return mav;
 	}
 	
