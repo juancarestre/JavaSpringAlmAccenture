@@ -163,6 +163,15 @@ public class LogicaNegocioProductoImp implements LogicaNegocioProducto  {
 		p.setEstadoProducto(false);
 		repositorioProducto.save(p);
 	}
+	
+	@Override
+	public void cambiarLogicamenteProducto(String id) throws LogicaNegocioExcepcion {
+		Producto p=obtenerProductoPorId(id);
+		p.setFechaModificacion(new Date(Calendar.getInstance().getTimeInMillis()));
+		
+		p.setEstadoProducto(!p.getEstadoProducto());
+		repositorioProducto.save(p);
+	}
 
 	@Override
 	public Page<Producto> obtenerTodos(Pageable pageable) throws LogicaNegocioExcepcion {

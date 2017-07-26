@@ -99,7 +99,7 @@
 							<td th:text="${inventario.nombreProducto}" class="tg-yw4l"></td>
 							<td th:text="${inventario.cantidadProducto}" class="tg-yw4l"></td>
 							<td th:text="${inventario.precioProducto}" class="tg-yw4l"></td>
-							<td th:text="${inventario.estadoProducto}" class="tg-yw4l"></td>
+							<td><form  th:action="@{'/inventario/modificarestado/' + ${inventario.idProducto}}"  th:method="POST"><input id="checkbox1" type="checkbox" th:checked="${inventario.estadoProducto}" name="check" onchange="submit()" ><label for="checkbox1" th:text="${inventario.estadoProducto}"></label></form></td>
 							<td th:text="${inventario.categoria.nombreCategoria}"
 								class="tg-yw4l"></td>
 							<td th:text="${inventario.descripcionProducto}" class="tg-yw4l"></td>
@@ -116,6 +116,7 @@
 					</tbody>
 
 				</table>
+				
 			</div>
 			<div class=col-md-1></div>
 			</br> </br>

@@ -11,6 +11,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -22,6 +24,7 @@ import co.almaccenture.business.LogicaNegocioProducto;
 import co.almaccenture.model.Producto;
 import co.almaccenture.exception.LogicaNegocioExcepcion;
 import co.almaccenture.model.Categoria;
+import co.almaccenture.model.DetalleVenta;
 import co.almaccenture.model.Producto;
 import co.almaccenture.repository.RepositorioCategoria;
 
@@ -98,6 +101,16 @@ public class ControladorInventario {
 		// Agrega producto a a lista de productos de venta
 		ModelAndView mav= new ModelAndView("main");
 
+		return mav;
+	}
+	
+	@RequestMapping(method = RequestMethod.POST, value = "/inventario/modificarestado/{idProducto}")
+	public ModelAndView eliminarProducto(@PathVariable("idProducto") String idProducto) throws LogicaNegocioExcepcion {
+		
+		System.out.println("eliminarProducto" + idProducto);
+		producto.cambiarLogicamenteProducto(idProducto);
+		
+		ModelAndView mav= new ModelAndView("redirect:/inventario");
 		return mav;
 	}
 	
