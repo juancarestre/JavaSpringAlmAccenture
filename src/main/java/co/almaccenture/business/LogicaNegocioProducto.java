@@ -71,6 +71,8 @@ public interface LogicaNegocioProducto {
 	 */
 	public Page<Producto> obtenerAgotados(Pageable pageable) throws LogicaNegocioExcepcion;
 
+	void cambiarLogicamenteProducto(String id) throws LogicaNegocioExcepcion;
+
 	
 
 }
