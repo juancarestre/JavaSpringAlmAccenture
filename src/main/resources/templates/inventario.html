@@ -57,20 +57,20 @@
 		<div class="row text-center">
 
 
-			<form id="messageForm" th:action="@{/inventario}" th :
-				object="${producto}" action="#" th:object="${detalle}" method="get">
-				<label for="codigo">Buscar producto:</label> <input type="text"
-					th:field="*{producto.idProducto}"> <input type="submit"
-					value="Buscar" id="agregar" class="btn btn-success btn-lg" /> <br>
-				<br>
+<!-- 			<form id="messageForm" th:action="@{/inventario}" th : -->
+<!-- 				object="${producto}" action="#" th:object="${detalle}" method="get"> -->
+<!-- 				<label for="codigo">Buscar producto:</label> <input type="text" -->
+<!-- 					th:field="*{producto.idProducto}"> <input type="submit" -->
+<!-- 					value="Buscar" id="agregar" class="btn btn-success btn-lg" /> <br> -->
+<!-- 				<br> -->
 
-				<div class="form-actions">
+<!-- 				<div class="form-actions"> -->
 
-					<input type="submit" value="Agregar producto" id="agregar1"
-						class="btn btn-success btn-lg" />
-				</div>
+<!-- 					<input type="submit" value="Agregar producto" id="agregar1" -->
+<!-- 						class="btn btn-success btn-lg" /> -->
+<!-- 				</div> -->
 
-			</form>
+<!-- 			</form> -->
 
 
 		</div>
@@ -98,7 +98,7 @@
 
 				<!-- 				<table th:if="${not #lists.isEmpty(venta.detalles)}" -->
 				<!-- 					class="table table-bordered table-striped table-hover"> -->
-
+<table>
 				<thead>
 					<tr>
 						<th>Código</th>
@@ -120,13 +120,13 @@
 						<td th:text="${inventario.cantidadProducto}" class="tg-yw4l"></td>
 						<td th:text="${inventario.precioProducto}" class="tg-yw4l"></td>
 						<td th:text="${inventario.estadoProducto}" class="tg-yw4l"></td>
-						<td th:text="${inventario.idCategoria}" class="tg-yw4l"></td>
-						<td th:text="${inventario.descripcionProduto}" class="tg-yw4l"></td>
-						<td><a class="btn btn-danger" href="modificar.html"
-							th:href="@{/product/modificar?id='+${inventario.identificacion}}">Modificar</a>
-							<a class="btn btn-danger"
-							th:href="@{'/product/eliminar?id='+${inventario.identificacion}}">Eliminar</a>
-						</td>
+						<td th:text="${inventario.categoria.idCategoria}" class="tg-yw4l"></td>
+						<td th:text="${inventario.descripcionProducto}" class="tg-yw4l"></td>
+<!-- 						<td><a class="btn btn-danger" href="modificar.html" -->
+<!-- 							th:href="@{/product/modificar?id='+${inventario.identificacion}}">Modificar</a> -->
+<!-- 							<a class="btn btn-danger" -->
+<!-- 							th:href="@{'/product/eliminar?id='+${inventario.identificacion}}">Eliminar</a> -->
+<!-- 						</td> -->
 						
 
 					</tr>
