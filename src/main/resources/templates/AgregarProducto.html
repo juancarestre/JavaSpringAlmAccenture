@@ -35,8 +35,8 @@
 					</div>
 					<div id="navbar" class="navbar-collapse collapse">
 						<ul class="nav navbar-nav">
-							<li><a th:href="@{/}" href="#">Home</a></li>
-							<li><a href="#">Venta</a></li>
+							<li><a th:href="@{/}" href="#">Página principal</a></li>
+							<li><a th:href="@{/ventas/new}" href="#">Venta</a></li>
 							<li class="active"><a href="#">Inventario</a></li>
 							<li><a href="#">Reportes</a></li>
 						</ul>
@@ -99,10 +99,9 @@
 				<div class="form-actions">
 
 					<input type="submit" value="Agregar producto" id="agregar1" name="agregar"
-						class="btn btn-success btn-lg" /> <input type="submit"
-						value="Cancelar" id="Cancelar1" class="btn btn-success btn-lg" />
-						<input type="submit"
-						value="Limpiar" id="Limpiar" class="btn btn-success btn-lg" />
+						class="btn btn-success btn-lg" /> 
+						<a th:href="@{/inventario}" id="Cancelar1" class="btn btn-success btn-lg" >Cancelar</a>
+						<a th:href="@{/inventario/new}" id="Limpiar" class="btn btn-success btn-lg" >Limpiar</a>
 						
 <!-- 						<input class="btn btn-info" type="submit" name="save" value="Guardar" /> -->
 				</div>
