@@ -69,6 +69,7 @@ public class ControladorInventario {
 			//pages tiene todos las paginas enumeradas en un array
 			//para 5 paginas, pages es {1,2,3,4,5}
 			mav.addObject("pages",IntStream.range(1,page.getTotalPages()+1).toArray());
+			mav.addObject("producto",new Producto());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -133,9 +134,9 @@ public class ControladorInventario {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(method=RequestMethod.GET, value="/inventario/consulta", params={"id"})
+	@RequestMapping(method=RequestMethod.GET, value="/inventario/consulta", params={"idProducto"})
 	public String buscarProductoPorCodigo(final Model model, final HttpServletRequest req){
-		String id = req.getParameter("id");
+		String id = req.getParameter("idProducto");
 		String message = "";
 		List<Producto> p = new ArrayList<>();
 		try {
@@ -147,6 +148,7 @@ public class ControladorInventario {
 		
 		model.addAttribute("productos", p);
 		model.addAttribute(message);
+		model.addAttribute("producto", new Producto());
 		return INVENTARIO_HTML;
 	}
 	
