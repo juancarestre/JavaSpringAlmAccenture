@@ -111,7 +111,7 @@
 						<th>Descripcion</th>
 						<th>Acción</th>
 					</tr>
-				
+<!-- 				sfhisdh -->
 
 					<tr th:each="inventario : ${producto}">
 						<td th:text="${inventario.idProducto}" class="tg-yw4l"></td>
@@ -127,6 +127,7 @@
 							<a class="btn btn-danger"
 							th:href="@{'/product/eliminar?id='+${inventario.identificacion}}">Eliminar</a>
 						</td>
+						
 
 					</tr>
 
