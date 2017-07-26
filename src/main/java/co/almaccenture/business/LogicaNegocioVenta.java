@@ -1,5 +1,10 @@
 package co.almaccenture.business;
 
+import java.sql.Date;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import co.almaccenture.exception.LogicaNegocioExcepcion;
 
 import co.almaccenture.model.DetalleVenta;
@@ -53,6 +58,7 @@ public interface LogicaNegocioVenta {
 	 */
 	public Venta obtenerVentaPorID(int idVenta) throws LogicaNegocioExcepcion;
 	
+	public Page<Venta> obtenerVentasPorFecha(Date fechaInicio, Date fechaFin, Pageable pageable) throws LogicaNegocioExcepcion;
 	
 	//TODO: Crear método para buscar por el nombre con comodin contains
 }

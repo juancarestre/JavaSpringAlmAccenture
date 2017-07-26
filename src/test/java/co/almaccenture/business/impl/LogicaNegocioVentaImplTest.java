@@ -2,6 +2,8 @@ package co.almaccenture.business.impl;
 
 import static org.junit.Assert.*;
 
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,6 +11,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import ch.qos.logback.classic.net.SyslogAppender;
@@ -17,6 +22,7 @@ import co.almaccenture.exception.LogicaNegocioExcepcion;
 import co.almaccenture.model.DetalleVenta;
 import co.almaccenture.model.Venta;
 import co.almaccenture.repository.RepositorioProducto;
+import groovyjarjarcommonscli.ParseException;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
@@ -84,6 +90,49 @@ public class LogicaNegocioVentaImplTest {
 			e.printStackTrace();
 			fail(e.getMessage());
 		}
+	}
+	
+	@Test
+	public void testObtenerVentaFecha() {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+		
+		String iniDate = "2017/07/10";
+		String endDate = "2017/07/24";
+		
+		try {
+			
+		java.util.Date date1 = sdf.parse(iniDate);
+		long millisDate1 = date1.getTime();
+		
+		
+		java.util.Date date2 = sdf.parse(endDate);
+		long millisDate2 = date2.getTime();
+		
+		
+		Date sqldate1=new Date(millisDate1);
+		Date sqldate2=new Date(millisDate2);
+		
+		Page<Venta> page = logicaNegocio.obtenerVentasPorFecha(sqldate1, sqldate2,  new PageRequest(0,5));
+		
+		System.out.println("Entre las fechas: " + sqldate1 + " y " + sqldate2 + " se ENCONTRARON: " + page.getTotalElements() 
+		+ " registros de venta");
+		
+		for(int i = 0;i<page.getTotalPages();i++){
+			for (Venta venta : page) {
+				System.out.println("Venta encontrada registrada con ID: " + venta.getIdVenta());
+			}
+			page = logicaNegocio.obtenerVentasPorFecha(sqldate1, sqldate2, page.nextPageable());
+			assertNotNull("Lista vacia", page);
+		}
+		
+		
+		} catch(Exception e) {
+			e.printStackTrace();
+			fail(e.getMessage());
+		}
+		
+		
+		
 	}
 
 

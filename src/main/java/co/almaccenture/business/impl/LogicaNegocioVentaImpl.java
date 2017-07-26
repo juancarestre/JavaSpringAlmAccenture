@@ -7,6 +7,9 @@ import java.util.List;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import co.almaccenture.business.LogicaNegocioCaja;
@@ -38,6 +41,10 @@ public class LogicaNegocioVentaImpl implements LogicaNegocioVenta {
 	public static final String MENSAJE_VENTA_TOTALVENTA_NO_COINCIDE = "El total de venta no es válido.";
 	public static final String MENSAJE_VENTA_TOTALVENTA_NO_EXISTE = "No se generó el total de la venta";
 	private static final String MENSAJE_VENTA_ELIMINADA = "La venta se encuentra eliminada.";
+	private static final String MENSAJE_FECHA_INICIAL_VACIA = "La fecha inicial esta vacia";
+	private static final String MENSAJE_FECHA_FINAL_VACIA = "La fecha final esta vacia";
+	private static final String MENSAJE_FECHAS_INCORRECTAS="Las fechas no estan ingresadas correctamente";
+
 	
 	@Autowired
 	private RepositorioVenta repositorioVenta;
@@ -159,6 +166,16 @@ public class LogicaNegocioVentaImpl implements LogicaNegocioVenta {
 		if(venta.getEstadoVenta().equals(ACTIVO)) throw new LogicaNegocioExcepcion(MENSAJE_VENTA_ELIMINADA);
 		
 		return venta;
+	}
+
+	@Override
+	public Page<Venta> obtenerVentasPorFecha(Date fechaInicio, Date fechaFin, Pageable pageable) throws LogicaNegocioExcepcion {
+		
+		if(fechaInicio==null) throw new LogicaNegocioExcepcion(MENSAJE_FECHA_INICIAL_VACIA);
+		if(fechaFin==null) throw new LogicaNegocioExcepcion(MENSAJE_FECHA_FINAL_VACIA);
+		if(fechaInicio.after(fechaFin)) throw new LogicaNegocioExcepcion(MENSAJE_FECHAS_INCORRECTAS);
+			
+		return repositorioVenta.findByFechaVentaBetween(fechaInicio, fechaFin, pageable);
 	}
 	
 
