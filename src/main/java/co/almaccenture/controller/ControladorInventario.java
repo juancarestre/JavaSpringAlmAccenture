@@ -46,24 +46,19 @@ public class ControladorInventario {
 	public static final String MENSAJE_PRECIO_NO_VALIDO = "El precio debe ser un campo mayor y diferente a cero";
 
 	
+	/**
+	 * Muestra lista de todos los productos en inventario, pageable es rellenado
+	 * con los parametros size y page que vienen en la url, por default es un pageable
+	 * con size 20 y page 0. url : /inventario?page=0&size=5
+	 * @param pageable
+	 * @return
+	 */
 	@RequestMapping(method = RequestMethod.GET, value = "/inventario")
 	public ModelAndView listar(Pageable pageable) { //metodo
 		ModelAndView mav = new ModelAndView("inventario"); // constructor , html
 		try {
-			mav.addObject("producto", producto.obtenerTodos(pageable)); // crud
-		} catch (Exception e) {
-		
-			e.printStackTrace();
-		}
-		return mav;
-	}
-	
-	@RequestMapping(method = RequestMethod.GET, value = "/inventario/list")
-	public ModelAndView listar2(Pageable pageable) { //metodo
-		ModelAndView mav = new ModelAndView("inventario"); // constructor , html
-		try {
 			Page<Producto> page = producto.obtenerTodos(pageable);
-			mav.addObject("producto", page.getContent()); // crud
+			mav.addObject("productos", page.getContent()); // crud
 			//pages tiene todos las paginas enumeradas en un array
 			//para 5 paginas, pages es {1,2,3,4,5}
 			mav.addObject("pages",IntStream.range(1,page.getTotalPages()+1).toArray());
@@ -72,7 +67,6 @@ public class ControladorInventario {
 		}
 		return mav;
 	}
-	
 	
 	@RequestMapping(value = "/inventario/new")
 	public ModelAndView nuevoProducto() {
