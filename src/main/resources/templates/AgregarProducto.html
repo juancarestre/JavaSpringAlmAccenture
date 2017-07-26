@@ -64,24 +64,24 @@
 	<div class="row text-center">
 
 
-			<form id="messageForm" th:action="@{/inventario}" action="#"
-				th:object="${detalle}" method="get">
-			<div>	<label for="codigo">Nombre:</label> <input type="text"
-					th:field="*{producto.idProducto}"> <br> <br> </div>
+			<form id="messageForm" th:action="@{/inventario/new}" action="#"
+				th:object="${producto}" method="post">
+			<div>	<label for="nombre">Nombre:</label> <input type="text"
+					th:field="*{nombreProducto}"> <br> <br> </div>
 				<div>	<label for="codigo">Código:</label> <input type="text"
-					th:field="*{producto.idProducto}"> <br> <br> </div>
-					<div><label for="codigo">Descripcion:</label> <input type="text"
-					th:field="*{producto.idProducto}"> <br> <br> </div>
-				<div>	<label for="codigo">Precio:</label> <input type="text"
-					th:field="*{producto.idProducto}"> <br> <br> </div>
-					<div><label for="codigo">Cantidad:</label> <input type="text"
-					th:field="*{producto.idProducto}"> <br> <br> </div>
+					th:field="*{idProducto}"> <br> <br> </div>
+					<div><label for="descripcion">Descripcion:</label> <input type="text"
+					th:field="*{descripcionProducto}"> <br> <br> </div>
+				<div>	<label for="precio">Precio:</label> <input type="text"
+					th:field="*{precioProducto}"> <br> <br> </div>
+					<div><label for="cantidad">Cantidad:</label> <input type="text"
+					th:field="*{cantidadProducto}"> <br> <br> </div>
 <!-- 				<div>	 <input type="text" -->
 <!-- 					th:field="*{producto.idProducto}"> <br> <br> </div> -->
 					
 <!-- 					<div> -->
 
-					<div>		<label for="codigo">Categoria:</label> <select th:field="*{rol}"
+					<div>		<label for="codigo">Categoria:</label> <select th:field="*{categoria.nombreCategoria}"
 							cssClass="form-control">
 							<option value="Aseo">Aseo</option>
 							<option value="Hogar">Hogar</option>
@@ -98,11 +98,13 @@
 					
 				<div class="form-actions">
 
-					<input type="submit" value="Agregar producto" id="agregar1"
+					<input type="submit" value="Agregar producto" id="agregar1" name="agregar"
 						class="btn btn-success btn-lg" /> <input type="submit"
 						value="Cancelar" id="Cancelar1" class="btn btn-success btn-lg" />
 						<input type="submit"
 						value="Limpiar" id="Limpiar" class="btn btn-success btn-lg" />
+						
+<!-- 						<input class="btn btn-info" type="submit" name="save" value="Guardar" /> -->
 				</div>
 
 			</form>

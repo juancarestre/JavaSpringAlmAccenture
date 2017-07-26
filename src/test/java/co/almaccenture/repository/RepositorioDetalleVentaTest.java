@@ -97,5 +97,19 @@ public class RepositorioDetalleVentaTest {
 		
 	}
 	
+	@Test
+	public void testFindAll(){
+		try {
+			Iterable<DetalleVenta> detalles = detalleRepo.findAll();
+			for (DetalleVenta detalleVenta : detalles) {
+				System.out.println("Detalle encontrado"+detalleVenta.getIdDetalle());
+				System.out.println("Producto: "+detalleVenta.getProducto().getNombreProducto());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail(e.getMessage());
+		}
+	}
+	
 
 }
