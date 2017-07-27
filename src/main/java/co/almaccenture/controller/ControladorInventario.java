@@ -116,7 +116,7 @@ public class ControladorInventario {
 			cate = repositorioCategoria.findBynombreCategoria(req.getParameter("categoria.nombreCategoria"));
 			p.setCategoria(cate);
 			producto.agregarProducto(p);
-			mav.setViewName("main");
+			mav.setViewName("redirect:/inventario");
 
 			
 		
@@ -173,11 +173,11 @@ public class ControladorInventario {
 			cate = repositorioCategoria.findBynombreCategoria(req.getParameter("categoria.nombreCategoria"));
 			p.setCategoria(cate);
 			producto.modificarProducto(p);
-			mav.setViewName("main");
+			mav.setViewName("redirect:/inventario");
 		}catch (LogicaNegocioExcepcion e) {
 			message=e.getMessage();
 			mav.addObject("producto", new Producto());
-			mav.setViewName("/ModificarProducto");
+			mav.setViewName("/inventario/modificar");
 			e.printStackTrace();
 		}
 		
