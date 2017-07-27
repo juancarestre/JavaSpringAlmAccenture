@@ -15,6 +15,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -39,7 +40,7 @@ public class ControladorReportes {
 	private LogicaNegocioVenta ventaBL;
 		
 	public static final String MENSAJE_FECHA_VACIA = "La fecha está vacia";
-
+	private static final String FRAGMENTO_CALCULA_CAMBIO = "fragments :: calculaCambio";
 	
 	private Venta venta;
 	
@@ -133,6 +134,15 @@ try{
 	
 		
 			
+	}
+	
+	@RequestMapping(value="/ventas/reporte",method= RequestMethod.GET)
+	public String ventasReportes(final Model model){
+		
+			venta.getDetalles();
+			model.addAttribute(venta);
+			return FRAGMENTO_CALCULA_CAMBIO;
+		
 	}
 	
 

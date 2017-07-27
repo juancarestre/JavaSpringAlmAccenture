@@ -19,6 +19,12 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.9/js/bootstrap-dialog.min.js"></script>
 <link rel="icon" href="../static/img/A.png">
 
+
+
+
+
+
+
 </head>
 <body>
 
@@ -41,12 +47,14 @@
 							<li><a th:href="@{/}" href="#">Página principal</a></li>
 							<li><a th:href="@{/ventas/new}" href="#">Venta</a></li>
 							<li><a href="/inventario">Inventario</a></li>
-							<li class="dropdown active"><a href="#" class="dropdown-toggle"
-								data-toggle="dropdown" role="button" aria-haspopup="true"
-								aria-expanded="false">Reportes<span class="caret"></span></a>
+							<li class="dropdown active"><a href="#"
+								class="dropdown-toggle" data-toggle="dropdown" role="button"
+								aria-haspopup="true" aria-expanded="false">Reportes<span
+									class="caret"></span></a>
 								<ul class="dropdown-menu">
 									<li class="active"><a href="#">Ventas</a></li>
-									<li><a href="/reportes/productosAgotados">Productos agotados</a></li>
+									<li><a href="/reportes/productosAgotados">Productos
+											agotados</a></li>
 								</ul></li>
 						</ul>
 					</div>
@@ -61,74 +69,111 @@
 	<br>
 	<br>
 	<br>
-	
-<div class="row text-center"> 
+
+	<div class="row text-center">
 
 
-			<form id="messageForm" th:action="@{/reportes/ventas/lista}" action="#"
-				 method="get">
-				<label for="fechaInicio">Fecha de inicio:</label> <input name="fechaInicio" type="Date">
-				<label for="fechaFinal">Fecha final:</label> <input name="fechaFinal" type="Date" >
-				<div class="form-actions">
+		<form id="messageForm" th:action="@{/reportes/ventas/lista}"
+			action="#" method="get">
+			<label for="fechaInicio">Fecha de inicio:</label> <input
+				name="fechaInicio" type="Date"> <label for="fechaFinal">Fecha
+				final:</label> <input name="fechaFinal" type="Date">
+			<div class="form-actions">
 
-					<br> <input type="submit" value="Buscar" id="FiltrarFecha"
-						class="btn btn-success btn-lg" />
-				</div>
-
-			</form>
-
-
-		</div>
-
-		<hr class="featurette-divider">
-
-		<br> <br>
-<div th:if="${message != ''}"
-			class="alert alert-warning alert-dismissible" role="alert">
-			<div class="text-center">
-				<button type="button" class="close" data-dismis="alert"
-					aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-				<strong>¡Señor usuario!</strong>
-				<div th:text="${message}"></div>
+				<br> <input type="submit" value="Buscar" id="FiltrarFecha"
+					class="btn btn-success btn-lg" />
 			</div>
+
+		</form>
+
+
+	</div>
+
+	<hr class="featurette-divider">
+
+	<br>
+	<br>
+	<div th:if="${message != ''}"
+		class="alert alert-warning alert-dismissible" role="alert">
+		<div class="text-center">
+			<button type="button" class="close" data-dismis="alert"
+				aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+			<strong>¡Señor usuario!</strong>
+			<div th:text="${message}"></div>
 		</div>
-	<div class="row"> 
-			<div class=col-md-2></div>
-			<div class=col-md-8>
+	</div>
+	<div class="row">
+		<div class=col-md-2></div>
+		<div class=col-md-8>
 
-				<table class="table table-bordered table-striped table-hover">
+			<table class="table table-bordered table-striped table-hover">
 
-					<thead>
-						<tr>
-							<th>Código</th>
-							<th>Fecha</th>
-							<th>Caja</th>
-							<th>Total</th>
-							<th>Acción</th>
-						</tr>
-					</thead>
-					<tbody>
+				<thead>
+					<tr>
+						<th>Código</th>
+						<th>Fecha</th>
+						<th>Caja</th>
+						<th>Total</th>
+						<th>Acción</th>
+					</tr>
+				</thead>
+				<tbody>
 					<tr th:each="venta : ${ventas}">
-							<td th:text="${venta.idVenta}"></td>
-							<td th:text="${venta.fechaVenta}"></td>
-							<td th:text="${venta.caja.nombreCaja}"></td>
-							<td>$ <span
-								th:text="${#numbers.formatDecimal(venta.totalVenta, 0, 'COMMA', 0, 'POINT')}"></span></td>
-							<td><a
-								th:href="@{'/ventas/}"><span
-									class="glyphicon glyphicon-eye-open"></span></a></td>
+						<td th:text="${venta.idVenta}"></td>
+						<td th:text="${venta.fechaVenta}"></td>
+						<td th:text="${venta.caja.nombreCaja}"></td>
+						<td>$ <span
+							th:text="${#numbers.formatDecimal(venta.totalVenta, 0, 'COMMA', 0, 'POINT')}"></span></td>
+							<td><button th:if="${not #lists.isEmpty(venta.detalles)}"
+							class="glyphicon glyphicon-eye-open" id="pagar"
+							onclick="preparaModal()"></button></td>
 
-						</tr>
-					</tbody>
+<!-- 						<td><a th:href="@{'/ventas/}"><span -->
+<!-- 								class="glyphicon glyphicon-eye-open"></span></a></td> -->
 
-				</table>
+					</tr>
+				</tbody>
+
+			</table>
+
+
+		</div>
+		<div class=col-md-2></div>
+	</div>
+	
+	
+	<script th:inline="javascript">
+	
+	
+	function preparaModal() {
+		let url = "/ventas/reporte";
+		$.get(url, function(result) {
+			mostrarModal(result);
+		})
+	}
 	
 
-			</div>
-			<div class=col-md-2></div>
-		</div> 
+	function mostrarModal() {
+
+		BootstrapDialog.show({
+			type : BootstrapDialog.TYPE_PRIMARY,
+			title : "Detalle de la venta",
+			draggable : true,
+			nl2br : false, 
+			buttons : [ {
+				label : 'Cerrar',
+				cssClass : 'btn-primary',
+				id : 'btncancelar',
+				action : function(dialogItself) {
+					dialogItself.close();
+				}
+			} ]
+		})
+	}
+</script>
+	
 
 </body>
 </html>
