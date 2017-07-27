@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
+<link rel="icon" href="../static/img/A.png">
 <title>Almaccenture Inventario</title>
 <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 <link
@@ -44,7 +45,8 @@
 									class="caret"></span></a>
 								<ul class="dropdown-menu">
 									<li><a href="/reportes/ventas">Ventas</a></li>
-									<li><a href="/reportes/productosAgotados">Productos agotados</a></li>
+									<li><a href="/reportes/productosAgotados">Productos
+											agotados</a></li>
 								</ul></li>
 						</ul>
 					</div>
@@ -98,24 +100,21 @@
 					<p>
 				</div>
 			</div>
-
-
-			<hr class="featurette-divider">
-
 			<h4>
 				<a href="/inventario" th:if="${esConsulta}">Ver todos los
 					productos</a>
 			</h4>
-			
-			<div class="text-center"
+
+			<hr class="featurette-divider">
+
+
+
+			<div class="text-center" th:unless="${esConsulta}"
 				th:insert="fragments :: paginationbar"></div>
 
 			<div class="row">
-
-				<table class="table table-bordered table-striped table-hover">
-
-
-
+				<table th:if="${not #lists.isEmpty(productos)}"
+					class="table table-bordered table-striped table-hover">
 					<thead>
 						<tr>
 							<th>Código</th>
@@ -135,10 +134,9 @@
 							<td th:text="${inventario.fechaModificacion}" class="tg-yw4l"></td>
 							<td th:text="${inventario.nombreProducto}" class="tg-yw4l"></td>
 							<td th:text="${inventario.cantidadProducto}" class="tg-yw4l"></td>
-							<td>$ <span th:text="${#numbers.formatDecimal(inventario.precioProducto, 0, 'COMMA', 0, 'POINT')}" class="tg-yw4l"></span></td>
-							<td><form  th:action="@{'/inventario/modificarestado/' + ${inventario.idProducto}}"  
-							th:method="POST"><input id="checkbox1" type="checkbox" th:checked="${inventario.estadoProducto}" name="check" onchange="submit()" ><label for="checkbox1" th:text="${inventario.estadoProducto}"></label></form></td>
-							<td th:text="${inventario.precioProducto}" class="tg-yw4l"></td>
+							<td>$ <span
+								th:text="${#numbers.formatDecimal(inventario.precioProducto, 0, 'COMMA', 0, 'POINT')}"
+								class="tg-yw4l"></span></td>
 							<td><form
 									th:action="@{'/inventario/modificarestado/' + ${inventario.idProducto}}"
 									th:method="POST">
@@ -170,7 +168,7 @@
 			</div>
 			<div class=col-md-1></div>
 			</br> </br>
-			<div class="text-center"
+			<div class="text-center" th:unless="${esConsulta}"
 				th:insert="fragments :: paginationbar"></div>
 		</div>
 

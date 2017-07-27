@@ -41,7 +41,7 @@ public class ControladorInventario {
 	private static final String INVENTARIO_HTML = "inventario";
 
 	@Autowired
-	private LogicaNegocioProducto producto;
+	private LogicaNegocioProducto productoBl;
 	
 	@Autowired
 	private RepositorioCategoria repositorioCategoria;
@@ -69,7 +69,8 @@ public class ControladorInventario {
 	public ModelAndView listar(Pageable pageable) { //metodo
 		ModelAndView mav = new ModelAndView("inventario"); // constructor , html
 		try {
-			PageWrapper<Producto> page = new PageWrapper<>(producto.obtenerTodos(pageable),"/inventario");
+			PageWrapper<Producto> page;
+			page = new PageWrapper<>(productoBl.obtenerTodos(pageable),"/inventario");
 			mav.addObject("productos", page.getContent()); // crud
 			//pages tiene todos las paginas enumeradas en un array
 			//para 5 paginas, pages es {1,2,3,4,5}
@@ -116,7 +117,7 @@ public class ControladorInventario {
 			Categoria cate = new Categoria();
 			cate = repositorioCategoria.findBynombreCategoria(req.getParameter("categoria.nombreCategoria"));
 			p.setCategoria(cate);
-			producto.agregarProducto(p);
+			productoBl.agregarProducto(p);
 			mav.setViewName("redirect:/inventario");
 
 			
@@ -138,7 +139,7 @@ public class ControladorInventario {
 		
 		ModelAndView mav = new ModelAndView("ModificarProducto");
 		try {
-			mav.addObject("producto", producto.obtenerProductoPorId(idProducto));
+			mav.addObject("producto", productoBl.obtenerProductoPorId(idProducto));
 		} catch (LogicaNegocioExcepcion e) {
 			e.printStackTrace();
 		}
@@ -153,12 +154,13 @@ public class ControladorInventario {
 			"cantidadProducto","categoria.nombreCategoria"})
 	public ModelAndView modificarProducto(HttpServletRequest req){
 		
-		String message="";
+		String message="asd";
 		ModelAndView mav= new ModelAndView();
-		
+		Producto p = new Producto();
 		try{
-			Producto p = new Producto();
+			
 			if(req.getParameter("idProducto").isEmpty()) throw new LogicaNegocioExcepcion(MENSAJE_NO_ID);
+			p = producto.obtenerProductoPorId(req.getParameter("idProducto"));
 			if(req.getParameter("nombreProducto").isEmpty()) throw new LogicaNegocioExcepcion(MENSAJE_NO_NOMBRE_PRODUCTO);
 			if(req.getParameter("cantidadProducto").isEmpty()) throw new LogicaNegocioExcepcion(MENSAJE_NO_CANTIDAD);
 			if(req.getParameter("descripcionProducto").isEmpty()) throw new LogicaNegocioExcepcion(MENSAJE_NO_DESCRIPCION);
@@ -170,15 +172,15 @@ public class ControladorInventario {
 			p.setCantidadProducto(Integer.parseInt(req.getParameter("cantidadProducto")));
 			p.setDescripcionProducto(req.getParameter("descripcionProducto"));
 			p.setPrecioProducto(Float.valueOf(req.getParameter("precioProducto")));
-			Categoria cate = new Categoria();
+			Categoria cate;
 			cate = repositorioCategoria.findBynombreCategoria(req.getParameter("categoria.nombreCategoria"));
 			p.setCategoria(cate);
-			producto.modificarProducto(p);
+			productoBl.modificarProducto(p);
 			mav.setViewName("redirect:/inventario");
 		}catch (LogicaNegocioExcepcion e) {
 			message=e.getMessage();
-			mav.addObject("producto", new Producto());
-			mav.setViewName("/inventario/modificar");
+			mav.addObject("producto", p);
+			mav.setViewName("/ModificarProducto");
 			e.printStackTrace();
 		}
 		
@@ -191,7 +193,7 @@ public class ControladorInventario {
 	public ModelAndView eliminarProducto(@PathVariable("idProducto") String idProducto) throws LogicaNegocioExcepcion {
 		
 		System.out.println("eliminarProducto" + idProducto);
-		producto.cambiarLogicamenteProducto(idProducto);
+		productoBl.cambiarLogicamenteProducto(idProducto);
 		
 		ModelAndView mav= new ModelAndView("redirect:/inventario");
 		return mav;
@@ -212,7 +214,7 @@ public class ControladorInventario {
 		String message = ""; //mensaje para enviar error
 		List<Producto> p = new ArrayList<>();
 		try {
-			p.add(producto.obtenerProductoPorId(id));
+			p.add(productoBl.obtenerProductoPorId(id));
 		} catch (LogicaNegocioExcepcion e) {
 			e.printStackTrace();
 			message = e.getMessage();
