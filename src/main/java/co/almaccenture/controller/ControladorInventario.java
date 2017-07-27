@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.aspectj.bridge.Message;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -142,26 +143,34 @@ public class ControladorInventario {
 		return mav;
 }
 	/**
-	 * Busca un producto por el id enviado como queryParam.
+	 * Busca un producto por el id enviado en el form buscar. Si hay algun error es catcheado por el bindingResult.
+	 * Si no se ingresa ningun valor en queryParam id, se muestran todos los productos
 	 * url: /inventario/consulta?id
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(method=RequestMethod.GET, value="/inventario/consulta", params={"idProducto"})
-	public String buscarProductoPorCodigo(final Model model, final HttpServletRequest req){
-		String id = req.getParameter("idProducto");
-		String message = "";
+	@RequestMapping(method=RequestMethod.GET, value="/inventario/consulta")
+	public String buscarProductoPorCodigo(final Model model, @Valid Producto prod, BindingResult bindingResult){
+		if(bindingResult.hasErrors()){
+			return "redirect:/inventario";
+		}
+		String id = prod.getIdProducto();
+		String message = ""; //mensaje para enviar error
 		List<Producto> p = new ArrayList<>();
 		try {
 			p.add(producto.obtenerProductoPorId(id));
-			message = p!=null ? "":"No se encontro producto";
 		} catch (LogicaNegocioExcepcion e) {
 			e.printStackTrace();
-		}	
+			message = e.getMessage();
+		}
+		
+		//si no ingresa nada, muestre todos los productos
+		if("".equals(prod.getIdProducto())) return "redirect:/inventario";
 		
 		model.addAttribute("productos", p);
-		model.addAttribute(message);
 		model.addAttribute("producto", new Producto());
+		model.addAttribute("message",message);
+		model.addAttribute("esConsulta",true);
 		return INVENTARIO_HTML;
 	}
 	
