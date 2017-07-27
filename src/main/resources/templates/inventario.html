@@ -35,15 +35,15 @@
 					</div>
 					<div id="navbar" class="navbar-collapse collapse">
 						<ul class="nav navbar-nav">
-							<li><a th:href="@{/}" href="#">Página principal</a></li>
-							<li><a th:href="@{/ventas/new}" href="#">Venta</a></li>
-							<li class="active"><a th:href="@{/inventario}" href="#">Inventario</a></li>
-							<li class="dropdown"><a href="#" class="dropdown-toggle"
+							<li><a th:href="@{/}" href="/">Página principal</a></li>
+							<li><a th:href="@{/ventas/new}" href="/ventas">Venta</a></li>
+							<li class="active"><a th:href="@{/inventario}" href="">Inventario</a></li>
+							<li class="dropdown"><a href="/reportes" class="dropdown-toggle"
 								data-toggle="dropdown" role="button" aria-haspopup="true"
 								aria-expanded="false">Reportes<span class="caret"></span></a>
 								<ul class="dropdown-menu">
 									<li><a href="#">Ventas</a></li>
-									<li><a href="#">Productos agotados</a></li>
+									<li><a href="/reportes">Productos agotados</a></li>
 								</ul></li>
 						</ul>
 					</div>
@@ -137,12 +137,6 @@
 
 				</table>
 
-
-				<div class="funkyradio-danger">
-					<input type="checkbox" name="checkbox" id="checkbox4" checked /> <label
-						for="checkbox4">Fourth Option danger</label>
-				</div>
-
 			</div>
 			<div class=col-md-1></div>
 			</br> </br>
@@ -150,7 +144,7 @@
 				<div th:fragment='paginationbar'>
 					<ul class='pagination justify-content-center'>
 						<li th:each='page : ${pages}'><a
-							th:href='@{/inventario(page=${page-1},size=5)}'><span
+							th:href='@{/inventario(page=${page-1},size=20)}'><span
 								th:text='${page}'>1</span></a></li>
 					</ul>
 				</div>
