@@ -47,22 +47,12 @@ public class ControladorReportes {
 	private Page<Venta> ventas; 
 
 
-	// @RequestMapping(method = RequestMethod.GET, value = "/reportes")
-	// public ModelAndView listar(Pageable pageable) { //metodo
-	// ModelAndView mav = new ModelAndView("reportesAgotados"); // constructor ,
-	// html
-	// try {
-	// mav.addObject("producto", producto.obtenerAgotados(pageable)); // crud
-	// } catch (Exception e) {
-	//
-	// e.printStackTrace();
-	// }
-	// return mav;
-	// }
-	//
-	// }
 
-
+	/**
+	 * Lista los productos con cantidades menores a 100. 
+	 * @param pageable
+	 * @return
+	 */
 	@RequestMapping(method = RequestMethod.GET, value = "/reportes/productosAgotados")
 	public ModelAndView listar(Pageable pageable) { // metodo
 		ModelAndView mav = new ModelAndView("reportesAgotados"); // constructor
@@ -80,10 +70,14 @@ public class ControladorReportes {
 		return mav;
 	}
 
-	
+	/**
+	 * Direge a la vista de consulta de ventas por fecha
+	 * @param pageable
+	 * @return
+	 */
 	@RequestMapping(value = "/reportes/ventas")
-	public ModelAndView ventasPorFecha(Pageable pageable) { //metodo
-		ModelAndView mav = new ModelAndView("reportesVentas"); // constructor , html
+	public ModelAndView ventasPorFecha(Pageable pageable) { 
+		ModelAndView mav = new ModelAndView("reportesVentas"); 
 		try {
 			venta=new Venta();
 		} catch (Exception e) {
@@ -97,6 +91,15 @@ public class ControladorReportes {
 		return mav;
 	}
 	
+	/**
+	 * Trae a la vista las ventas realizadas en un rango de ventas, validad las fechas, se cambia el formato
+	 * de las fechas y son enviadas a las logica de negocio par traer las ventas.
+	 * @param req
+	 * @param redirect
+	 * @param pageable
+	 * @return
+	 * @throws RemoteException
+	 */
 	@RequestMapping(value = "/reportes/ventas/lista", params={"fechaInicio", "fechaFinal"})
 	public ModelAndView agregarVentasPorFecha(HttpServletRequest req, RedirectAttributes redirect, Pageable pageable) throws RemoteException{
 		String message="";

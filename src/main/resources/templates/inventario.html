@@ -151,23 +151,24 @@
 							<td><a class="glyphicon glyphicon-pencil"
 								href="modificar.html"
 								th:href="@{'/inventario/modificar/'+${inventario.idProducto}}"></a>
-								<a class="glyphicon glyphicon-trash"
-								th:href="@{'/product/eliminar?id='+${inventario.estadoProducto}}"></a>
 							</td>
 						</tr>
 					</tbody>
 				</table>
 			</div>
-			<div class=col-md-1></div>
-			</br> </br>
+			
+
 			<div class="text-center" th:unless="${esConsulta}"
 				th:insert="fragments :: paginationbar"></div>
+
 		</div>
+		<div class=col-md-1></div>
+		
 
 
 
 		<br> <br>
-		</h2>
+	</h4>
 </body>
 
 </html>

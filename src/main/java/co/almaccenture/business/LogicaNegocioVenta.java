@@ -58,7 +58,15 @@ public interface LogicaNegocioVenta {
 	 */
 	public Venta obtenerVentaPorID(int idVenta) throws LogicaNegocioExcepcion;
 	
+	/**
+	 * Obtiene una lista paginada de las ventas en un rango de fecha: verifica las fechas no nulas y 
+	 * secuencialidad de las fechas  obtiene las ventas de la base de datos.
+	 * @param fechaInicio
+	 * @param fechaFin
+	 * @param pageable
+	 * @return
+	 * @throws LogicaNegocioExcepcion
+	 */
 	public Page<Venta> obtenerVentasPorFecha(Date fechaInicio, Date fechaFin, Pageable pageable) throws LogicaNegocioExcepcion;
 	
-	//TODO: Crear método para buscar por el nombre con comodin contains
 }

@@ -82,6 +82,10 @@ public class ControladorInventario {
 		return mav;
 	}
 	
+	/**
+	 * Direge a la vista correspondiente a agregar un producto nuevo
+	 * @return
+	 */
 	@RequestMapping(value = "/inventario/new")
 	public ModelAndView nuevoProducto() {
 		
@@ -91,7 +95,12 @@ public class ControladorInventario {
 		return mav;
 	}
 	
-		
+	/**
+	 * Ingresa un nuevo producto a la base de datos, se controla con excepciones los campos
+	 * en blanco, se construye un producto y es enviado a la lógica de negocio de agregar producto. 
+	 * @param req
+	 * @return
+	 */
 	@RequestMapping(value="/inventario/new", params={"idProducto",
 			"nombreProducto","descripcionProducto","precioProducto",
 			"cantidadProducto","categoria.nombreCategoria"})
@@ -134,6 +143,11 @@ public class ControladorInventario {
 		return mav;
 	}
 	
+	/**
+	 * Dirige de la vista de inventario a la vista de modificar un producto elegido por el usuario
+	 * @param idProducto
+	 * @return
+	 */
 	@RequestMapping(value = "/inventario/modificar/{idProducto}")
 	public ModelAndView botonModificar(@PathVariable("idProducto") String idProducto) {
 		
@@ -148,7 +162,13 @@ public class ControladorInventario {
 		return mav;
 	}
 	
-	
+	/**
+	 * Se modifica un producto en la base de datos, se realizan validaciones correspondientes
+	 * se actualiza los valores de producto según los ingresados por el usuario y se envía a la 
+	 * lógica de negocio
+	 * @param req
+	 * @return
+	 */
 	@RequestMapping(value="/inventario/modificar", params={"idProducto",
 			"nombreProducto","descripcionProducto","precioProducto",
 			"cantidadProducto","categoria.nombreCategoria"})
@@ -160,7 +180,7 @@ public class ControladorInventario {
 		try{
 			
 			if(req.getParameter("idProducto").isEmpty()) throw new LogicaNegocioExcepcion(MENSAJE_NO_ID);
-			p = producto.obtenerProductoPorId(req.getParameter("idProducto"));
+			p = productoBl.obtenerProductoPorId(req.getParameter("idProducto"));
 			if(req.getParameter("nombreProducto").isEmpty()) throw new LogicaNegocioExcepcion(MENSAJE_NO_NOMBRE_PRODUCTO);
 			if(req.getParameter("cantidadProducto").isEmpty()) throw new LogicaNegocioExcepcion(MENSAJE_NO_CANTIDAD);
 			if(req.getParameter("descripcionProducto").isEmpty()) throw new LogicaNegocioExcepcion(MENSAJE_NO_DESCRIPCION);
@@ -189,6 +209,12 @@ public class ControladorInventario {
 		return mav;
 	}
 
+	/**
+	 * Cambia el estado cuando el usuario interactua el check box de estado
+	 * @param idProducto
+	 * @return
+	 * @throws LogicaNegocioExcepcion
+	 */
 	@RequestMapping(method = RequestMethod.POST, value = "/inventario/modificarestado/{idProducto}")
 	public ModelAndView eliminarProducto(@PathVariable("idProducto") String idProducto) throws LogicaNegocioExcepcion {
 		
