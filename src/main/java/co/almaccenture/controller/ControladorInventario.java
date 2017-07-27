@@ -154,12 +154,13 @@ public class ControladorInventario {
 			"cantidadProducto","categoria.nombreCategoria"})
 	public ModelAndView modificarProducto(HttpServletRequest req){
 		
-		String message="";
+		String message="asd";
 		ModelAndView mav= new ModelAndView();
-		
+		Producto p = new Producto();
 		try{
-			Producto p = new Producto();
+			
 			if(req.getParameter("idProducto").isEmpty()) throw new LogicaNegocioExcepcion(MENSAJE_NO_ID);
+			p = producto.obtenerProductoPorId(req.getParameter("idProducto"));
 			if(req.getParameter("nombreProducto").isEmpty()) throw new LogicaNegocioExcepcion(MENSAJE_NO_NOMBRE_PRODUCTO);
 			if(req.getParameter("cantidadProducto").isEmpty()) throw new LogicaNegocioExcepcion(MENSAJE_NO_CANTIDAD);
 			if(req.getParameter("descripcionProducto").isEmpty()) throw new LogicaNegocioExcepcion(MENSAJE_NO_DESCRIPCION);
@@ -171,15 +172,15 @@ public class ControladorInventario {
 			p.setCantidadProducto(Integer.parseInt(req.getParameter("cantidadProducto")));
 			p.setDescripcionProducto(req.getParameter("descripcionProducto"));
 			p.setPrecioProducto(Float.valueOf(req.getParameter("precioProducto")));
-			Categoria cate = new Categoria();
+			Categoria cate;
 			cate = repositorioCategoria.findBynombreCategoria(req.getParameter("categoria.nombreCategoria"));
 			p.setCategoria(cate);
 			productoBl.modificarProducto(p);
 			mav.setViewName("redirect:/inventario");
 		}catch (LogicaNegocioExcepcion e) {
 			message=e.getMessage();
-			mav.addObject("producto", new Producto());
-			mav.setViewName("/inventario/modificar");
+			mav.addObject("producto", p);
+			mav.setViewName("/ModificarProducto");
 			e.printStackTrace();
 		}
 		

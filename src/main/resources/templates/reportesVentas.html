@@ -65,10 +65,10 @@
 <div class="row text-center"> 
 
 
-			<form id="messageForm" th:action="@{/ventas}" action="#"
+			<form id="messageForm" th:action="@{/reportes/ventas/lista}" action="#"
 				 method="get">
-				<label for="fechaInicio">Fecha de inicio:</label> <input id="fechaInicio" type="Date">
-				<label for="fechaFinal">Fecha final:</label> <input id="fechaFinal" type="Date" >
+				<label for="fechaInicio">Fecha de inicio:</label> <input name="fechaInicio" type="Date">
+				<label for="fechaFinal">Fecha final:</label> <input name="fechaFinal" type="Date" >
 				<div class="form-actions">
 
 					<br> <input type="submit" value="Buscar" id="FiltrarFecha"
@@ -83,7 +83,17 @@
 		<hr class="featurette-divider">
 
 		<br> <br>
-
+<div th:if="${message != ''}"
+			class="alert alert-warning alert-dismissible" role="alert">
+			<div class="text-center">
+				<button type="button" class="close" data-dismis="alert"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<strong>¡Señor usuario!</strong>
+				<div th:text="${message}"></div>
+			</div>
+		</div>
 	<div class="row"> 
 			<div class=col-md-2></div>
 			<div class=col-md-8>
@@ -100,10 +110,10 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
+					<tr th:each="venta : ${ventas}">
 							<td th:text="${venta.idVenta}"></td>
 							<td th:text="${venta.fechaVenta}"></td>
-							<td th:text="${venta.caja}"></td>
+							<td th:text="${venta.caja.nombreCaja}"></td>
 							<td>$ <span
 								th:text="${#numbers.formatDecimal(venta.totalVenta, 0, 'COMMA', 0, 'POINT')}"></span></td>
 							<td><a
