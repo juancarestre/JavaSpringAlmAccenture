@@ -38,12 +38,14 @@
 							<li><a th:href="@{/}" href="/">Página principal</a></li>
 							<li><a th:href="@{/ventas/new}" href="/ventas">Venta</a></li>
 							<li><a href="/inventario">Inventario</a></li>
-							<li class="dropdown active"><a href="#" class="dropdown-toggle"
-								data-toggle="dropdown" role="button" aria-haspopup="true"
-								aria-expanded="false">Reportes<span class="caret"></span></a>
+							<li class="dropdown active"><a href="#"
+								class="dropdown-toggle" data-toggle="dropdown" role="button"
+								aria-haspopup="true" aria-expanded="false">Reportes<span
+									class="caret"></span></a>
 								<ul class="dropdown-menu">
 									<li><a href="/reportes/ventas">Ventas</a></li>
-									<li class="active"><a href="/reportes/productosAgotados">Productos agotados</a></li>
+									<li class="active"><a href="/reportes/productosAgotados">Productos
+											agotados</a></li>
 								</ul></li>
 						</ul>
 					</div>
@@ -53,87 +55,61 @@
 		</div>
 	</div>
 
-	<div class="container">
-		<div class="panel panel-primary">
-			<div class="panel-heading"></div>
-			<div class="panel-body">
 
-				<h1 align="center">
-					<font color="blue"><label for="codigo">Productos
-							agotados</label></font>
-
-
-<!-- 					<h2> -->
-<!-- 						</br> </br> -->
-<!-- 						<br> <input type="hidden" th:field="*{activo}" /> -->
-<!-- 						<div th:if="${message != ''}" -->
-<!-- 							class="alert alert-warning alert-dismissible" role="alert"> -->
-<!-- 							<div class="text-center"> -->
-<!-- 								<button type="button" class="close" data-dismis="alert" -->
-<!-- 									aria-label="Close"> -->
-<!-- 									<span aria-hidden="true">&times;</span> -->
-<!-- 								</button> -->
-<!-- 								<strong>¡Señor usuario!</strong> -->
-<!-- 								<div th:text="${message}"></div> -->
-<!-- 							</div> -->
-<!-- 						</div> -->
-
-						<hr class="featurette-divider">
-
-						<br>
-
-						<div class="row">
-							<div class=col-md-1></div>
-							<div class=col-md-10>
-								<table class="table table-bordered table-striped table-hover">
+<br>
+<br>
+<br>
+	<h2 align="center">
+		<label for="codigo">Productos
+				agotados</label></h2>
 
 
 
-									<thead>
-										<tr>
-											<th>Código</th>
-											<th>Producto</th>
-											<th>Cantidad</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr th:each="reporte : ${productos}">
-											<td th:text="${reporte.idProducto}" class="tg-yw4l"></td>
-											<td th:text="${reporte.nombreProducto}" class="tg-yw4l"></td>
-											<td th:text="${reporte.cantidadProducto}" class="tg-yw4l"></td>
-											<!-- 							<td th:text="${reporte.descripcionProducto}" class="tg-yw4l"></td> -->
-											<!-- 							<td><a class="btn btn-danger" href="modificar.html" -->
-											<!-- 								th:href="@{/product/modificar?id='+${reporte.nombreProducto}}">Modificar</a> -->
-											<!-- 								<a class="btn btn-danger" -->
-											<!-- 								th:href="@{'/product/eliminar?id='+${reporte.estadoProducto}}">Eliminar</a> -->
-											<!-- 							</td> -->
+		<hr class="featurette-divider">
+
+		<br>
+
+		<div class="row">
+			<div class=col-md-2></div>
+			<div class=col-md-8>
+				<table class="table table-bordered table-striped table-hover">
+
+					<thead>
+						<tr>
+							<th>Código</th>
+							<th>Producto</th>
+							<th>Cantidad</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="reporte : ${productos}">
+							<td th:text="${reporte.idProducto}" class="tg-yw4l"></td>
+							<td th:text="${reporte.nombreProducto}" class="tg-yw4l"></td>
+							<td th:text="${reporte.cantidadProducto}" class="tg-yw4l"></td>
+						</tr>
 
 
-										</tr>
+					</tbody>
 
+				</table>
+			</div>
+			<div class=col-md-2></div>
+			</br> </br>
+		</div>
 
-									</tbody>
-
-								</table>
-							</div>
-							<div class=col-md-1></div>
-							</br> </br>
-						</div>
-						
-<div class="text-center">
-				<div th:fragment='paginationbar'>
-					<ul class='pagination justify-content-center'>
-						<li th:each='page : ${pages}'><a
-							th:href='@{/reportes(page=${page-1},size=20)}'><span
-								th:text='${page}'>1</span></a></li>
-					</ul>
-				</div>
+		<div class="text-center">
+			<div th:fragment='paginationbar'>
+				<ul class='pagination justify-content-center'>
+					<li th:each='page : ${pages}'><a
+						th:href='@{/reportes(page=${page-1},size=20)}'><span
+							th:text='${page}'>1</span></a></li>
+				</ul>
 			</div>
 		</div>
-		
 
-						<br> <br>
-					</h2>
+
+
+		<br> <br>
 </body>
 
 </html>
