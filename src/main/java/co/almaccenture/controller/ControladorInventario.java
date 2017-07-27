@@ -133,6 +133,59 @@ public class ControladorInventario {
 		return mav;
 	}
 	
+	@RequestMapping(value = "/inventario/modificar/{idProducto}")
+	public ModelAndView botonModificar(@PathVariable("idProducto") String idProducto) {
+		
+		ModelAndView mav = new ModelAndView("ModificarProducto");
+		try {
+			mav.addObject("producto", producto.obtenerProductoPorId(idProducto));
+		} catch (LogicaNegocioExcepcion e) {
+			e.printStackTrace();
+		}
+		
+		mav.addObject("message", "");
+		return mav;
+	}
+	
+	
+	@RequestMapping(value="/inventario/modificar", params={"idProducto",
+			"nombreProducto","descripcionProducto","precioProducto",
+			"cantidadProducto","categoria.nombreCategoria"})
+	public ModelAndView modificarProducto(HttpServletRequest req){
+		
+		String message="";
+		ModelAndView mav= new ModelAndView();
+		
+		try{
+			Producto p = new Producto();
+			if(req.getParameter("idProducto").isEmpty()) throw new LogicaNegocioExcepcion(MENSAJE_NO_ID);
+			if(req.getParameter("nombreProducto").isEmpty()) throw new LogicaNegocioExcepcion(MENSAJE_NO_NOMBRE_PRODUCTO);
+			if(req.getParameter("cantidadProducto").isEmpty()) throw new LogicaNegocioExcepcion(MENSAJE_NO_CANTIDAD);
+			if(req.getParameter("descripcionProducto").isEmpty()) throw new LogicaNegocioExcepcion(MENSAJE_NO_DESCRIPCION);
+			if(req.getParameter("precioProducto").isEmpty()) throw new LogicaNegocioExcepcion(MENSAJE_NO_PRECIO);
+			if(req.getParameter("categoria.nombreCategoria").isEmpty()) throw new LogicaNegocioExcepcion(MENSAJE_NO_CATEGORIA);
+			
+			p.setIdProducto(req.getParameter("idProducto"));
+			p.setNombreProducto(req.getParameter("nombreProducto"));
+			p.setCantidadProducto(Integer.parseInt(req.getParameter("cantidadProducto")));
+			p.setDescripcionProducto(req.getParameter("descripcionProducto"));
+			p.setPrecioProducto(Float.valueOf(req.getParameter("precioProducto")));
+			Categoria cate = new Categoria();
+			cate = repositorioCategoria.findBynombreCategoria(req.getParameter("categoria.nombreCategoria"));
+			p.setCategoria(cate);
+			producto.modificarProducto(p);
+			mav.setViewName("main");
+		}catch (LogicaNegocioExcepcion e) {
+			message=e.getMessage();
+			mav.addObject("producto", new Producto());
+			mav.setViewName("/ModificarProducto");
+			e.printStackTrace();
+		}
+		
+		mav.addObject("message", message);
+		
+		return mav;
+	}
 
 	@RequestMapping(method = RequestMethod.POST, value = "/inventario/modificarestado/{idProducto}")
 	public ModelAndView eliminarProducto(@PathVariable("idProducto") String idProducto) throws LogicaNegocioExcepcion {

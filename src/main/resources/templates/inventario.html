@@ -43,8 +43,8 @@
 								aria-haspopup="true" aria-expanded="false">Reportes<span
 									class="caret"></span></a>
 								<ul class="dropdown-menu">
-									<li><a href="#">Ventas</a></li>
-									<li><a href="/reportes">Productos agotados</a></li>
+									<li><a href="/reportes/ventas">Ventas</a></li>
+									<li><a href="/reportes/productosAgotados">Productos agotados</a></li>
 								</ul></li>
 						</ul>
 					</div>
@@ -149,7 +149,7 @@
 							<td th:text="${inventario.descripcionProducto}" class="tg-yw4l"></td>
 							<td><a class="glyphicon glyphicon-pencil"
 								href="modificar.html"
-								th:href="@{/product/modificar?id='+${inventario.nombreProducto}}"></a>
+								th:href="@{'/inventario/modificar/'+${inventario.idProducto}}"></a>
 								<a class="glyphicon glyphicon-trash"
 								th:href="@{'/product/eliminar?id='+${inventario.estadoProducto}}"></a>
 							</td>
