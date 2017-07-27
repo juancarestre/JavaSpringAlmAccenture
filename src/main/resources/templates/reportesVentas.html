@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
+<meta charset="UTF-8">
 <title>Reportes Ventas</title>
 
 <meta charset="UTF-8">
@@ -31,14 +31,14 @@
 						<button type="button" class="navbar-toggle collapsed"
 							data-toggle="collapse" data-target="#navbar"
 							aria-expanded="false" aria-controls="navbar">
-							<span class="sr-only">Navegación</span> <span class="icon-bar"></span>
+							<span class="sr-only">NavegaciÃ³n</span> <span class="icon-bar"></span>
 							<span class="icon-bar"></span> <span class="icon-bar"></span>
 						</button>
 						<a class="navbar-brand" href="#">Almaccenture</a>
 					</div>
 					<div id="navbar" class="navbar-collapse collapse">
 						<ul class="nav navbar-nav">
-							<li><a th:href="@{/}" href="#">Página principal</a></li>
+							<li><a th:href="@{/}" href="#">PÃ¡gina principal</a></li>
 							<li><a th:href="@{/ventas/new}" href="#">Venta</a></li>
 							<li><a href="inventario.html">Inventario</a></li>
 							<li class="dropdown"><a href="#" class="dropdown-toggle"
@@ -61,20 +61,17 @@
 	<br>
 	<br>
 	<br>
-
-	<h2>
-
-		<div class="row text-center">
+	
+<div class="row text-center"> 
 
 
 			<form id="messageForm" th:action="@{/ventas}" action="#"
-				th:object="${detalle}" method="get">
-				<label for="fechaInicio">Fecha de inicio:</label> <input type="Date"
-					th:field="*{producto.idProducto}"> <label for="cantidad">Fecha
-					final:</label> <input type="Date" th:field="*{cantidad}">
+				 method="get">
+				<label for="fechaInicio">Fecha de inicio:</label> <input id="fechaInicio" type="Date">
+				<label for="fechaFinal">Fecha final:</label> <input id="fechaFinal" type="Date" >
 				<div class="form-actions">
 
-					<br> <input type="submit" value="Buscar" id="agregar"
+					<br> <input type="submit" value="Buscar" id="FiltrarFecha"
 						class="btn btn-success btn-lg" />
 				</div>
 
@@ -87,7 +84,7 @@
 
 		<br> <br>
 
-		<div class="row">
+	<div class="row"> 
 			<div class=col-md-2></div>
 			<div class=col-md-8>
 
@@ -95,49 +92,33 @@
 
 					<thead>
 						<tr>
-							<th>Código</th>
+							<th>CÃ³digo</th>
 							<th>Fecha</th>
 							<th>Caja</th>
 							<th>Total</th>
-							<th>Acción</th>
+							<th>AcciÃ³n</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr>
-							<td th:text="${detalle.producto.idProducto}"></td>
-							<td th:text="${detalle.producto.nombreProducto}"></td>
-							<td th:text="${detalle.cantidad}"></td>
+							<td th:text="${venta.idVenta}"></td>
+							<td th:text="${venta.fechaVenta}"></td>
+							<td th:text="${venta.caja}"></td>
 							<td>$ <span
-								th:text="${#numbers.formatDecimal(detalle.valorUnitario, 0, 'COMMA', 0, 'POINT')}"></span></td>
+								th:text="${#numbers.formatDecimal(venta.totalVenta, 0, 'COMMA', 0, 'POINT')}"></span></td>
 							<td><a
-								th:href="@{'/ventas/' + ${detalle.producto.idProducto}}"><span
+								th:href="@{'/ventas/}"><span
 									class="glyphicon glyphicon-eye-open"></span></a></td>
 
 						</tr>
 					</tbody>
 
 				</table>
-
-				<div class="row">
-					<div class="col-md-10"></div>
-					<div class="col-md-2">
-						<p class="label label-danger"
-							th:if="${not #lists.isEmpty(venta.detalles)}">
-							Total:
-							<!-- 							[[${venta.totalVenta}]]</p> -->
-					</div>
-				</div>
+	
 
 			</div>
 			<div class=col-md-2></div>
-		</div>
-
-	</h2>
-
-
-
-
-
+		</div> 
 
 </body>
 </html>
