@@ -38,12 +38,13 @@
 							<li><a th:href="@{/}" href="/">Página principal</a></li>
 							<li><a th:href="@{/ventas/new}" href="/ventas">Venta</a></li>
 							<li class="active"><a th:href="@{/inventario}" href="">Inventario</a></li>
-							<li class="dropdown"><a href="/reportes" class="dropdown-toggle"
-								data-toggle="dropdown" role="button" aria-haspopup="true"
-								aria-expanded="false">Reportes<span class="caret"></span></a>
+							<li class="dropdown"><a href="/reportes"
+								class="dropdown-toggle" data-toggle="dropdown" role="button"
+								aria-haspopup="true" aria-expanded="false">Reportes<span
+									class="caret"></span></a>
 								<ul class="dropdown-menu">
-									<li><a href="#">Ventas</a></li>
-									<li><a href="/reportes">Productos agotados</a></li>
+									<li><a href="/reportes/ventas">Ventas</a></li>
+									<li><a href="/reportes/productosAgotados">Productos agotados</a></li>
 								</ul></li>
 						</ul>
 					</div>
@@ -55,42 +56,59 @@
 
 	<h4>
 		</br> </br>
-		
+
 
 		<div class="col-md-1"></div>
 		<div class="col-md-10">
 			<h1>Inventario</h1>
 
 			<hr class="featurette-divider">
-			
+
 			<div class="row">
-				<div class="col-md-9">
-				<p>
-					<a th:href="@{/inventario/new}" class="btn
+				<div class="col-md-8">
+					<p>
+						<a th:href="@{/inventario/new}" class="btn
 				btn-primary"><span
-						class="glyphicon glyphicon-plus" aria-hidden="true"></span>Agregar
-						Producto</a>
-				</p>
+							class="glyphicon glyphicon-plus" aria-hidden="true"></span>Agregar
+							Producto</a>
+					</p>
 				</div>
-				
-				<div class="col-md-3 text-right">
+
+				<div class="col-md-4 text-right">
 					<form id="formBuscarProducto" th:action="@{/inventario/consulta}"
-						action="#" method="get" class="form-inline" th:object="${producto}">
+						action="#" method="get" class="form-inline"
+						th:object="${producto}">
 						<div class="form-group">
-						<input placeholder="Buscar por código" th:field="*{idProducto}" class="form-control">
+							<input placeholder="Buscar por código" th:field="*{idProducto}"
+								class="form-control"
+								th:classappend="${#strings.isEmpty(message)}?'has error':'has success'">
 						</div>
 						<div class="form-group">
-							<input type="submit" value="Buscar" id="btnBuscarProd" class="btn btn-info">
+							<input type="submit" value="Buscar" id="btnBuscarProd"
+								class="btn btn-info">
 						</div>
-					
+
 					</form>
+					<h5>
+						<span th:if="${not #strings.isEmpty(message)}"
+							th:text="${message}">Error buscar producto</span>
+					</h5>
+					<p th:if="${#fields.hasErrors('${producto.idProducto}')}"
+						th:errors="${producto.idProducto}">Error al buscar
+					<p>
 				</div>
 			</div>
 
 
 			<hr class="featurette-divider">
 
-			<br>
+			<h4>
+				<a href="/inventario" th:if="${esConsulta}">Ver todos los
+					productos</a>
+			</h4>
+			
+			<div class="text-center"
+				th:insert="fragments :: paginationbar"></div>
 
 			<div class="row">
 
@@ -117,14 +135,24 @@
 							<td th:text="${inventario.fechaModificacion}" class="tg-yw4l"></td>
 							<td th:text="${inventario.nombreProducto}" class="tg-yw4l"></td>
 							<td th:text="${inventario.cantidadProducto}" class="tg-yw4l"></td>
+							<td>$ <span th:text="${#numbers.formatDecimal(inventario.precioProducto, 0, 'COMMA', 0, 'POINT')}" class="tg-yw4l"></span></td>
+							<td><form  th:action="@{'/inventario/modificarestado/' + ${inventario.idProducto}}"  
+							th:method="POST"><input id="checkbox1" type="checkbox" th:checked="${inventario.estadoProducto}" name="check" onchange="submit()" ><label for="checkbox1" th:text="${inventario.estadoProducto}"></label></form></td>
 							<td th:text="${inventario.precioProducto}" class="tg-yw4l"></td>
-							<td><form  th:action="@{'/inventario/modificarestado/' + ${inventario.idProducto}}"  th:method="POST"><input id="checkbox1" type="checkbox" th:checked="${inventario.estadoProducto}" name="check" onchange="submit()" ><label for="checkbox1" th:text="${inventario.estadoProducto}"></label></form></td>
+							<td><form
+									th:action="@{'/inventario/modificarestado/' + ${inventario.idProducto}}"
+									th:method="POST">
+									<input id="checkbox1" type="checkbox"
+										th:checked="${inventario.estadoProducto}" name="check"
+										onchange="submit()"><label for="checkbox1"
+										th:text="${inventario.estadoProducto}"></label>
+								</form></td>
 							<td th:text="${inventario.categoria.nombreCategoria}"
 								class="tg-yw4l"></td>
 							<td th:text="${inventario.descripcionProducto}" class="tg-yw4l"></td>
 							<td><a class="glyphicon glyphicon-pencil"
 								href="modificar.html"
-								th:href="@{/product/modificar?id='+${inventario.nombreProducto}}"></a>
+								th:href="@{'/inventario/modificar/'+${inventario.idProducto}}"></a>
 								<a class="glyphicon glyphicon-trash"
 								th:href="@{'/product/eliminar?id='+${inventario.estadoProducto}}"></a>
 							</td>
@@ -137,18 +165,13 @@
 
 				</table>
 
+
+
 			</div>
 			<div class=col-md-1></div>
 			</br> </br>
-			<div class="text-center">
-				<div th:fragment='paginationbar'>
-					<ul class='pagination justify-content-center'>
-						<li th:each='page : ${pages}'><a
-							th:href='@{/inventario(page=${page-1},size=20)}'><span
-								th:text='${page}'>1</span></a></li>
-					</ul>
-				</div>
-			</div>
+			<div class="text-center"
+				th:insert="fragments :: paginationbar"></div>
 		</div>
 
 

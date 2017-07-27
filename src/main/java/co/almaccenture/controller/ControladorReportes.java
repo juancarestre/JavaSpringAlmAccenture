@@ -62,7 +62,7 @@ public class ControladorReportes {
 	// }
 
 
-	@RequestMapping(method = RequestMethod.GET, value = "/reportes")
+	@RequestMapping(method = RequestMethod.GET, value = "/reportes/productosAgotados")
 	public ModelAndView listar(Pageable pageable) { // metodo
 		ModelAndView mav = new ModelAndView("reportesAgotados"); // constructor
 																	// , html
