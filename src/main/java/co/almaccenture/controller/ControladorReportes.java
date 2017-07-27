@@ -45,6 +45,7 @@ public class ControladorReportes {
 	private static final String REPORTE_VENTA_HTML = "reportesVentas";
 	private static final String REPORTE_VENTA_LIST_MAPPING = "/reportes/ventas/lista";
 	private static final String FRAGMENTO_CALCULA_CAMBIO = "fragments :: calculaCambio";
+	private static final String FRAGMENTO_DETALLE_VENTA= "fragments :: detalleVenta";
 	
 	private Venta venta;
 	private PageWrapper<Venta> ventasPage;
@@ -154,8 +155,8 @@ public class ControladorReportes {
 	public String ventasReportes(final Model model){
 		
 			venta.getDetalles();
-			model.addAttribute(venta);
-			return FRAGMENTO_CALCULA_CAMBIO;
+			model.addAttribute("venta",venta);
+			return FRAGMENTO_DETALLE_VENTA;
 		
 	}
 	

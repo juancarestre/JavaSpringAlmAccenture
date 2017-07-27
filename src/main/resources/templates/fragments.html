@@ -30,26 +30,56 @@
 	</script>
 </div>
 
+<div th:fragment="detalleVenta">
+<h1>Esto debe aparecer</h1>
+	<table class="table table-bordered table-striped table-hover">
+		<thead>
+			<tr>
+				<th>Código</th>
+				<th>Producto</th>
+				<th>Cantidad</th>
+				<th>Precio</th>
+				<th>Subtotal</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="detalle : ${venta.detalles}">
+				<td th:text="${detalle.producto.idProducto}"></td>
+				<td th:text="${detalle.producto.nombreProducto}"></td>
+				<td th:text="${detalle.cantidad}"></td>
+				<td>$ <span
+					th:text="${#numbers.formatDecimal(detalle.valorUnitario, 0, 'COMMA', 0, 'POINT')}"></span></td>
+				<td>$ <span
+					th:text="${#numbers.formatDecimal(detalle.cantidad*detalle.valorUnitario, 0, 'COMMA', 0, 'POINT')}"></span></td>
+			</tr>
+		</tbody>
+
+	</table>
+</div>
+
+
+
+
+
+
 <div th:fragment='paginationbar'>
 	<ul class="pagination">
 		<li th:class="${pages.first}? 'disabled' : ''"><span
-			th:if='${pages.first}'>← Primera</span> <a
-			th:if='${not pages.first}'
-			th:href='@{${pages.url}(page=0,size=${pages.size})}'>←
-				Primera</a></li>
+			th:if='${pages.first}'>← Primera</span> <a th:if='${not pages.first}'
+			th:href='@{${pages.url}(page=0,size=${pages.size})}'>← Primera</a></li>
 
 		<li th:each="item : ${pages.items}"
 			th:class="${item.current}? 'active' : ''"><span
 			th:if="${item.current}" th:text="${item.number+1}">1</span> <a
-			th:id="pag+${item.number+1}"
-			th:if="${not item.current}"
+			th:id="pag+${item.number+1}" th:if="${not item.current}"
 			th:href="@{${pages.url}(page=${item.number},size=${pages.size})}"><span
 				th:text="${item.number+1}">1</span></a></li>
 		<li th:class="${pages.last}? 'disabled' : ''"><span
-			th:if='${pages.last}'>Última →</span> <a
-			th:if='${not pages.last}'
+			th:if='${pages.last}'>Última →</span> <a th:if='${not pages.last}'
 			th:href='@{${pages.url}(page=${pages.totalPages-1},size=${pages.size})}'>Última
 				→</a></li>
 	</ul>
 </div>
+
+
 </html>
