@@ -37,13 +37,13 @@
 						<ul class="nav navbar-nav">
 							<li><a th:href="@{/}" href="/">Página principal</a></li>
 							<li><a th:href="@{/ventas/new}" href="/ventas">Venta</a></li>
-							<li class="active"><a href="/inventario">Inventario</a></li>
-							<li class="dropdown"><a href="#" class="dropdown-toggle"
+							<li><a href="/inventario">Inventario</a></li>
+							<li class="dropdown active"><a href="#" class="dropdown-toggle"
 								data-toggle="dropdown" role="button" aria-haspopup="true"
 								aria-expanded="false">Reportes<span class="caret"></span></a>
 								<ul class="dropdown-menu">
-									<li><a href="reportes">Ventas</a></li>
-									<li><a href="reportes">Productos agotados</a></li>
+									<li><a href="/reportes/ventas">Ventas</a></li>
+									<li class="active"><a href="/reportes/productosAgotados">Productos agotados</a></li>
 								</ul></li>
 						</ul>
 					</div>
