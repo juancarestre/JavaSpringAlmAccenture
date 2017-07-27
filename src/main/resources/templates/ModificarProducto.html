@@ -31,14 +31,20 @@
 							<span class="sr-only">Navegación</span> <span class="icon-bar"></span>
 							<span class="icon-bar"></span> <span class="icon-bar"></span>
 						</button>
-						<a class="navbar-brand" href="#">Almaccenture</a>
+						<a class="navbar-brand" href="#">Administrador</a>
 					</div>
 					<div id="navbar" class="navbar-collapse collapse">
 						<ul class="nav navbar-nav">
-							<li><a th:href="@{/}" href="#">Home</a></li>
-							<li><a href="#">Venta</a></li>
-							<li class="active"><a href="#">Inventario</a></li>
-							<li><a href="#">Reportes</a></li>
+							<li><a th:href="@{/}" href="/">Página principal</a></li>
+							<li><a th:href="@{/ventas/new}" href="/ventas">Venta</a></li>
+							<li class="active"><a th:href="@{/inventario}" href="">Inventario</a></li>
+							<li class="dropdown"><a href="/reportes" class="dropdown-toggle"
+								data-toggle="dropdown" role="button" aria-haspopup="true"
+								aria-expanded="false">Reportes<span class="caret"></span></a>
+								<ul class="dropdown-menu">
+									<li><a href="/reportes/ventas">Ventas</a></li>
+									<li><a href="/reportes/productosAgotados">Productos agotados</a></li>
+								</ul></li>
 						</ul>
 					</div>
 				</div>
