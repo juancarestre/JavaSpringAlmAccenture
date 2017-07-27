@@ -73,6 +73,7 @@ public class ControladorInventario {
 			//pages tiene todos las paginas enumeradas en un array
 			//para 5 paginas, pages es {1,2,3,4,5}
 			mav.addObject("pages",IntStream.range(1,page.getTotalPages()+1).toArray());
+			mav.addObject("producto",new Producto());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -195,25 +196,34 @@ public class ControladorInventario {
 		return mav;
 }
 	/**
-	 * Busca un producto por el id enviado como queryParam.
+	 * Busca un producto por el id enviado en el form buscar. Si hay algun error es catcheado por el bindingResult.
+	 * Si no se ingresa ningun valor en queryParam id, se muestran todos los productos
 	 * url: /inventario/consulta?id
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(method=RequestMethod.GET, value="/inventario/consulta", params={"id"})
-	public String buscarProductoPorCodigo(final Model model, final HttpServletRequest req){
-		String id = req.getParameter("id");
-		String message = "";
+	@RequestMapping(method=RequestMethod.GET, value="/inventario/consulta")
+	public String buscarProductoPorCodigo(final Model model, @Valid Producto prod, BindingResult bindingResult){
+		if(bindingResult.hasErrors()){
+			return "redirect:/inventario";
+		}
+		String id = prod.getIdProducto();
+		String message = ""; //mensaje para enviar error
 		List<Producto> p = new ArrayList<>();
 		try {
 			p.add(producto.obtenerProductoPorId(id));
-			message = p!=null ? "":"No se encontro producto";
 		} catch (LogicaNegocioExcepcion e) {
 			e.printStackTrace();
-		}	
+			message = e.getMessage();
+		}
+		
+		//si no ingresa nada, muestre todos los productos
+		if("".equals(prod.getIdProducto())) return "redirect:/inventario";
 		
 		model.addAttribute("productos", p);
-		model.addAttribute(message);
+		model.addAttribute("producto", new Producto());
+		model.addAttribute("message",message);
+		model.addAttribute("esConsulta",true);
 		return INVENTARIO_HTML;
 	}
 	
