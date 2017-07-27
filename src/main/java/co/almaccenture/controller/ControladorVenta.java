@@ -38,7 +38,7 @@ public class ControladorVenta{
 	public static final String MENSAJE_ID_PRODUCTO_INVALIDO = "El código de producto debe contener algún valor.---";
 	public static final String MENSAJE_CANTIDAD_INVALIDO = "La cantidad debe contener algún valor.";
 	private static final String MENSAJE_DETALLE_ACTUALIZADO = "Se ha actualizado producto";
-	private static final String FRAGMENTO_CALCULA_CAMBIO = "fragmento-calcula-cambio :: calculaCambio";
+	private static final String FRAGMENTO_CALCULA_CAMBIO = "fragments :: calculaCambio";
 	private static final String MENSAJE_SIN_DETALLES = "No hay detalles en la venta.";
 	private static final String REDIRECT_VENTAS ="redirect:/ventas";
 	/**
