@@ -24,9 +24,9 @@ import co.almaccenture.business.LogicaNegocioProducto;
 
 import co.almaccenture.business.LogicaNegocioVenta;
 import co.almaccenture.exception.LogicaNegocioExcepcion;
+import co.almaccenture.helpers.jpa.PageWrapper;
 import co.almaccenture.model.DetalleVenta;
 import co.almaccenture.model.Venta;
-
 
 import co.almaccenture.model.Producto;
 
@@ -37,18 +37,17 @@ public class ControladorReportes {
 	private LogicaNegocioProducto producto;
 	@Autowired
 	private LogicaNegocioVenta ventaBL;
-		
+
 	public static final String MENSAJE_FECHA_VACIA = "La fecha está vacia";
-
-	
+	private static final String REPORTE_VENTA_MAPPING = "/reportes/ventas";
+	private static final String REPORTE_VENTA_HTML = "reportesVentas";
+	private static final String REPORTE_VENTA_LIST_MAPPING = "/reportes/ventas/lista";
 	private Venta venta;
-	
-	private Page<Venta> ventas; 
-
-
+	private PageWrapper<Venta> ventasPage;
 
 	/**
-	 * Lista los productos con cantidades menores a 100. 
+	 * Lista los productos con cantidades menores a 100.
+	 * 
 	 * @param pageable
 	 * @return
 	 */
@@ -71,72 +70,74 @@ public class ControladorReportes {
 
 	/**
 	 * Direge a la vista de consulta de ventas por fecha
+	 * 
 	 * @param pageable
 	 * @return
 	 */
 	@RequestMapping(value = "/reportes/ventas")
-	public ModelAndView ventasPorFecha(Pageable pageable) { 
-		ModelAndView mav = new ModelAndView("reportesVentas"); 
+	public ModelAndView ventasPorFecha(Pageable pageable) {
+		ModelAndView mav = new ModelAndView("reportesVentas");
 		try {
-			venta=new Venta();
+			venta = new Venta();
 		} catch (Exception e) {
-		
+
 			e.printStackTrace();
 		}
 		venta.setDetalles(new ArrayList<>());
-		mav.addObject("detalles", new DetalleVenta());
-		mav.addObject("ventas", ventas);
+		mav.addObject("ventas", ventasPage);
 
 		return mav;
 	}
-	
+
 	/**
-	 * Trae a la vista las ventas realizadas en un rango de ventas, validad las fechas, se cambia el formato
-	 * de las fechas y son enviadas a las logica de negocio par traer las ventas.
+	 * Trae a la vista las ventas realizadas en un rango de ventas, validad las
+	 * fechas, se cambia el formato de las fechas y son enviadas a las logica de
+	 * negocio par traer las ventas.
+	 * 
 	 * @param req
 	 * @param redirect
 	 * @param pageable
 	 * @return
 	 * @throws RemoteException
 	 */
-	@RequestMapping(value = "/reportes/ventas/lista", params={"fechaInicio", "fechaFinal"})
-	public ModelAndView agregarVentasPorFecha(HttpServletRequest req, RedirectAttributes redirect, Pageable pageable) throws RemoteException{
-		String message="";
+	@RequestMapping(value = "/reportes/ventas/lista", params = { "fechaInicio", "fechaFinal" })
+	public ModelAndView agregarVentasPorFecha(HttpServletRequest req, RedirectAttributes redirect, Pageable pageable)
+			throws RemoteException {
+		String message = "";
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-try{
+		try {
 			String fechaInicial = req.getParameter("fechaInicio");
 			String fechaFinal = req.getParameter("fechaFinal");
-			
-			if(fechaInicial.equals("")) throw new LogicaNegocioExcepcion(MENSAJE_FECHA_VACIA);
-			if(fechaFinal.equals("")) throw new LogicaNegocioExcepcion(MENSAJE_FECHA_VACIA);
-			fechaInicial=fechaInicial.replace("-", "/");
-			fechaFinal=fechaFinal.replace("-", "/");
+
+			if (fechaInicial.equals(""))
+				throw new LogicaNegocioExcepcion(MENSAJE_FECHA_VACIA);
+			if (fechaFinal.equals(""))
+				throw new LogicaNegocioExcepcion(MENSAJE_FECHA_VACIA);
+			fechaInicial = fechaInicial.replace("-", "/");
+			fechaFinal = fechaFinal.replace("-", "/");
 			java.util.Date date1 = sdf.parse(fechaInicial);
 			java.util.Date date2 = sdf.parse(fechaFinal);
-			
-			Date sqldate1=new Date(date1.getTime());
-			Date sqldate2=new Date(date2.getTime());
-			
-			ventas=ventaBL.obtenerVentasPorFecha(sqldate1, sqldate2, pageable);
-			System.out.println("Entre las fechas: " + sqldate1 + " y " + sqldate2 + " se ENCONTRARON: " + ventas.getTotalElements() 
-			+ " registros de venta");
-		
-			
-		}catch (Exception e) {
-			e.printStackTrace();
-			message=e.getMessage();
-		}
-		
 
-		ModelAndView mav= new ModelAndView("redirect:/reportes/ventas");
-		mav.addObject("ventas", ventas.getContent());
-		redirect.addFlashAttribute("message", message);
-		
-		return mav;
-	
-		
+			Date sqldate1 = new Date(date1.getTime());
+			Date sqldate2 = new Date(date2.getTime());
 			
+			Page<Venta> page =ventaBL.obtenerVentasPorFecha(sqldate1, sqldate2, pageable);  
+			ventasPage = new PageWrapper<>(page, REPORTE_VENTA_LIST_MAPPING+"?fechaInicio="+fechaInicial+"&fechaFinal="+fechaFinal);
+			System.out.println("Entre las fechas: " + sqldate1 + " y " + sqldate2 + " se ENCONTRARON: "
+					+ page.getContent().size() + " registros de venta");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			message = e.getMessage();
+		}
+
+		ModelAndView mav = new ModelAndView(REPORTE_VENTA_HTML);
+		mav.addObject("ventas", ventasPage.getContent());
+		mav.addObject("pages", ventasPage);
+		redirect.addFlashAttribute("message", message);
+
+		return mav;
+
 	}
-	
 
 }

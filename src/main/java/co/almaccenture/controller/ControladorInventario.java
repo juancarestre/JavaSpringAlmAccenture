@@ -171,7 +171,7 @@ public class ControladorInventario {
 	 */
 	@RequestMapping(value="/inventario/modificar", params={"idProducto",
 			"nombreProducto","descripcionProducto","precioProducto",
-			"cantidadProducto","categoria.nombreCategoria"})
+			"cantidadProducto","categoria.nombreCategoria"}, method=RequestMethod.POST)
 	public ModelAndView modificarProducto(HttpServletRequest req){
 		
 		String message="asd";
