@@ -52,58 +52,55 @@
 		</br> 
 		
 		<h1  align="center"><font color="blue"><label for="codigo">Modificar producto</label></font></h1>
-		
-
 </br>
 		</br>
 	
 	
 	<h2>
+	
+		<form id="messageForm" th:action="@{/inventario/modificar}" action="#"
+			th:object="${producto}" method="post">
+			<div>
+				<input type = "hidden" th:field = "*{idProducto}">
+			</div>
+			<div>
+				<label for="nombre">Nombre:</label> <input type="text"
+					th:field="*{nombreProducto}"> <br> <br>
+			</div>
+			<div>
+				<label for="descripcion">Descripcion:</label> <input type="text"
+					th:field="*{descripcionProducto}"> <br> <br>
+			</div>
+			<div>
+				<label for="precio">Precio:</label> <input type="text"
+					th:field="*{precioProducto}"> <br> <br>
+			</div>
+			<div>
+				<label for="cantidad">Cantidad:</label> <input type="text"
+					th:field="*{cantidadProducto}"> <br> <br>
+			</div>
+			<div>
+				<label for="codigo">Categoria:</label> <select
+					th:field="*{categoria.nombreCategoria}" cssClass="form-control">
+					<option value="Aseo">Aseo</option>
+					<option value="Hogar">Hogar</option>
+					<option value="Moda">Moda</option>
+					<option value="Tecnologia">Tecnologia</option>
+			</div>
+			</select> <br> <br>
+			</div>
 
+			<div class="form-actions">
 
+				<input type="submit" value="Modificar producto" id="modificar1"
+					name="modificar" class="btn btn-success btn-lg" /> <a
+					th:href="@{/inventario}" id="Cancelar1"
+					class="btn btn-success btn-lg">Cancelar</a> <a
+					th:href="@{'/inventario/modificar/'+${idProducto}}" id="Reestablecer"
+					class="btn btn-success btn-lg">Reestablecer</a>
+			</div>
 
-
-
-			<form id="messageForm" th:action="@{/inventario}" action="#"
-				th:object="${detalle}" method="get">
-			<div>	<label for="codigo">Nombre:</label> <input type="text"
-					th:field="*{producto.idProducto}"> <br> <br> </div>
-				<div>	<label for="codigo">Código:</label> <input type="text"
-					th:field="*{producto.idProducto}"> <br> <br> </div>
-					<div><label for="codigo">Descripcion:</label> <input type="text"
-					th:field="*{producto.idProducto}"> <br> <br> </div>
-				<div>	<label for="codigo">Precio:</label> <input type="text"
-					th:field="*{producto.idProducto}"> <br> <br> </div>
-					<div><label for="codigo">Cantidad:</label> <input type="text"
-					th:field="*{producto.idProducto}"> <br> <br> </div> </form>
-
-
-					<div>		<label for="codigo">Categoria:</label> <select>
-							<option value="Aseo">Aseo</option>
-							<option value="Hogar">Hogar</option>
-							<option value="Moda">Moda</option> 
-							<option value="Tecnologia">Tecnologia</option> </select></div>	<br><br>
-							
-								<div>		<label for="codigo">Estado:</label> <select>
-							<option value="Aseo">Activo</option>
-							<option value="Tecnologia">Inactivo</option> </select></div>	
-							
-				
-						
-						<br> <br>
-
-					</div>
-						<div class="row text-center">
-				<div class="form-actions">
-
-					<input type="submit" value="Agregar producto" id="agregar1"
-						class="btn btn-success btn-lg" /> <input type="submit"
-						value="Cancelar" id="Cancelar1" class="btn btn-success btn-lg" />
-						<input type="submit"
-						value="Limpiar" id="Limpiar" class="btn btn-success btn-lg" />
-				</div>
-
-			</form>
+		</form>
 
 
 		</div>

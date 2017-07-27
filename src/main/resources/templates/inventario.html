@@ -106,7 +106,7 @@
 							<td th:text="${inventario.descripcionProducto}" class="tg-yw4l"></td>
 							<td><a class="glyphicon glyphicon-pencil"
 								href="modificar.html"
-								th:href="@{/product/modificar?id='+${inventario.nombreProducto}}"></a>
+								th:href="@{'/inventario/modificar/'+${inventario.idProducto}}"></a>
 								<a class="glyphicon glyphicon-trash"
 								th:href="@{'/product/eliminar?id='+${inventario.estadoProducto}}"></a>
 							</td>
