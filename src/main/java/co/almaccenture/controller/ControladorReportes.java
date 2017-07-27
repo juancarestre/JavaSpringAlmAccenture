@@ -40,7 +40,7 @@ public class ControladorReportes {
 	private LogicaNegocioVenta ventaBL;
 		
 	public static final String MENSAJE_FECHA_VACIA = "La fecha está vacia";
-	private static final String FRAGMENTO_CALCULA_CAMBIO = "fragments :: calculaCambio";
+	private static final String FRAGMENTO_DETALLE_VENTA= "fragments :: detalleVenta";
 	
 	private Venta venta;
 	
@@ -143,8 +143,8 @@ try{
 	public String ventasReportes(final Model model){
 		
 			venta.getDetalles();
-			model.addAttribute(venta);
-			return FRAGMENTO_CALCULA_CAMBIO;
+			model.addAttribute("venta",venta);
+			return FRAGMENTO_DETALLE_VENTA;
 		
 	}
 	

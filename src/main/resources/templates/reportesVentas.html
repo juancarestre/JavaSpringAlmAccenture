@@ -128,7 +128,7 @@
 							th:text="${#numbers.formatDecimal(venta.totalVenta, 0, 'COMMA', 0, 'POINT')}"></span></td>
 							<td><button th:if="${not #lists.isEmpty(venta.detalles)}"
 							class="glyphicon glyphicon-eye-open" id="pagar"
-							onclick="preparaModal()"></button></td>
+							th:onclick="'javascript:preparaModal(\''+${venta.idVenta}+'\');'"></button></td>
 
 <!-- 						<td><a th:href="@{'/ventas/}"><span -->
 <!-- 								class="glyphicon glyphicon-eye-open"></span></a></td> -->
@@ -147,19 +147,20 @@
 	<script th:inline="javascript">
 	
 	
-	function preparaModal() {
-		let url = "/ventas/reporte";
+	function preparaModal(idVenta) {
+		console.log(idVenta);
+		let url = "/ventas/reporte?id="+idVenta;
 		$.get(url, function(result) {
 			mostrarModal(result);
 		})
 	}
 	
 
-	function mostrarModal() {
-
+	function mostrarModal(result) {
 		BootstrapDialog.show({
 			type : BootstrapDialog.TYPE_PRIMARY,
 			title : "Detalle de la venta",
+			message : result,
 			draggable : true,
 			nl2br : false, 
 			buttons : [ {
