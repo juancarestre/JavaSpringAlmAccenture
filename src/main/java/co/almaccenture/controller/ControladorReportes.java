@@ -3,6 +3,7 @@ package co.almaccenture.controller;
 import java.rmi.RemoteException;
 import java.sql.Date;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +16,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -42,6 +44,8 @@ public class ControladorReportes {
 	private static final String REPORTE_VENTA_MAPPING = "/reportes/ventas";
 	private static final String REPORTE_VENTA_HTML = "reportesVentas";
 	private static final String REPORTE_VENTA_LIST_MAPPING = "/reportes/ventas/lista";
+	private static final String FRAGMENTO_CALCULA_CAMBIO = "fragments :: calculaCambio";
+	
 	private Venta venta;
 	private PageWrapper<Venta> ventasPage;
 
@@ -56,11 +60,14 @@ public class ControladorReportes {
 		ModelAndView mav = new ModelAndView("reportesAgotados"); // constructor
 																	// , html
 		try {
-			Page<Producto> page = producto.obtenerAgotados(pageable);
+			PageWrapper<Producto> page;
+			page = new PageWrapper<>(producto.obtenerAgotados(pageable), 
+					"/reportes/productosAgotados");
+//			Page<Producto> page = producto.obtenerAgotados(pageable);
 			mav.addObject("productos", page.getContent()); // crud
 			// pages tiene todos las paginas enumeradas en un array
 			// para 5 paginas, pages es {1,2,3,4,5}
-			mav.addObject("pages", IntStream.range(1, page.getTotalPages() + 1).toArray());
+			mav.addObject("pages", page);
 			mav.addObject("producto", new Producto());
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -85,6 +92,9 @@ public class ControladorReportes {
 		}
 		venta.setDetalles(new ArrayList<>());
 		mav.addObject("ventas", ventasPage);
+		mav.addObject("detalles", new DetalleVenta());
+		mav.addObject("message", "");
+
 
 		return mav;
 	}
@@ -99,13 +109,14 @@ public class ControladorReportes {
 	 * @param pageable
 	 * @return
 	 * @throws RemoteException
+	 * @throws ParseException 
 	 */
-	@RequestMapping(value = "/reportes/ventas/lista", params = { "fechaInicio", "fechaFinal" })
-	public ModelAndView agregarVentasPorFecha(HttpServletRequest req, RedirectAttributes redirect, Pageable pageable)
-			throws RemoteException {
-		String message = "";
+	@RequestMapping(value = "/reportes/ventas/lista", params={"fechaInicio", "fechaFinal"})
+	public ModelAndView agregarVentasPorFecha(HttpServletRequest req, RedirectAttributes redirect, Pageable pageable) throws RemoteException, ParseException{
+		String message="";
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-		try {
+		ModelAndView mav= new ModelAndView();
+		try{
 			String fechaInicial = req.getParameter("fechaInicio");
 			String fechaFinal = req.getParameter("fechaFinal");
 
@@ -131,13 +142,22 @@ public class ControladorReportes {
 			message = e.getMessage();
 		}
 
-		ModelAndView mav = new ModelAndView(REPORTE_VENTA_HTML);
+		mav = new ModelAndView(REPORTE_VENTA_HTML);
 		mav.addObject("ventas", ventasPage.getContent());
 		mav.addObject("pages", ventasPage);
 		redirect.addFlashAttribute("message", message);
-
 		return mav;
 
 	}
+	
+	@RequestMapping(value="/ventas/reporte",method= RequestMethod.GET)
+	public String ventasReportes(final Model model){
+		
+			venta.getDetalles();
+			model.addAttribute(venta);
+			return FRAGMENTO_CALCULA_CAMBIO;
+		
+	}
+	
 
 }
