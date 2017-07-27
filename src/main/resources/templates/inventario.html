@@ -100,14 +100,14 @@
 					<p>
 				</div>
 			</div>
-
-
-			<hr class="featurette-divider">
-
 			<h4>
 				<a href="/inventario" th:if="${esConsulta}">Ver todos los
 					productos</a>
 			</h4>
+
+			<hr class="featurette-divider">
+
+
 
 			<div class="text-center" th:unless="${esConsulta}"
 				th:insert="fragments :: paginationbar"></div>
