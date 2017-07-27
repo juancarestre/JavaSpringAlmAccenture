@@ -78,8 +78,8 @@
 					th:field="*{descripcionProducto}"> <br> <br>
 			</div>
 			<div>
-				<label for="precio">Precio:</label> <input type="text"
-					th:field="*{precioProducto}"> <br> <br>
+				<label for="precio">Precio:</label>  $ <input type="text"
+				 th:field="*{precioProducto}"> <br> <br>
 			</div>
 			<div>
 				<label for="cantidad">Cantidad:</label> <input type="text"
@@ -111,7 +111,6 @@
 
 		</div>
 		<br>
-		<!-- <br> <input type="hidden" th:field="*{activo}" /> -->
 		<div th:if="${message != ''}"
 			class="alert alert-warning alert-dismissible" role="alert">
 			<div class="text-center">

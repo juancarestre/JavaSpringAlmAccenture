@@ -1,0 +1,55 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+</head>
+<div th:fragment="calculaCambio">
+	<h2>
+		<font color="red">
+			<div>
+				Total:
+				<td>$ <span
+					th:text="${#numbers.formatDecimal(venta.totalVenta, 0, 'COMMA', 0, 'POINT')}"></span></td>
+			</div>
+
+		</font> <br> <label>Efectivo</label> <input type="number"
+			id="inpEfectivo"></input> <br> <br>
+		<div class="row text-center">
+			<button th:inline="javascript" onclick="calcularCambio()"
+				class="btn btn-success btn-lg">Calcular</button>
+		</div>
+		<br> <label>Su cambio es de:</label> <label id="lblCambio"></label>
+	</h2>
+	<script th:inline="javascript">
+	
+	
+	//calcula cambio a partir de efectivo entregado y total de la venta
+	function calcularCambio(){
+		let efe = document.getElementById('inpEfectivo').value;
+		document.getElementById('lblCambio').textContent='$'+(efe-[[${venta.totalVenta}]]);
+		}
+	</script>
+</div>
+
+<div th:fragment='paginationbar'>
+	<ul class="pagination">
+		<li th:class="${pages.first}? 'disabled' : ''"><span
+			th:if='${pages.first}'>← Primera</span> <a
+			th:if='${not pages.first}'
+			th:href='@{${pages.url}(page=1,size=${pages.size})}'>←
+				Primera</a></li>
+
+		<li th:each="item : ${pages.items}"
+			th:class="${item.current}? 'active' : ''"><span
+			th:if="${item.current}" th:text="${item.number+1}">1</span> <a
+			th:id="pag+${item.number+1}"
+			th:if="${not item.current}"
+			th:href="@{${pages.url}(page=${item.number},size=${pages.size})}"><span
+				th:text="${item.number+1}">1</span></a></li>
+		<li th:class="${pages.last}? 'disabled' : ''"><span
+			th:if='${pages.last}'>Última →</span> <a
+			th:if='${not pages.last}'
+			th:href='@{${pages.url}(page=${pages.totalPages},size=${pages.size})}'>Última
+				→</a></li>
+	</ul>
+</div>
+</html>

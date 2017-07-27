@@ -28,6 +28,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import co.almaccenture.business.LogicaNegocioProducto;
 import co.almaccenture.model.Producto;
 import co.almaccenture.exception.LogicaNegocioExcepcion;
+import co.almaccenture.helpers.jpa.PageWrapper;
 import co.almaccenture.model.Categoria;
 import co.almaccenture.model.DetalleVenta;
 import co.almaccenture.model.Producto;
@@ -68,11 +69,11 @@ public class ControladorInventario {
 	public ModelAndView listar(Pageable pageable) { //metodo
 		ModelAndView mav = new ModelAndView("inventario"); // constructor , html
 		try {
-			Page<Producto> page = producto.obtenerTodos(pageable);
+			PageWrapper<Producto> page = new PageWrapper<>(producto.obtenerTodos(pageable),"/inventario");
 			mav.addObject("productos", page.getContent()); // crud
 			//pages tiene todos las paginas enumeradas en un array
 			//para 5 paginas, pages es {1,2,3,4,5}
-			mav.addObject("pages",IntStream.range(1,page.getTotalPages()+1).toArray());
+			mav.addObject("pages",page);
 			mav.addObject("producto",new Producto());
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -116,7 +117,7 @@ public class ControladorInventario {
 			cate = repositorioCategoria.findBynombreCategoria(req.getParameter("categoria.nombreCategoria"));
 			p.setCategoria(cate);
 			producto.agregarProducto(p);
-			mav.setViewName("main");
+			mav.setViewName("redirect:/inventario");
 
 			
 		
@@ -173,11 +174,11 @@ public class ControladorInventario {
 			cate = repositorioCategoria.findBynombreCategoria(req.getParameter("categoria.nombreCategoria"));
 			p.setCategoria(cate);
 			producto.modificarProducto(p);
-			mav.setViewName("main");
+			mav.setViewName("redirect:/inventario");
 		}catch (LogicaNegocioExcepcion e) {
 			message=e.getMessage();
 			mav.addObject("producto", new Producto());
-			mav.setViewName("/ModificarProducto");
+			mav.setViewName("/inventario/modificar");
 			e.printStackTrace();
 		}
 		
