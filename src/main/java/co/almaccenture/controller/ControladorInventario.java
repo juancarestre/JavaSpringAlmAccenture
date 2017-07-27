@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.aspectj.bridge.Message;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -131,6 +132,59 @@ public class ControladorInventario {
 		return mav;
 	}
 	
+	@RequestMapping(value = "/inventario/modificar/{idProducto}")
+	public ModelAndView botonModificar(@PathVariable("idProducto") String idProducto) {
+		
+		ModelAndView mav = new ModelAndView("ModificarProducto");
+		try {
+			mav.addObject("producto", producto.obtenerProductoPorId(idProducto));
+		} catch (LogicaNegocioExcepcion e) {
+			e.printStackTrace();
+		}
+		
+		mav.addObject("message", "");
+		return mav;
+	}
+	
+	
+	@RequestMapping(value="/inventario/modificar", params={"idProducto",
+			"nombreProducto","descripcionProducto","precioProducto",
+			"cantidadProducto","categoria.nombreCategoria"})
+	public ModelAndView modificarProducto(HttpServletRequest req){
+		
+		String message="";
+		ModelAndView mav= new ModelAndView();
+		
+		try{
+			Producto p = new Producto();
+			if(req.getParameter("idProducto").isEmpty()) throw new LogicaNegocioExcepcion(MENSAJE_NO_ID);
+			if(req.getParameter("nombreProducto").isEmpty()) throw new LogicaNegocioExcepcion(MENSAJE_NO_NOMBRE_PRODUCTO);
+			if(req.getParameter("cantidadProducto").isEmpty()) throw new LogicaNegocioExcepcion(MENSAJE_NO_CANTIDAD);
+			if(req.getParameter("descripcionProducto").isEmpty()) throw new LogicaNegocioExcepcion(MENSAJE_NO_DESCRIPCION);
+			if(req.getParameter("precioProducto").isEmpty()) throw new LogicaNegocioExcepcion(MENSAJE_NO_PRECIO);
+			if(req.getParameter("categoria.nombreCategoria").isEmpty()) throw new LogicaNegocioExcepcion(MENSAJE_NO_CATEGORIA);
+			
+			p.setIdProducto(req.getParameter("idProducto"));
+			p.setNombreProducto(req.getParameter("nombreProducto"));
+			p.setCantidadProducto(Integer.parseInt(req.getParameter("cantidadProducto")));
+			p.setDescripcionProducto(req.getParameter("descripcionProducto"));
+			p.setPrecioProducto(Float.valueOf(req.getParameter("precioProducto")));
+			Categoria cate = new Categoria();
+			cate = repositorioCategoria.findBynombreCategoria(req.getParameter("categoria.nombreCategoria"));
+			p.setCategoria(cate);
+			producto.modificarProducto(p);
+			mav.setViewName("main");
+		}catch (LogicaNegocioExcepcion e) {
+			message=e.getMessage();
+			mav.addObject("producto", new Producto());
+			mav.setViewName("/ModificarProducto");
+			e.printStackTrace();
+		}
+		
+		mav.addObject("message", message);
+		
+		return mav;
+	}
 
 	@RequestMapping(method = RequestMethod.POST, value = "/inventario/modificarestado/{idProducto}")
 	public ModelAndView eliminarProducto(@PathVariable("idProducto") String idProducto) throws LogicaNegocioExcepcion {
@@ -142,26 +196,34 @@ public class ControladorInventario {
 		return mav;
 }
 	/**
-	 * Busca un producto por el id enviado como queryParam.
+	 * Busca un producto por el id enviado en el form buscar. Si hay algun error es catcheado por el bindingResult.
+	 * Si no se ingresa ningun valor en queryParam id, se muestran todos los productos
 	 * url: /inventario/consulta?id
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(method=RequestMethod.GET, value="/inventario/consulta", params={"idProducto"})
-	public String buscarProductoPorCodigo(final Model model, final HttpServletRequest req){
-		String id = req.getParameter("idProducto");
-		String message = "";
+	@RequestMapping(method=RequestMethod.GET, value="/inventario/consulta")
+	public String buscarProductoPorCodigo(final Model model, @Valid Producto prod, BindingResult bindingResult){
+		if(bindingResult.hasErrors()){
+			return "redirect:/inventario";
+		}
+		String id = prod.getIdProducto();
+		String message = ""; //mensaje para enviar error
 		List<Producto> p = new ArrayList<>();
 		try {
 			p.add(producto.obtenerProductoPorId(id));
-			message = p!=null ? "":"No se encontro producto";
 		} catch (LogicaNegocioExcepcion e) {
 			e.printStackTrace();
-		}	
+			message = e.getMessage();
+		}
+		
+		//si no ingresa nada, muestre todos los productos
+		if("".equals(prod.getIdProducto())) return "redirect:/inventario";
 		
 		model.addAttribute("productos", p);
-		model.addAttribute(message);
 		model.addAttribute("producto", new Producto());
+		model.addAttribute("message",message);
+		model.addAttribute("esConsulta",true);
 		return INVENTARIO_HTML;
 	}
 	
