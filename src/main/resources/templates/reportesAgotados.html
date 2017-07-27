@@ -35,15 +35,15 @@
 					</div>
 					<div id="navbar" class="navbar-collapse collapse">
 						<ul class="nav navbar-nav">
-							<li><a th:href="@{/}" href="#">Página principal</a></li>
-							<li><a th:href="@{/ventas/new}" href="#">Venta</a></li>
-							<li class="active"><a href="#">Inventario</a></li>
+							<li><a th:href="@{/}" href="/">Página principal</a></li>
+							<li><a th:href="@{/ventas/new}" href="/ventas">Venta</a></li>
+							<li class="active"><a href="/inventario">Inventario</a></li>
 							<li class="dropdown"><a href="#" class="dropdown-toggle"
 								data-toggle="dropdown" role="button" aria-haspopup="true"
 								aria-expanded="false">Reportes<span class="caret"></span></a>
 								<ul class="dropdown-menu">
-									<li><a href="#">Ventas</a></li>
-									<li><a href="#">Productos agotados</a></li>
+									<li><a href="reportes">Ventas</a></li>
+									<li><a href="reportes">Productos agotados</a></li>
 								</ul></li>
 						</ul>
 					</div>
@@ -97,7 +97,7 @@
 										</tr>
 									</thead>
 									<tbody>
-										<tr th:each="reporte : ${producto}">
+										<tr th:each="reporte : ${productos}">
 											<td th:text="${reporte.idProducto}" class="tg-yw4l"></td>
 											<td th:text="${reporte.nombreProducto}" class="tg-yw4l"></td>
 											<td th:text="${reporte.cantidadProducto}" class="tg-yw4l"></td>
@@ -119,14 +119,18 @@
 							<div class=col-md-1></div>
 							</br> </br>
 						</div>
-						<div th:fragment='paginationbar'>
-							<ul class='pagination justify-content-center'>
-								<li th:each='page : ${pages}'><a
-									th:href='@{/reporte/list(page=${page-1},size=5)}'><span
-										th:text='${page}'>1</span></a></li>
-							</ul>
-						</div>
-
+						
+<div class="text-center">
+				<div th:fragment='paginationbar'>
+					<ul class='pagination justify-content-center'>
+						<li th:each='page : ${pages}'><a
+							th:href='@{/reportes(page=${page-1},size=20)}'><span
+								th:text='${page}'>1</span></a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		
 
 						<br> <br>
 					</h2>
