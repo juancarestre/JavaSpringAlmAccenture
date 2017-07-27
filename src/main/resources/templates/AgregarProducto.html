@@ -75,42 +75,42 @@
 
 					<div class="input-group">
 						<span class="input-group-addon" id="basic-addon1">Nombre</span> <input
-							type="text" class="form-control"
+							type="text" required class="form-control"
 							placeholder="Digite el nombre del producto"
 							aria-describedby="basic-addon1" th:field="*{nombreProducto}">
 					</div>
 					<br>
 					<div class="input-group">
 						<span class="input-group-addon" id="basic-addon1">Código</span> <input
-							type="text" class="form-control"
+							type="text" required class="form-control"
 							placeholder="Digite el código del producto"
 							aria-describedby="basic-addon1" th:field="*{idProducto}">
 					</div>
 					<br>
 					<div class="input-group">
 						<span class="input-group-addon" id="basic-addon1">Descripción</span>
-						<input type="text" class="form-control"
+						<input type="text" required class="form-control"
 							placeholder="Digite la descripción del producto"
 							aria-describedby="basic-addon1" th:field="*{descripcionProducto}">
 					</div>
 					<br>
 					<div class="input-group">
 						<span class="input-group-addon" id="basic-addon1">Precio</span> <input
-							type="number" class="form-control"
+							type="number" required class="form-control"
 							placeholder="Digite el precio del producto"
 							aria-describedby="basic-addon1" th:field="*{precioProducto}">
 					</div>
 					<br>
 					<div class="input-group">
 						<span class="input-group-addon" id="basic-addon1">Cantidad</span>
-						<input type="number" class="form-control"
+						<input type="number" required class="form-control"
 							placeholder="Digite la cantidad del producto"
 							aria-describedby="basic-addon1" th:field="*{cantidadProducto}">
 						<br> <br>
 					</div>
 					<br>
 					<div class="input-group my-group">
-						<span class="input-group-addon" id="basic-addon1">Cantidad</span>
+						<span class="input-group-addon" id="basic-addon1">Categoría</span>
 						<select th:field="*{categoria.nombreCategoria}" id="lunch"
 							class="selectpicker form-control" data-live-search="true"
 							title="Porfavor seleccione una categoría...">
@@ -146,11 +146,9 @@
 				</div>
 			</div>
 			<br> <br>
-
 			</form>
 		</div>
 		<br>
-
-
 	</div>
-	</div>
+</body>
+</html>

@@ -53,14 +53,37 @@ public interface LogicaNegocioProducto {
 	 */
 	public Page<Producto> obtenerTodos(Pageable pageable) throws LogicaNegocioExcepcion;
 
-	
+	/**
+	 * MOdifica un producto, verifica que exista, valida la cantidad, el precio, los espacios 
+	 * en blanco, agrega la fecha de modificación y se agrega a la base de datos 
+	 * @param producto
+	 * @throws LogicaNegocioExcepcion
+	 */
 	public void modificarProducto(Producto producto) throws LogicaNegocioExcepcion;
 	
+	/**
+	 * Se obtiene un producto por el ID del producto
+	 * @param id
+	 * @return
+	 * @throws LogicaNegocioExcepcion
+	 */
 	public Producto obtenerProductoPorId(String id) throws LogicaNegocioExcepcion;
 	
-
+	/**
+	 * Agrega un producto a la base de datos, verifica que el código no corresponda a un
+	 * producto existente, valida espacios en blanco, verifica cantidad y precio, ingresa la 
+	 * fecha de modificación y se guarda en la base de datos 
+	 * @param producto
+	 * @return
+	 * @throws LogicaNegocioExcepcion
+	 */
 	public Producto agregarProducto(Producto producto) throws LogicaNegocioExcepcion;
 
+	/**
+	 * Cambia el estado del producto de true a false
+	 * @param id
+	 * @throws LogicaNegocioExcepcion
+	 */
 	public void eliminarLogicamenteProducto(String id) throws LogicaNegocioExcepcion;
 	
 	/**
@@ -71,6 +94,11 @@ public interface LogicaNegocioProducto {
 	 */
 	public Page<Producto> obtenerAgotados(Pageable pageable) throws LogicaNegocioExcepcion;
 
+	/**
+	 * Cambia el estado del producto. Activo a inactivo
+	 * @param id
+	 * @throws LogicaNegocioExcepcion
+	 */
 	void cambiarLogicamenteProducto(String id) throws LogicaNegocioExcepcion;
 
 	
