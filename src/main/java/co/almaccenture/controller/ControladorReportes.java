@@ -3,6 +3,7 @@ package co.almaccenture.controller;
 import java.rmi.RemoteException;
 import java.sql.Date;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +26,7 @@ import co.almaccenture.business.LogicaNegocioProducto;
 
 import co.almaccenture.business.LogicaNegocioVenta;
 import co.almaccenture.exception.LogicaNegocioExcepcion;
+import co.almaccenture.helpers.jpa.PageWrapper;
 import co.almaccenture.model.DetalleVenta;
 import co.almaccenture.model.Venta;
 
@@ -58,11 +60,14 @@ public class ControladorReportes {
 		ModelAndView mav = new ModelAndView("reportesAgotados"); // constructor
 																	// , html
 		try {
-			Page<Producto> page = producto.obtenerAgotados(pageable);
+			PageWrapper<Producto> page;
+			page = new PageWrapper<>(producto.obtenerAgotados(pageable), 
+					"/reportes/productosAgotados");
+//			Page<Producto> page = producto.obtenerAgotados(pageable);
 			mav.addObject("productos", page.getContent()); // crud
 			// pages tiene todos las paginas enumeradas en un array
 			// para 5 paginas, pages es {1,2,3,4,5}
-			mav.addObject("pages", IntStream.range(1, page.getTotalPages() + 1).toArray());
+			mav.addObject("pages", page);
 			mav.addObject("producto", new Producto());
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -87,6 +92,7 @@ public class ControladorReportes {
 		venta.setDetalles(new ArrayList<>());
 		mav.addObject("detalles", new DetalleVenta());
 		mav.addObject("ventas", ventas);
+		mav.addObject("message", "");
 
 		return mav;
 	}
@@ -99,12 +105,14 @@ public class ControladorReportes {
 	 * @param pageable
 	 * @return
 	 * @throws RemoteException
+	 * @throws ParseException 
 	 */
 	@RequestMapping(value = "/reportes/ventas/lista", params={"fechaInicio", "fechaFinal"})
-	public ModelAndView agregarVentasPorFecha(HttpServletRequest req, RedirectAttributes redirect, Pageable pageable) throws RemoteException{
+	public ModelAndView agregarVentasPorFecha(HttpServletRequest req, RedirectAttributes redirect, Pageable pageable) throws RemoteException, ParseException{
 		String message="";
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-try{
+		ModelAndView mav= new ModelAndView();
+		try{
 			String fechaInicial = req.getParameter("fechaInicio");
 			String fechaFinal = req.getParameter("fechaFinal");
 			
@@ -121,17 +129,21 @@ try{
 			ventas=ventaBL.obtenerVentasPorFecha(sqldate1, sqldate2, pageable);
 			System.out.println("Entre las fechas: " + sqldate1 + " y " + sqldate2 + " se ENCONTRARON: " + ventas.getTotalElements() 
 			+ " registros de venta");
-		
+			mav.setViewName("redirect:/reportes/ventas");
 			
-		}catch (Exception e) {
+		}catch (LogicaNegocioExcepcion e) {
 			e.printStackTrace();
 			message=e.getMessage();
+			mav.addObject("detalles", new DetalleVenta());
+//			mav.addObject("ventas", ventas);
+			mav.setViewName("/reportesVentas");
+			
 		}
 		
 
-		ModelAndView mav= new ModelAndView("redirect:/reportes/ventas");
-		mav.addObject("ventas", ventas.getContent());
-		redirect.addFlashAttribute("message", message);
+		
+		mav.addObject("ventas", ventas);
+		mav.addObject("message", message);
 		
 		return mav;
 	
