@@ -41,7 +41,7 @@ public class ControladorInventario {
 	private static final String INVENTARIO_HTML = "inventario";
 
 	@Autowired
-	private LogicaNegocioProducto producto;
+	private LogicaNegocioProducto productoBl;
 	
 	@Autowired
 	private RepositorioCategoria repositorioCategoria;
@@ -69,7 +69,8 @@ public class ControladorInventario {
 	public ModelAndView listar(Pageable pageable) { //metodo
 		ModelAndView mav = new ModelAndView("inventario"); // constructor , html
 		try {
-			PageWrapper<Producto> page = new PageWrapper<>(producto.obtenerTodos(pageable),"/inventario");
+			PageWrapper<Producto> page;
+			page = new PageWrapper<>(productoBl.obtenerTodos(pageable),"/inventario");
 			mav.addObject("productos", page.getContent()); // crud
 			//pages tiene todos las paginas enumeradas en un array
 			//para 5 paginas, pages es {1,2,3,4,5}
@@ -116,7 +117,7 @@ public class ControladorInventario {
 			Categoria cate = new Categoria();
 			cate = repositorioCategoria.findBynombreCategoria(req.getParameter("categoria.nombreCategoria"));
 			p.setCategoria(cate);
-			producto.agregarProducto(p);
+			productoBl.agregarProducto(p);
 			mav.setViewName("redirect:/inventario");
 
 			
@@ -138,7 +139,7 @@ public class ControladorInventario {
 		
 		ModelAndView mav = new ModelAndView("ModificarProducto");
 		try {
-			mav.addObject("producto", producto.obtenerProductoPorId(idProducto));
+			mav.addObject("producto", productoBl.obtenerProductoPorId(idProducto));
 		} catch (LogicaNegocioExcepcion e) {
 			e.printStackTrace();
 		}
@@ -173,7 +174,7 @@ public class ControladorInventario {
 			Categoria cate = new Categoria();
 			cate = repositorioCategoria.findBynombreCategoria(req.getParameter("categoria.nombreCategoria"));
 			p.setCategoria(cate);
-			producto.modificarProducto(p);
+			productoBl.modificarProducto(p);
 			mav.setViewName("redirect:/inventario");
 		}catch (LogicaNegocioExcepcion e) {
 			message=e.getMessage();
@@ -191,7 +192,7 @@ public class ControladorInventario {
 	public ModelAndView eliminarProducto(@PathVariable("idProducto") String idProducto) throws LogicaNegocioExcepcion {
 		
 		System.out.println("eliminarProducto" + idProducto);
-		producto.cambiarLogicamenteProducto(idProducto);
+		productoBl.cambiarLogicamenteProducto(idProducto);
 		
 		ModelAndView mav= new ModelAndView("redirect:/inventario");
 		return mav;
@@ -212,7 +213,7 @@ public class ControladorInventario {
 		String message = ""; //mensaje para enviar error
 		List<Producto> p = new ArrayList<>();
 		try {
-			p.add(producto.obtenerProductoPorId(id));
+			p.add(productoBl.obtenerProductoPorId(id));
 		} catch (LogicaNegocioExcepcion e) {
 			e.printStackTrace();
 			message = e.getMessage();
