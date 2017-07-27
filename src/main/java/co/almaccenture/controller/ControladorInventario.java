@@ -160,7 +160,7 @@ public class ControladorInventario {
 		try{
 			
 			if(req.getParameter("idProducto").isEmpty()) throw new LogicaNegocioExcepcion(MENSAJE_NO_ID);
-			p = producto.obtenerProductoPorId(req.getParameter("idProducto"));
+			p = productoBl.obtenerProductoPorId(req.getParameter("idProducto"));
 			if(req.getParameter("nombreProducto").isEmpty()) throw new LogicaNegocioExcepcion(MENSAJE_NO_NOMBRE_PRODUCTO);
 			if(req.getParameter("cantidadProducto").isEmpty()) throw new LogicaNegocioExcepcion(MENSAJE_NO_CANTIDAD);
 			if(req.getParameter("descripcionProducto").isEmpty()) throw new LogicaNegocioExcepcion(MENSAJE_NO_DESCRIPCION);
