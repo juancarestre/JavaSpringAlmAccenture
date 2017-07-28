@@ -84,10 +84,37 @@
 	</div>
 
 
-	<div class="row">
+
+
+	<hr class="featurette-divider">
+
+	<br>
+	<br>
+	<div th:if="${message != ''}"
+		class="alert alert-warning alert-dismissible" role="alert">
+		<div class="text-center">
+			<button type="button" class="close" data-dismis="alert"
+				aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+			<strong>¡Señor usuario!</strong>
+			<div th:text="${message}"></div>
+		</div>
+	</div>
+
+
+
+
+	
+	
+
+	<div th:if="${not #lists.isEmpty(ventas)}" class="row">
 		<div class=col-md-2></div>
 		<div class=col-md-8>
+			<div th:if="${not #lists.isEmpty(ventas)}"
+				th:insert="fragments :: paginationbar" class="text-center"></div>
 
+			
 			<table class="table table-bordered table-striped table-hover">
 
 				<thead>
@@ -106,104 +133,52 @@
 						<td th:text="${venta.caja.nombreCaja}"></td>
 						<td>$ <span
 							th:text="${#numbers.formatDecimal(venta.totalVenta, 0, 'COMMA', 0, 'POINT')}"></span></td>
-						<td><button th:if="${not #lists.isEmpty(venta.detalles)}"
-								class="glyphicon glyphicon-eye-open" id="pagar"
-								th:onclick="'javascript:preparaModal(\''+${venta.idVenta}+'\');'"></button></td>
+						<td><button th:if="${not #lists.isEmpty(venta.detalles)}" class="glyphicon glyphicon-eye-open" id="detalles" th:onclick="'javascript:preparaModal(\''+${venta.idVenta}+'\');'"></button></td>
 
-						<!-- 						<td><a th:href="@{'/ventas/}"><span -->
-						<!-- 								class="glyphicon glyphicon-eye-open"></span></a></td> -->
+							
+
 
 					</tr>
 				</tbody>
 
 			</table>
+			<div th:if="${not #lists.isEmpty(ventas)}"
+			th:insert="fragments :: paginationbar" class="text-center"></div>
+			
 
 
-			<hr class="featurette-divider">
-
-			<br> <br>
-			<div th:if="${message != ''}"
-				class="alert alert-warning alert-dismissible" role="alert">
-				<div class="text-center">
-					<button type="button" class="close" data-dismis="alert"
-						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-					<strong>¡Señor usuario!</strong>
-					<div th:text="${message}"></div>
-				</div>
-			</div>
-
-			<div class=col-md-2></div>
 		</div>
+		<div class=col-md-2></div>
 
+		
+	</div>
+	
+	<script th:inline="javascript">
+		function preparaModal(idVenta) {
+			console.log(idVenta);
+			let url = "/ventas/reporte?id=" + idVenta;
+			$.get(url, function(result) {
+				mostrarModal(result);
+			})
+		}
 
-
-
-
-		<div class="row">
-			<div class=col-md-2></div>
-			<div class=col-md-8>
-
-				<table class="table table-bordered table-striped table-hover">
-
-					<thead>
-						<tr>
-							<th>Código</th>
-							<th>Fecha</th>
-							<th>Caja</th>
-							<th>Total</th>
-							<th>Acción</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr th:each="venta : ${ventas}">
-							<td th:text="${venta.idVenta}"></td>
-							<td th:text="${venta.fechaVenta}"></td>
-							<td th:text="${venta.caja.nombreCaja}"></td>
-							<td>$ <span
-								th:text="${#numbers.formatDecimal(venta.totalVenta, 0, 'COMMA', 0, 'POINT')}"></span></td>
-							<td><a th:href="@{'/ventas/}"><span
-									class="glyphicon glyphicon-eye-open"></span></a></td>
-
-						</tr>
-					</tbody>
-
-				</table>
-
-
-			</div>
-			<div class=col-md-2></div>
-
-			<div th:if="${not #lists.isEmpty(ventas)}" th:insert="fragments :: paginationbar" class="text-center"></div>
-		</div> 
-
-		<script th:inline="javascript">
-			function preparaModal(idVenta) {
-				console.log(idVenta);
-				let url = "/ventas/reporte?id=" + idVenta;
-				$.get(url, function(result) {
-					mostrarModal(result);
-				})
-			}
-
-			function mostrarModal(result) {
-				BootstrapDialog.show({
-					type : BootstrapDialog.TYPE_PRIMARY,
-					title : "Detalle de la venta",
-					message : result,
-					draggable : true,
-					nl2br : false,
-					buttons : [ {
-						label : 'Cerrar',
-						cssClass : 'btn-primary',
-						id : 'btncancelar',
-						action : function(dialogItself) {
-							dialogItself.close();
-						}
-					} ]
-				})
-			}
-		</script>
+		function mostrarModal(result) {
+			BootstrapDialog.show({
+				type : BootstrapDialog.TYPE_PRIMARY,
+				title : "Detalle de la venta",
+				message : result,
+				draggable : true,
+				nl2br : false,
+				buttons : [ {
+					label : 'Cerrar',
+					cssClass : 'btn-primary',
+					id : 'btncancelar',
+					action : function(dialogItself) {
+						dialogItself.close();
+					}
+				} ]
+			})
+		}
+	</script>
 </body>
 </html>

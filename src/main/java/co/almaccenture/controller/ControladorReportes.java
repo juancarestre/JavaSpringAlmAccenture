@@ -85,14 +85,10 @@ public class ControladorReportes {
 	@RequestMapping(value = "/reportes/ventas")
 	public ModelAndView ventasPorFecha(Pageable pageable) {
 		ModelAndView mav = new ModelAndView("reportesVentas");
-		try {
-			venta = new Venta();
-		} catch (Exception e) {
-
-			e.printStackTrace();
-		}
+		
+		venta = new Venta();
 		venta.setDetalles(new ArrayList<>());
-		mav.addObject("ventas", ventasPage);
+		//mav.addObject("ventas", ventasPage.getContent());
 		mav.addObject("detalles", new DetalleVenta());
 		mav.addObject("message", "");
 
@@ -137,7 +133,7 @@ public class ControladorReportes {
 			ventasPage = new PageWrapper<>(page, REPORTE_VENTA_LIST_MAPPING+"?fechaInicio="+fechaInicial+"&fechaFinal="+fechaFinal);
 			System.out.println("Entre las fechas: " + sqldate1 + " y " + sqldate2 + " se ENCONTRARON: "
 					+ page.getContent().size() + " registros de venta");
-
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			message = e.getMessage();
@@ -146,7 +142,7 @@ public class ControladorReportes {
 		mav = new ModelAndView(REPORTE_VENTA_HTML);
 		mav.addObject("ventas", ventasPage.getContent());
 		mav.addObject("pages", ventasPage);
-		redirect.addFlashAttribute("message", message);
+		mav.addObject("message", message);
 		return mav;
 
 	}
