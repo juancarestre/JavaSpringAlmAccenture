@@ -117,6 +117,7 @@ public class ControladorReportes {
 		String message="";
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 		ModelAndView mav= new ModelAndView();
+		float totalDineroReporte=0;
 		try{
 			String fechaInicial = req.getParameter("fechaInicio");
 			String fechaFinal = req.getParameter("fechaFinal");
@@ -134,9 +135,13 @@ public class ControladorReportes {
 			Date sqldate2 = new Date(date2.getTime());
 			
 			Page<Venta> page =ventaBL.obtenerVentasPorFecha(sqldate1, sqldate2, pageable);  
+			
 			ventasPage = new PageWrapper<>(page, REPORTE_VENTA_LIST_MAPPING+"?fechaInicio="+fechaInicial+"&fechaFinal="+fechaFinal);
 			System.out.println("Entre las fechas: " + sqldate1 + " y " + sqldate2 + " se ENCONTRARON: "
 					+ page.getContent().size() + " registros de venta");
+			
+			totalDineroReporte=sumarTotalReporte(sqldate1, sqldate2);
+
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -146,6 +151,7 @@ public class ControladorReportes {
 		mav = new ModelAndView(REPORTE_VENTA_HTML);
 		mav.addObject("ventas", ventasPage.getContent());
 		mav.addObject("pages", ventasPage);
+		mav.addObject("totaldineroventa",totalDineroReporte);
 		redirect.addFlashAttribute("message", message);
 		return mav;
 
@@ -158,6 +164,18 @@ public class ControladorReportes {
 			model.addAttribute("venta",venta);
 			return FRAGMENTO_DETALLE_VENTA;
 		
+	}
+	
+	public float sumarTotalReporte(Date fechainicial, Date fechafinal) {
+		float suma=0;		
+		List<Venta> totalVentasPorFecha= ventaBL.obtenerTotalVentasPorFecha(fechainicial, fechafinal);
+		
+		for(int i=0; i<totalVentasPorFecha.size(); i++){
+			suma += (totalVentasPorFecha.get(i).getTotalVenta());		
+		}
+		
+		System.out.println("Suma total del reporte: " + suma);
+		return suma;
 	}
 	
 
