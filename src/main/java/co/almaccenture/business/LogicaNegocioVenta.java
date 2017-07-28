@@ -1,6 +1,7 @@
 package co.almaccenture.business;
 
 import java.sql.Date;
+import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -68,5 +69,13 @@ public interface LogicaNegocioVenta {
 	 * @throws LogicaNegocioExcepcion
 	 */
 	public Page<Venta> obtenerVentasPorFecha(Date fechaInicio, Date fechaFin, Pageable pageable) throws LogicaNegocioExcepcion;
+	
+	/**
+	 * Obtiene lista del total del dinero de las ventas para determinado rango de fechas, independientemente de las paginas
+	 * @param fechaInicio
+	 * @param fechaFin
+	 * @return
+	 */
+	public List<Venta> obtenerTotalVentasPorFecha(Date fechaInicio, Date fechaFin);
 	
 }
