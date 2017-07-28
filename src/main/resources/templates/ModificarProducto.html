@@ -18,46 +18,47 @@
 <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}">
 </head>
 <body>
-			<nav class="navbar navbar-inverse navbar-fixed-top">
-				<div class="container">
-					<div class="navbar-header">
-						<button type="button" class="navbar-toggle collapsed"
-							data-toggle="collapse" data-target="#navbar"
-							aria-expanded="false" aria-controls="navbar">
-							<span class="sr-only">Navegación</span> <span class="icon-bar"></span>
-							<span class="icon-bar"></span> <span class="icon-bar"></span>
-						</button>
-						<a class="navbar-brand" href="#">Administrador</a>
-					</div>
-					<div id="navbar" class="navbar-collapse collapse">
-						<ul class="nav navbar-nav">
-							<li><a th:href="@{/}" href="/">Página principal</a></li>
-							<li><a th:href="@{/ventas/new}" href="/ventas">Venta</a></li>
-							<li class="active"><a th:href="@{/inventario}" href="">Inventario</a></li>
-							<li class="dropdown"><a href="/reportes"
-								class="dropdown-toggle" data-toggle="dropdown" role="button"
-								aria-haspopup="true" aria-expanded="false">Reportes<span
-									class="caret"></span></a>
-								<ul class="dropdown-menu">
-									<li><a href="/reportes/ventas">Ventas</a></li>
-									<li><a href="/reportes/productosAgotados">Productos
-											agotados</a></li>
-								</ul></li>
-						</ul>
-					</div>
-				</div>
-			</nav>
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed"
+					data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+					aria-controls="navbar">
+					<span class="sr-only">Navegación</span> <span class="icon-bar"></span>
+					<span class="icon-bar"></span> <span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#">Administrador</a>
+			</div>
+			<div id="navbar" class="navbar-collapse collapse">
+				<ul class="nav navbar-nav">
+					<li><a th:href="@{/}" href="/">Página principal</a></li>
+					<li><a th:href="@{/ventas/new}" href="/ventas">Venta</a></li>
+					<li class="active"><a th:href="@{/inventario}" href="">Inventario</a></li>
+					<li class="dropdown"><a href="/reportes"
+						class="dropdown-toggle" data-toggle="dropdown" role="button"
+						aria-haspopup="true" aria-expanded="false">Reportes<span
+							class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="/reportes/ventas">Ventas</a></li>
+							<li><a href="/reportes/productosAgotados">Productos
+									agotados</a></li>
+						</ul></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
 
 	<div class="container">
 		<div class="panel panel-primary">
 			<div class="panel-heading">
-			<h1>Modificar producto</h1></div>
-			
+				<h1>Modificar producto</h1>
+			</div>
+
 			<div class="panel-body">
 
 				<form id="messageForm" th:action="@{/inventario/modificar}"
-					action="#" th:object="${producto}" method="post">
-					
+					action="#" th:object="${producto}" method="post" onsubmit="return confirm('Estas seguro que deseas actualizar');">
+
 					<br>
 					<div class="input-group">
 						<span class="input-group-addon" id="basic-addon1">Código</span> <input
@@ -116,10 +117,8 @@
 					<hr class="featurette-divider">
 					<div class="text-center">
 						<div class="form-actions">
-
-							<input type="submit" value="Modificar producto" id="modificar1"
-								name="modificar" class="btn btn-primary" /> <a
-								th:href="@{/inventario}" id="Cancelar1"
+							<input type="submit" value="Modificar producto" id="modificar1" name="modificar" class="btn btn-primary" /> 
+							<a th:href="@{/inventario}" id="Cancelar1"
 								class="btn btn-primary">Cancelar</a> <a
 								th:href="@{'/inventario/modificar/'+${idProducto}}"
 								id="Reestablecer" class="btn btn-primary">Reestablecer</a>
