@@ -135,8 +135,6 @@
 							th:text="${#numbers.formatDecimal(venta.totalVenta, 0, 'COMMA', 0, 'POINT')}"></span></td>
 						<td><button th:if="${not #lists.isEmpty(venta.detalles)}" class="glyphicon glyphicon-eye-open" id="detalles" th:onclick="'javascript:preparaModal(\''+${venta.idVenta}+'\');'"></button></td>
 
-							
-
 
 					</tr>
 				</tbody>
