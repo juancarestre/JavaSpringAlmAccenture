@@ -182,6 +182,7 @@ public class LogicaNegocioVentaImpl implements LogicaNegocioVenta {
 	public List<Venta> obtenerTotalVentasPorFecha(Date fechaInicio, Date fechaFin) {
 		return repositorioVenta.findByFechaVentaBetween(fechaInicio, fechaFin);
 	}
+
 	
 
 }

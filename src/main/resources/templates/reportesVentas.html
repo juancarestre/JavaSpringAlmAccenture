@@ -105,13 +105,13 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr th:each="venta : ${ventas}">
+						<tr th:each="venta,status : ${ventas}">
 							<td th:text="${venta.idVenta}"></td>
 							<td th:text="${venta.fechaVenta}"></td>
 							<td th:text="${venta.caja.nombreCaja}"></td>
 							<td>$ <span
 								th:text="${#numbers.formatDecimal(venta.totalVenta, 0, 'COMMA', 0, 'POINT')}"></span></td>
-						<td><button th:if="${not #lists.isEmpty(venta.detalles)}" class="glyphicon glyphicon-eye-open" id="detalles" th:onclick="'javascript:preparaModal(\''+${venta.idVenta}+'\');'"></button></td>
+						<td><button th:if="${not #lists.isEmpty(venta.detalles)}" class="glyphicon glyphicon-eye-open" id="detalles" th:onclick="'javascript:preparaModal(\''+${status.index}+'\');'"></button></td>
 
 						</tr>
 					</tbody>
