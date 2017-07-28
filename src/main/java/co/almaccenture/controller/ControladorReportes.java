@@ -85,12 +85,8 @@ public class ControladorReportes {
 	@RequestMapping(value = "/reportes/ventas")
 	public ModelAndView ventasPorFecha(Pageable pageable) {
 		ModelAndView mav = new ModelAndView("reportesVentas");
-		try {
-			venta = new Venta();
-		} catch (Exception e) {
-
-			e.printStackTrace();
-		}
+		
+		venta = new Venta();
 		venta.setDetalles(new ArrayList<>());
 		//mav.addObject("ventas", ventasPage.getContent());
 		mav.addObject("detalles", new DetalleVenta());
@@ -140,8 +136,8 @@ public class ControladorReportes {
 			System.out.println("Entre las fechas: " + sqldate1 + " y " + sqldate2 + " se ENCONTRARON: "
 					+ page.getContent().size() + " registros de venta");
 			
-			totalDineroReporte=sumarTotalReporte(sqldate1, sqldate2);
 
+			totalDineroReporte=sumarTotalReporte(sqldate1, sqldate2);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -152,7 +148,8 @@ public class ControladorReportes {
 		mav.addObject("ventas", ventasPage.getContent());
 		mav.addObject("pages", ventasPage);
 		mav.addObject("totaldineroventa",totalDineroReporte);
-		redirect.addFlashAttribute("message", message);
+		mav.addObject("message", message);
+
 		return mav;
 
 	}
