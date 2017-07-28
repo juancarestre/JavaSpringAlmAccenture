@@ -50,12 +50,14 @@
 
 	<div class="container">
 		<div class="panel panel-primary">
-			<div class="panel-heading"></div>
+			<div class="panel-heading">
+			<h1>Modificar producto</h1></div>
+			
 			<div class="panel-body">
 
 				<form id="messageForm" th:action="@{/inventario/modificar}"
 					action="#" th:object="${producto}" method="post">
-					<h1>Modificar producto</h1>
+					
 					<br>
 					<div class="input-group">
 						<span class="input-group-addon" id="basic-addon1">Código</span> <input
