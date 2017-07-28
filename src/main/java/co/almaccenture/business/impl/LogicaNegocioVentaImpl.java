@@ -22,6 +22,11 @@ import co.almaccenture.model.Venta;
 import co.almaccenture.repository.RepositorioCaja;
 import co.almaccenture.repository.RepositorioProducto;
 import co.almaccenture.repository.RepositorioVenta;
+/**
+ * Implementa los metodos de interfaz LogicaNegocioVenta
+ * @author Administrator
+ *
+ */
 @Service
 public class LogicaNegocioVentaImpl implements LogicaNegocioVenta {
 

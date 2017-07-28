@@ -1,7 +1,11 @@
 package co.almaccenture.exception;
 
 import org.apache.log4j.Logger;
-
+/**
+ * Clase que contiene las excepciones ya definidas
+ * @author Administrator
+ *
+ */
 @SuppressWarnings("serial")
 public class LogicaNegocioExcepcion extends Exception {
 

@@ -9,12 +9,26 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import co.almaccenture.model.Producto;
-
+/**
+ * Interfaz que hereda de CRUDrepository, genera los metodos necesarios DAO 
+ * @author Administrator
+ *
+ */
 @Repository
 public interface RepositorioProducto extends CrudRepository<Producto, String> {
-
+/**
+ * Retorna un producto por su respectivo ID y su estado actual (Activo o inactivo)
+ * @param idProducto
+ * @param estadoProducto
+ * @return
+ */
 	public Producto findByIdProductoAndEstadoProducto(String idProducto, boolean estadoProducto);
-	
+	/**
+	 * Encuentra productos por su nombre, los asocia a una paginacion
+	 * @param nombreProducto
+	 * @param pageable
+	 * @return
+	 */
 	public Page<Producto> findByNombreProductoContaining(String nombreProducto, Pageable pageable);
 	
 	/**

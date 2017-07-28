@@ -2,6 +2,11 @@ package co.almaccenture.business;
 
 import co.almaccenture.model.Caja;
 
+/**
+ * Interface que firma los metodos relacionados con las cajas
+ * @author Administrator
+ *
+ */
 public interface LogicaNegocioCaja {
 
 	/**

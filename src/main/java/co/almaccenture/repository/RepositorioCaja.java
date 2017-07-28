@@ -6,7 +6,11 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import co.almaccenture.model.Caja;
-
+/**
+ * Interfaz que hereda de CRUDrepository, genera los metodos necesarios DAO 
+ * @author Administrator
+ *
+ */
 @Repository
 public interface RepositorioCaja extends CrudRepository<Caja, Integer> {
 	/**

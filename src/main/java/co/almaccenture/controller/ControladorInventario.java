@@ -34,7 +34,11 @@ import co.almaccenture.model.DetalleVenta;
 import co.almaccenture.model.Producto;
 import co.almaccenture.repository.RepositorioCategoria;
 import co.almaccenture.repository.RepositorioProducto;
-
+/**
+ * Controlador de la vista inventario
+ * @author Administrator
+ *
+ */
 @Controller
 public class ControladorInventario {
 	

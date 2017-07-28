@@ -9,7 +9,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
- * Se implementa el modelo , set and get
+ * Se implementa el modelo de la entidad producto, setters and getters
  * 
  * @author Uditeam
  *

@@ -11,7 +11,7 @@ import javax.persistence.Table;
 
 
 /**
- * Se implementa el modelo , set and get
+ * Se implementa el modelo de detalle venta , setters and getters
  * 
  * @author Uditeam
  *

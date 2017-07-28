@@ -23,7 +23,11 @@ import co.almaccenture.business.impl.LogicaNegocioProductoImp;
 import co.almaccenture.exception.LogicaNegocioExcepcion;
 import co.almaccenture.model.DetalleVenta;
 import co.almaccenture.model.Venta;
-
+/**
+ * Controlador de la vista de ventas 
+ * @author Administrator
+ *
+ */
 @Controller
 public class ControladorVenta{
 	

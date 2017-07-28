@@ -12,7 +12,7 @@ import javax.persistence.Table;
 import java.util.List;
 
 /**
- * Se implementa el modelo , set and get
+ * Se implementa el modelo Categoria , setters and getters
  * 
  * @author Uditeam
  *

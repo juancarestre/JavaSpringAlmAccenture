@@ -8,6 +8,11 @@ import org.springframework.data.domain.Pageable;
 import co.almaccenture.exception.LogicaNegocioExcepcion;
 import co.almaccenture.model.Producto;
 
+/**
+ * Interfaz que firma los metodos relacionados con el manejo de productos del inventario
+ * @author Administrator
+ *
+ */
 public interface LogicaNegocioProducto {
 	
 	

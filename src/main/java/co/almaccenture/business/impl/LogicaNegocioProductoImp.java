@@ -14,7 +14,11 @@ import co.almaccenture.exception.LogicaNegocioExcepcion;
 import co.almaccenture.model.Categoria;
 import co.almaccenture.model.Producto;
 import co.almaccenture.repository.RepositorioProducto;
-
+/**
+ * Clase implementa los metodos de la interfaz LogicaNegocioProducto
+ * @author Administrator
+ *
+ */
 @Service
 public class LogicaNegocioProductoImp implements LogicaNegocioProducto  {
 	

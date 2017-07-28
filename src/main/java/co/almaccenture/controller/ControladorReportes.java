@@ -31,7 +31,11 @@ import co.almaccenture.model.DetalleVenta;
 import co.almaccenture.model.Venta;
 
 import co.almaccenture.model.Producto;
-
+/**
+ * Controlador de las vistas de reporte por fecha y reporte de agotados
+ * @author Administrator
+ *
+ */
 @Controller
 public class ControladorReportes {
 

@@ -12,7 +12,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
- * Se implementa el modelo , set and get
+ * Se implementa el modelo de caja , setters and getters
  * 
  * @author Uditeam
  *

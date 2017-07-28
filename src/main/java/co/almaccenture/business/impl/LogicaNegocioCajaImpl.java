@@ -9,7 +9,11 @@ import org.springframework.stereotype.Service;
 import co.almaccenture.business.LogicaNegocioCaja;
 import co.almaccenture.model.Caja;
 import co.almaccenture.repository.RepositorioCaja;
-
+/**
+ * Clase que implementa los metodos de la interfaz LogicaNegocioCaja
+ * @author Administrator
+ *
+ */
 @Service
 public class LogicaNegocioCajaImpl implements LogicaNegocioCaja {
 	
