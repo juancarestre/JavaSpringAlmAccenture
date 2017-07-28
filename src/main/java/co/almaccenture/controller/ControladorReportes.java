@@ -92,7 +92,7 @@ public class ControladorReportes {
 			e.printStackTrace();
 		}
 		venta.setDetalles(new ArrayList<>());
-		mav.addObject("ventas", ventasPage);
+		//mav.addObject("ventas", ventasPage.getContent());
 		mav.addObject("detalles", new DetalleVenta());
 		mav.addObject("message", "");
 
