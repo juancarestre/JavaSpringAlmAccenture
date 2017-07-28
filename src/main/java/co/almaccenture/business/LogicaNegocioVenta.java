@@ -78,4 +78,5 @@ public interface LogicaNegocioVenta {
 	 */
 	public List<Venta> obtenerTotalVentasPorFecha(Date fechaInicio, Date fechaFin);
 	
+	
 }

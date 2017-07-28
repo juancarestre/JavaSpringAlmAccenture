@@ -29,4 +29,5 @@ public interface RepositorioDetalleVenta extends CrudRepository<DetalleVenta, In
 	 */
 	public List<DetalleVenta> findByVenta(Venta venta);
 	
+	
 }

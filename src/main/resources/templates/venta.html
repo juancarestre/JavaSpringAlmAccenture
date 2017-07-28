@@ -180,8 +180,8 @@
 				onclick="preparaModalPago()">Pagar</button>
 			<form th:action="@{/ventas}" action="#" th:method="GET"
 				style="display: inline;">
-				<input name="limpiar" type="submit" value="Cancelar"
-					class="btn btn-primary btn-lg" />
+				<button th:if="${not #lists.isEmpty(venta.detalles)}" name="limpiar" type="submit" 
+					class="btn btn-primary btn-lg" >Cancelar</button>
 			</form>
 		</div>
 

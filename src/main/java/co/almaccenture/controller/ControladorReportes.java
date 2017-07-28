@@ -160,10 +160,11 @@ public class ControladorReportes {
 	
 	@RequestMapping(value="/ventas/reporte",method= RequestMethod.GET,params={"id"})
 	public String ventasReportes(final Model model,HttpServletRequest req){
-		String idVenta = req.getParameter("id");
-		System.out.println(idVenta);
-			venta.getDetalles();
-			model.addAttribute("venta",venta);
+		int index = Integer.parseInt(req.getParameter("id"));
+		System.out.println(index);
+		Venta venta1 = ventasPage.getContent().get(index);
+			venta1.getDetalles();
+			model.addAttribute("venta",venta1);
 			return FRAGMENTO_DETALLE_VENTA;
 		
 	}
