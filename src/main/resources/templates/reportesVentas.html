@@ -57,9 +57,9 @@
 
 		<form id="messageForm" th:action="@{/reportes/ventas/lista}"
 			action="#" method="get" class="text-center">
-			<label for="fechaInicio">Fecha de inicio:</label> <input required
+			<label for="fechaInicio">Fecha de inicio:</label> <input id="inp-fecha-ini" required
 				name="fechaInicio" type="Date"> <label for="fechaFinal">Fecha
-				final:</label> <input required name="fechaFinal" type="Date">
+				final:</label> <input id="inp-fecha-fin" required name="fechaFinal" type="Date">
 			<div class="form-actions">
 
 				<br> <input type="submit" value="Buscar" id="FiltrarFecha"
