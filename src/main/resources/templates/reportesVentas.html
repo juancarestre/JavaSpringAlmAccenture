@@ -88,10 +88,8 @@
 
 
 
-		<div th:if="${not #lists.isEmpty(ventas)}" class="row">
-			<div class=col-md-2></div>
-			<div class=col-md-8>
-				<div th:if="${not #lists.isEmpty(ventas)}"
+		<div th:if="${not #lists.isEmpty(ventas)}">
+				<div
 					th:insert="fragments :: paginationbar" class="text-center"></div>
 
 
@@ -113,20 +111,17 @@
 							<td th:text="${venta.caja.nombreCaja}"></td>
 							<td>$ <span
 								th:text="${#numbers.formatDecimal(venta.totalVenta, 0, 'COMMA', 0, 'POINT')}"></span></td>
-							<td><a th:href="@{'/ventas/}"><span
-									class="glyphicon glyphicon-eye-open"></span></a></td>
+						<td><button th:if="${not #lists.isEmpty(venta.detalles)}" class="glyphicon glyphicon-eye-open" id="detalles" th:onclick="'javascript:preparaModal(\''+${venta.idVenta}+'\');'"></button></td>
 
 						</tr>
 					</tbody>
 
+
 				</table>
-				<div th:if="${not #lists.isEmpty(ventas)}"
+				<div
 					th:insert="fragments :: paginationbar" class="text-center"></div>
 
 
-
-			</div>
-			<div class=col-md-2></div>
 
 
 		</div>
