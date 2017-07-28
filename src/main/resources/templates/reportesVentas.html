@@ -3,9 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Reportes Ventas</title>
-
-<meta charset="UTF-8">
-<title>Reportes Ventas</title>
 <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 <link
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -18,57 +15,48 @@
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.9/js/bootstrap-dialog.min.js"></script>
 <link rel="icon" href="../static/img/A.png">
+<link rel="stylesheet" th:href="@{/css/main.css}">
 
 </head>
 <body>
 
-	<div class="navbar-wrapper">
+
+	<nav class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container">
-
-			<nav class="navbar navbar-inverse navbar-fixed-top">
-				<div class="container">
-					<div class="navbar-header">
-						<button type="button" class="navbar-toggle collapsed"
-							data-toggle="collapse" data-target="#navbar"
-							aria-expanded="false" aria-controls="navbar">
-							<span class="sr-only">Navegación</span> <span class="icon-bar"></span>
-							<span class="icon-bar"></span> <span class="icon-bar"></span>
-						</button>
-						<a class="navbar-brand" href="#">Almaccenture</a>
-					</div>
-					<div id="navbar" class="navbar-collapse collapse">
-						<ul class="nav navbar-nav">
-							<li><a th:href="@{/}" href="#">Página principal</a></li>
-							<li><a th:href="@{/ventas/new}" href="#">Venta</a></li>
-							<li><a href="/inventario">Inventario</a></li>
-							<li class="dropdown active"><a href="#"
-								class="dropdown-toggle" data-toggle="dropdown" role="button"
-								aria-haspopup="true" aria-expanded="false">Reportes<span
-									class="caret"></span></a>
-								<ul class="dropdown-menu">
-									<li class="active"><a href="#">Ventas</a></li>
-									<li><a href="/reportes/productosAgotados">Productos
-											agotados</a></li>
-								</ul></li>
-						</ul>
-					</div>
-				</div>
-			</nav>
-
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed"
+					data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+					aria-controls="navbar">
+					<span class="sr-only">Navegación</span> <span class="icon-bar"></span>
+					<span class="icon-bar"></span> <span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#">Almaccenture</a>
+			</div>
+			<div id="navbar" class="navbar-collapse collapse">
+				<ul class="nav navbar-nav">
+					<li><a th:href="@{/}" href="#">Página principal</a></li>
+					<li><a th:href="@{/ventas/new}" href="#">Venta</a></li>
+					<li><a href="/inventario">Inventario</a></li>
+					<li class="dropdown active"><a href="#"
+						class="dropdown-toggle" data-toggle="dropdown" role="button"
+						aria-haspopup="true" aria-expanded="false">Reportes<span
+							class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li class="active"><a href="#">Ventas</a></li>
+							<li><a href="/reportes/productosAgotados">Productos
+									agotados</a></li>
+						</ul></li>
+				</ul>
+			</div>
 		</div>
-	</div>
+	</nav>
 
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-
-	<div class="row text-center">
-
+	<div class="container">
+	
+	<hr class="featurette-divider">
 
 		<form id="messageForm" th:action="@{/reportes/ventas/lista}"
-			action="#" method="get">
+			action="#" method="get" class="text-center">
 			<label for="fechaInicio">Fecha de inicio:</label> <input required
 				name="fechaInicio" type="Date"> <label for="fechaFinal">Fecha
 				final:</label> <input required name="fechaFinal" type="Date">
@@ -80,79 +68,65 @@
 
 		</form>
 
+		<hr class="featurette-divider">
 
-	</div>
-
-
-
-
-	<hr class="featurette-divider">
-
-	<br>
-	<br>
-	<div th:if="${message != ''}"
-		class="alert alert-warning alert-dismissible" role="alert">
-		<div class="text-center">
-			<button type="button" class="close" data-dismis="alert"
-				aria-label="Close">
-				<span aria-hidden="true">&times;</span>
-			</button>
-			<strong>¡Señor usuario!</strong>
-			<div th:text="${message}"></div>
+		<div th:if="${not #strings.isEmpty(message)}"
+			class="alert alert-warning alert-dismissible" role="alert">
+			<div class="text-center">
+				<button type="button" class="close" data-dismis="alert"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<strong>¡Señor usuario!</strong>
+				<div th:text="${message}"></div>
+			</div>
 		</div>
-	</div>
 
 
 
 
-	
-	
 
-	<div th:if="${not #lists.isEmpty(ventas)}" class="row">
-		<div class=col-md-2></div>
-		<div class=col-md-8>
-			<div th:if="${not #lists.isEmpty(ventas)}"
-				th:insert="fragments :: paginationbar" class="text-center"></div>
 
-			
-			<table class="table table-bordered table-striped table-hover">
 
-				<thead>
-					<tr>
-						<th>Código</th>
-						<th>Fecha</th>
-						<th>Caja</th>
-						<th>Total</th>
-						<th>Acción</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr th:each="venta : ${ventas}">
-						<td th:text="${venta.idVenta}"></td>
-						<td th:text="${venta.fechaVenta}"></td>
-						<td th:text="${venta.caja.nombreCaja}"></td>
-						<td>$ <span
-							th:text="${#numbers.formatDecimal(venta.totalVenta, 0, 'COMMA', 0, 'POINT')}"></span></td>
+		<div th:if="${not #lists.isEmpty(ventas)}">
+				<div
+					th:insert="fragments :: paginationbar" class="text-center"></div>
+
+
+				<table class="table table-bordered table-striped table-hover">
+
+					<thead>
+						<tr>
+							<th>Código</th>
+							<th>Fecha</th>
+							<th>Caja</th>
+							<th>Total</th>
+							<th>Acción</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="venta : ${ventas}">
+							<td th:text="${venta.idVenta}"></td>
+							<td th:text="${venta.fechaVenta}"></td>
+							<td th:text="${venta.caja.nombreCaja}"></td>
+							<td>$ <span
+								th:text="${#numbers.formatDecimal(venta.totalVenta, 0, 'COMMA', 0, 'POINT')}"></span></td>
 						<td><button th:if="${not #lists.isEmpty(venta.detalles)}" class="glyphicon glyphicon-eye-open" id="detalles" th:onclick="'javascript:preparaModal(\''+${venta.idVenta}+'\');'"></button></td>
 
-							
+						</tr>
+					</tbody>
 
 
-					</tr>
-				</tbody>
+				</table>
+				<div
+					th:insert="fragments :: paginationbar" class="text-center"></div>
 
-			</table>
-			<div th:if="${not #lists.isEmpty(ventas)}"
-			th:insert="fragments :: paginationbar" class="text-center"></div>
-			
+
 
 
 		</div>
-		<div class=col-md-2></div>
-
-		
 	</div>
-	
+
 	<script th:inline="javascript">
 		function preparaModal(idVenta) {
 			console.log(idVenta);
