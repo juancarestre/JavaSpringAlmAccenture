@@ -21,6 +21,8 @@ public interface RepositorioVenta extends CrudRepository<Venta, Integer> {
 	public List<Venta> findByFechaVenta(Date date);
 	
 	public Page<Venta> findByFechaVentaBetween(Date date1, Date date2, Pageable pageabe);
+	
+	public List<Venta> findByFechaVentaBetween(Date date1, Date date2);
 
 		
 }

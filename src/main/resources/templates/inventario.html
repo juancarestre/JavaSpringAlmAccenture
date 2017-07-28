@@ -129,7 +129,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr th:each="inventario : ${productos}">
+						<tr th:each="inventario,status : ${productos}">
 							<td th:text="${inventario.idProducto}" class="tg-yw4l"></td>
 							<td th:text="${inventario.fechaModificacion}" class="tg-yw4l"></td>
 							<td th:text="${inventario.nombreProducto}" class="tg-yw4l"></td>
@@ -140,9 +140,9 @@
 							<td><form
 									th:action="@{'/inventario/modificarestado/' + ${inventario.idProducto}}"
 									th:method="POST">
-									<input id="checkbox1" type="checkbox"
+									<input th:id="checkbox+${status.index}" type="checkbox"
 										th:checked="${inventario.estadoProducto}" name="check"
-										onchange="submit()"><label for="checkbox1"
+										onchange="submit()"><label th:for="checkbox+${status.index}"
 										th:text="${inventario.estadoProducto}"></label>
 								</form></td>
 							<td th:text="${inventario.categoria.nombreCategoria}"

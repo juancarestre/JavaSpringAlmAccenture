@@ -25,8 +25,17 @@
 	//calcula cambio a partir de efectivo entregado y total de la venta
 	function calcularCambio(){
 		let efe = document.getElementById('inpEfectivo').value;
-		document.getElementById('lblCambio').textContent='$'+(efe-[[${venta.totalVenta}]]);
+		
+		if ((efe-[[${venta.totalVenta}]])>= 0)
+		{
+			document.getElementById('lblCambio').textContent='$'+(efe-[[${venta.totalVenta}]]);
+		}else
+		{
+			document.getElementById('lblCambio').textContent= 'Importe Invalido; Hacen falta $'+(-efe+[[${venta.totalVenta}]]);
+			document.getElementById('lblCambio').style.color="#d32e12";
 		}
+		
+	}
 	</script>
 </div>
 
