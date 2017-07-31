@@ -48,7 +48,7 @@ public class LogicaNegocioVentaImpl implements LogicaNegocioVenta {
 	private static final String MENSAJE_VENTA_ELIMINADA = "La venta se encuentra eliminada.";
 	private static final String MENSAJE_FECHA_INICIAL_VACIA = "La fecha inicial esta vacia";
 	private static final String MENSAJE_FECHA_FINAL_VACIA = "La fecha final esta vacia";
-	private static final String MENSAJE_FECHAS_INCORRECTAS="Las fechas no estan ingresadas correctamente";
+	private static final String MENSAJE_FECHAS_INCORRECTAS="Las fechas ingresadas no son correctas";
 
 	
 	@Autowired
