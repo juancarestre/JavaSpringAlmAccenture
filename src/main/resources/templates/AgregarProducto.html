@@ -55,8 +55,6 @@
 
 		</div>
 	</div>
-
-
 	<br>
 	<br>
 	<br>
@@ -101,12 +99,12 @@
 							aria-describedby="basic-addon1" th:field="*{precioProducto}">
 					</div>
 					<br>
+<!-- 					Agregado -->
 					<div class="input-group">
-						<span class="input-group-addon" id="basic-addon1">Cantidad</span>
-						<input type="number" required class="form-control"
+						<span class="input-group-addon" id="basic-addon1">Cantidad</span> <input
+							type="number" required class="form-control"
 							placeholder="Digite la cantidad del producto"
 							aria-describedby="basic-addon1" th:field="*{cantidadProducto}">
-						<br> <br>
 					</div>
 					<br>
 					<div class="input-group my-group">
@@ -114,10 +112,10 @@
 						<select th:field="*{categoria.nombreCategoria}" id="lunch"
 							class="selectpicker form-control" data-live-search="true"
 							title="Porfavor seleccione una categoría...">
-							<option value="Aseo" id = "aseo" >Aseo</option>
-							<option value="Hogar" id = "hogar" >Hogar</option>
-							<option value="Moda" id = "moda" >Moda</option>
-							<option value="Tecnologia" id = "tecnologia" >Tecnologia</option>
+							<option value="Aseo" id="aseo">Aseo</option>
+							<option value="Hogar" id="hogar">Hogar</option>
+							<option value="Moda" id="moda">Moda</option>
+							<option value="Tecnologia" id="tecnologia">Tecnologia</option>
 						</select>
 					</div>
 			</div>
@@ -137,7 +135,6 @@
 			<hr class="featurette-divider">
 			<div class="text-center">
 				<div class="form-actions">
-
 					<input type="submit" value="Agregar producto" id="agregar1"
 						name="agregar" class="btn btn-primary" /> <a
 						th:href="@{/inventario}" id="Cancelar1" class="btn btn-primary">Cancelar</a>
