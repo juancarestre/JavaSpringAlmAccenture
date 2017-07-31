@@ -187,7 +187,7 @@ public class ControladorInventario {
 			cate = repositorioCategoria.findBynombreCategoria(req.getParameter("categoria.nombreCategoria"));
 			p.setCategoria(cate);
 			productoBl.modificarProducto(p);
-			mav.setViewName("redirect:/inventario");
+			mav.setViewName("redirect:/inventario/consulta?idProducto="+req.getParameter("idProducto"));
 		}catch (LogicaNegocioExcepcion e) {
 			message=e.getMessage();
 			mav.addObject("producto", p);
