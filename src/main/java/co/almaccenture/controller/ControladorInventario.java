@@ -178,7 +178,7 @@ public class ControladorInventario {
 			"cantidadProducto","categoria.nombreCategoria"}, method=RequestMethod.POST)
 	public ModelAndView modificarProducto(HttpServletRequest req){
 		
-		String message="asd";
+		String message="";
 		ModelAndView mav= new ModelAndView();
 		Producto p = new Producto();
 		try{
