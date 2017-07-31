@@ -65,7 +65,7 @@ public class ControladorInventario {
 	/**
 	 * Muestra lista de todos los productos en inventario, pageable es rellenado
 	 * con los parametros size y page que vienen en la url, por default es un pageable
-	 * con size 20 y page 0. url : /inventario?page=0&size=5
+	 * con size 20 y page 0. url : /inventario?page=0&size=20
 	 * @param pageable
 	 * @return
 	 */

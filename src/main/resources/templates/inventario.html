@@ -16,6 +16,8 @@
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.9/js/bootstrap-dialog.min.js"></script>
 <link rel="icon" href="../static/img/A.png">
+<script type="text/javascript" th:src="@{/js/main.js}"></script>
+<link rel="stylesheet" th:href="@{/css/main.css}" />
 </head>
 <body>
 
@@ -122,7 +124,7 @@
 							<th>Producto</th>
 							<th>Cantidad</th>
 							<th>Precio</th>
-							<th>Estado</th>
+							<th style="width: 120px;">Estado</th>
 							<th>Categoria</th>
 							<th>Descripcion</th>
 							<th>Acción</th>
@@ -142,8 +144,9 @@
 									th:method="POST">
 									<input th:id="checkbox+${status.index}" type="checkbox"
 										th:checked="${inventario.estadoProducto}" name="check"
-										onchange="submit()"><label th:for="checkbox+${status.index}"
-										th:text="${inventario.estadoProducto}"></label>
+										onchange="submit()"/><label class="lbl-check-box"
+										th:for="checkbox+${status.index}"
+										th:text="(${inventario.estadoProducto})?'Activo':'Inactivo'"></label>
 								</form></td>
 							<td th:text="${inventario.categoria.nombreCategoria}"
 								class="tg-yw4l"></td>
@@ -156,14 +159,14 @@
 					</tbody>
 				</table>
 			</div>
-			
+
 
 			<div class="text-center" th:unless="${esConsulta}"
 				th:insert="fragments :: paginationbar"></div>
 
 		</div>
 		<div class=col-md-1></div>
-		
+
 
 
 
