@@ -1,6 +1,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
+<script type="text/javascript" th:src="@{/js/main.js}"></script>
 </head>
 <div th:fragment="calculaCambio">
 	<h2>
@@ -74,23 +75,90 @@
 
 
 
-	<ul th:fragment='paginationbar' class="pagination">
+<ul th:fragment='paginationbar' class="pagination">
+	<li th:class="${pages.first}? 'disabled' : ''"><span
+		th:if='${pages.first}'>← Primera</span> <a th:if='${not pages.first}'
+		th:href='@{${pages.url}(page=0,size=${pages.size})}'>← Primera</a></li>
+
+	<li th:each="item : ${pages.items}"
+		th:class="${item.current}? 'active' : ''"><span
+		th:if="${item.current}" th:text="${item.number+1}">1</span> <a
+		th:id="pag+${item.number+1}" th:if="${not item.current}"
+		th:href="@{${pages.url}(page=${item.number},size=${pages.size})}"><span
+			th:text="${item.number+1}">1</span></a></li>
+	<li th:class="${pages.last}? 'disabled' : ''"><span
+		th:if='${pages.last}'>Última →</span> <a th:if='${not pages.last}'
+		th:href='@{${pages.url}(page=${pages.totalPages-1},size=${pages.size})}'>Última
+			→</a></li>
+</ul>
+
+<div th:fragment='reporteVentaTabla'>
+	<div th:insert="fragments :: paginationbar1" class="text-center"></div>
+	<table class="table table-bordered table-striped table-hover">
+
+		<thead>
+			<tr>
+				<th style="width: 5px;">Código</th>
+				<th>Fecha</th>
+				<th>Caja</th>
+				<th>Total</th>
+				<th>Acción</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="venta,status : ${ventas}">
+				<td class="text-center" th:text="${venta.idVenta}"></td>
+				<td th:text="${venta.fechaVenta}"></td>
+				<td th:text="${venta.caja.nombreCaja}"></td>
+				<td>$ <span
+					th:text="${#numbers.formatDecimal(venta.totalVenta, 0, 'COMMA', 0, 'POINT')}"></span></td>
+				<td><button class="glyphicon glyphicon-eye-open"
+						th:id="detalles+${status.index}"
+						th:onclick="'javascript:preparaModal(\''+${status.index}+'\');'"></button></td>
+
+			</tr>
+		</tbody>
+
+
+	</table>
+
+	<h2>
+		<div class="row">
+			<div class="col-md-4"></div>
+			<div class="col-md-2">
+
+				<p class="label label-danger">Total del reporte: $
+					[[${#numbers.formatDecimal(totaldineroventa, 0, 'COMMA', 0,
+					'POINT')}]]</p>
+
+			</div>
+			<div class="col-md-2"></div>
+		</div>
+	</h2>
+
+
+	<div th:insert="fragments :: paginationbar1" class="text-center"></div>
+</div>
+
+<div th:fragment='paginationbar1'>
+	<ul class="pagination">
 		<li th:class="${pages.first}? 'disabled' : ''"><span
 			th:if='${pages.first}'>← Primera</span> <a th:if='${not pages.first}'
-			th:href='@{${pages.url}(page=0,size=${pages.size})}'>← Primera</a></li>
+			th:onclick="'obtenerFragmentPaginado(\''+${pages.url}+'\','+0+','+${pages.size}+')'"
+			href='#'>← Primera</a></li>
 
 		<li th:each="item : ${pages.items}"
 			th:class="${item.current}? 'active' : ''"><span
 			th:if="${item.current}" th:text="${item.number+1}">1</span> <a
-			th:id="pag+${item.number+1}" th:if="${not item.current}"
-			th:href="@{${pages.url}(page=${item.number},size=${pages.size})}"><span
+			th:onclick="'obtenerFragmentPaginado(\''+${pages.url}+'\','+${item.number}+','+${pages.size}+')'"
+			th:id="pag+${item.number+1}" th:if="${not item.current}" href="#"><span
 				th:text="${item.number+1}">1</span></a></li>
 		<li th:class="${pages.last}? 'disabled' : ''"><span
 			th:if='${pages.last}'>Última →</span> <a th:if='${not pages.last}'
-			th:href='@{${pages.url}(page=${pages.totalPages-1},size=${pages.size})}'>Última
-				→</a></li>
+			th:onclick="'obtenerFragmentPaginado(\''+${pages.url}+'\','+${pages.totalPages-1}+','+${pages.size}+')'"
+			href='#'>Última →</a></li>
 	</ul>
-
+</div>
 
 
 </html>

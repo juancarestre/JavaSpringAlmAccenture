@@ -148,7 +148,7 @@ public class ControladorReportes {
 			message = e.getMessage();
 		}
 
-		mav = new ModelAndView(REPORTE_VENTA_HTML);
+		mav = new ModelAndView("fragments :: reporteVentaTabla");
 		mav.addObject("ventas", ventasPage.getContent());
 		mav.addObject("pages", ventasPage);
 		mav.addObject("totaldineroventa",totalDineroReporte);
